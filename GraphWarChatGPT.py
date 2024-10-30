@@ -11,7 +11,7 @@ class GraphWarGame(CTk):
 
         self.title("Graph War")
         self.geometry("800x600")
-
+        #ajout  comme
         # Configuration de la figure Matplotlib
         self.fig, self.ax = plt.subplots()
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)

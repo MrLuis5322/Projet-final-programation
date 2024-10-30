@@ -46,7 +46,7 @@ class GraphWarGame(CTk):
         self.reset_button.pack(pady=10)
 
         self.plot_obstacles_and_goal()
-
+#aaa
     def generate_valid_player_position(self):
         """ Génère une position valide pour le joueur (dans le domaine négatif, sans collision avec un obstacle). """
         while True:

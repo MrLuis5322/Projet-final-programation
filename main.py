@@ -4,10 +4,3 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
-
-
-
-xd = 1
-
-print(f"Hello world")

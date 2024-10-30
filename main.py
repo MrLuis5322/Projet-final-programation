@@ -3,11 +3,14 @@ from customtkinter import CTk
 import numpy as np
 import matplotlib.pyplot as plt
 
+import joueur as Joueur
+import tir as Tir
+import accueil as Accueil
 
 
 
 
 
-xd = 1
 
-print(f"Hello world")
+app = GraphWarGame()
+app.mainloop()

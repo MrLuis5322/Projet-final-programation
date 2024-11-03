@@ -1,7 +1,5 @@
 import tkinter as tk
 from customtkinter import CTk
-import numpy as np
-import matplotlib.pyplot as plt
 #NON
 #import accueil as Accueil
 #OUI
@@ -11,8 +9,10 @@ from accueil import Accueil
 class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
     def __init__(self):  # Constructeur de la classe
         super().__init__()  
+
         self.title("Graph War des cool")  # Définition du titre de la fenêtre
         self.geometry("800x600")  # Définition de la taille de la fenêtre
+
         self.accueil = Accueil(self)  # Création d'une classe Accueil
         self.accueil.pack(fill=tk.BOTH, expand=True)  # Ajout de l'interface Accueil à la fenêtre
 

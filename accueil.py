@@ -8,23 +8,24 @@ from tir import Tir
 from matplotlib.patches import Circle
 
 
-
 class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
     #master c'est la convention pour désigner la fenêtre principale
    
     def __init__(self, master):# Appel du constructeur de la classe parente
         super().__init__(master)
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
-        self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
-        self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre. Ce code je l'ai crecherche je le comprend pas trop mais ca marche
-
+        
         self.joueur = Joueur(self)  # Création d'une instance de Joueur
         self.tir = Tir(self)  # Création d'une instance de Tir
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
 
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
+        self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre. Ce code je l'ai crecherche je le comprend pas trop mais ca marche
+
     def setup_ui(self):  # Méthode pour configurer l'interface utilisateur
-        # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
+
+         # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
         self.function_types = {
             "Linéaire (x)": "x",
             "Quadratique (x^2)": "x**2",
@@ -40,7 +41,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         # Création d'une entrée pour que l'utilisateur saisisse une fonction
         self.entry_func = ctk.CTkEntry(self, placeholder_text="Entrez une fonction en x (ex: np.sin(x))")
         self.entry_func.pack(pady=10)  # Ajout de l'entrée à la fenêtre
-
+        
         # Création d'un bouton pour tracer la fonction saisie
         self.plot_button = ctk.CTkButton(self, text="Tracer la fonction", command=self.tir.plot_function)
         self.plot_button.pack(pady=10)  # Ajout du bouton à la fenêtre
@@ -49,7 +50,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.reset_button = ctk.CTkButton(self, text="Réinitialiser", command=self.tir.reset_plot)
         self.reset_button.pack(pady=10)  # Ajout du bouton à la fenêtre
 
-        self.plot_obstacles_and_goal()  # Appel de la méthode pour tracer les obstacles et la cible
+        self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 
     def plot_obstacles_and_goal(self):  # Méthode pour tracer les obstacles et la cible
         for obstacle in self.joueur.obstacles:  # Itération sur les obstacles

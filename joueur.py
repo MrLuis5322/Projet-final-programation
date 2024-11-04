@@ -1,13 +1,11 @@
 import numpy as np  # Importation de NumPy pour les calculs mathématiques
-from traitementCSV import Obstcales
 
 class Joueur:  # Définition de la classe Joueur
-    def __init__(self, accueil):  
+    def __init__(self, accueil, obstacles):  
         self.accueil = accueil  # Référence à l'interface d'accueil
-
-        # self.obstacles = self.generer_obstacles()  # Génération des obstacles
-        self.obstacles_instance = Obstcales() # Créer une instance de la classe Obstacles
-        self.obstacles = self.obstacles_instance.generer_obstacles()  # Génération des obstacles
+        self.obstacles = self.accueil.get_obstacles()
+        # self.obstacles_instance = Obstcales() # Créer une instance de la classe Obstacles
+        # self.obstacles = self.obstacles_instance.generer_obstacles()  # Génération des obstacles
 
         self.joueur_position = self.generer_position_valide_joueur()  # Position valide pour le joueur
         self.cible_position = self.generer_position_valide_cible()  # Position valide pour la cible

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-class Obstcales: 
+class Obstacles: 
     def __init__(self):
         self.villes_data = pd.read_csv(r'./uscities.csv') # Le ./ indique le répertoire courant
         # Supprimer les colonnes inutiles

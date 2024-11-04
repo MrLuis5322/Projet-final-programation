@@ -5,18 +5,23 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg  # Importation pour intégrer Matplotlib avec tkinter
 from joueur import Joueur  
 from tir import Tir  
+from traitementCSV import Obstacles
 from matplotlib.patches import Circle
 
 
 class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
     #master c'est la convention pour désigner la fenêtre principale
-   
+    def get_obstacles(self):
+        return self.obstacles
+    
     def __init__(self, master):# Appel du constructeur de la classe parente
         super().__init__(master)
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         
-        self.joueur = Joueur(self)  # Création d'une instance de Joueur
-        self.tir = Tir(self)  # Création d'une instance de Tir
+        self.obstacles_instance = Obstacles() # Créer une instance de la classe Obstacles
+        self.obstacles = self.obstacles_instance.generer_obstacles()  # Génération des obstacles
+        self.joueur = Joueur(self, self.obstacles)  # Création d'une instance de Joueur
+        self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
 

@@ -8,7 +8,6 @@ from tir import Tir
 from traitementCSV import Obstacles
 from matplotlib.patches import Circle
 
-
 class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
     #master c'est la convention pour désigner la fenêtre principale
     def get_obstacles(self):
@@ -32,11 +31,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
 
         # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
         self.function_types = {
-            "Linéaire (x)": "x",
-            "Quadratique (x^2)": "x**2",
-            "Exponentielle (e^x)": "np.exp(x)",
-            "Sinus (sin(x))": "np.sin(x)",
-            "Cercle touchant l'origine": "circle" #???? on le garde tu?
+            "Linéaire": "x",
+            "Quadratique": "x**2",
+            "Exponentielle": "np.exp(x)",
+            "Sinus": "np.sin(x)",
+            "Cosinus": "np.cos(x)",
         }
 
         # Création d'une combo box pour sélectionner le type de fonction
@@ -58,7 +57,6 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         # Supprimer les graduations
         self.ax.set_xticks([])
         self.ax.set_yticks([])
-        self.ax.legend(loc="upper left", prop = { "size": 7 }, markerscale=0.6, bbox_to_anchor=(1, 1))
 
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 

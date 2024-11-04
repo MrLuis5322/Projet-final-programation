@@ -27,15 +27,15 @@ class Joueur:  # Définition de la classe Joueur
     def generer_point_aleatoire(self, negatif=True):  # Méthode pour générer un point aléatoire
         """ Génère un point aléatoire avec des coordonnées négatives ou positives. """
         if negatif:  # Si le point est pour le joueur
-            return (np.random.uniform(-100, 0), np.random.uniform(-100, 0))  # Coordonnées négatives
+            return (np.random.uniform(-150, 0), np.random.uniform(-100, 0))  # Coordonnées négatives
         else:  # Si le point est pour la cible
-            return (np.random.uniform(0, 100), np.random.uniform(0, 100))  # Coordonnées positives
+            return (np.random.uniform(0, 150), np.random.uniform(0, 100))  # Coordonnées positives
 
     def est_point_sur_obstacle(self, point):  # Méthode pour vérifier si un point est sur un obstacle
         """ Vérifie si un point donné se trouve à l'intérieur d'un obstacle. """
         px, py = point  # Décomposition des coordonnées du point
         for (ox, oy, r) in self.obstacles:  # Itération sur les obstacles
             distance = np.sqrt((px - ox)**2 + (py - oy)**2)  # Calcul de la distance entre le point et l'obstacle
-            if distance < r:  # Si le point est à l'intérieur de l'obstacle
+            if distance < (r + 3):  # Si le point est à l'intérieur de l'obstacle
                 return True  # Retourne vrai
         return False  # Retourne faux si le point n'est pas sur un obstacle

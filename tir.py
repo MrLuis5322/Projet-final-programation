@@ -25,7 +25,7 @@ class Tir:
         x_cible, y_cible = cible_pos
 
         # Génère un tableau de valeurs x allant de x_joueur à 200 (-100 à 100)
-        x_fct = np.linspace(x_joueur, 200, 1000)
+        x_fct = np.linspace(x_joueur, 400, 2000)
         
         # Évaluer l'équation pour obtenir y
         try:
@@ -64,7 +64,7 @@ class Tir:
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])
         # Placer la légende en dehors de la zone de tracé
-        self.accueil.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
+        self.accueil.ax.legend(loc="upper left", prop = { "size": 7 }, markerscale=0.6, bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()  
 
     def reset_plot(self):  # Méthode pour réinitialiser le graphique
@@ -73,7 +73,7 @@ class Tir:
         # Supprimer les graduations
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])
-        self.accueil.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
+        self.accueil.ax.legend(loc="upper left", prop = { "size": 7 },markerscale=0.6, bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()  # Met à jour le graphique(cnvas)
 
     def plot_selected_function(self, choice):  # Méthode pour tracer une fonction sélectionnée

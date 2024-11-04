@@ -24,7 +24,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-        self.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
+        self.ax.legend(loc="upper left", prop = { "size": 7 }, markerscale=0.6, bbox_to_anchor=(1, 1))
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre. Ce code je l'ai crecherche je le comprend pas trop mais ca marche
 
@@ -58,7 +58,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         # Supprimer les graduations
         self.ax.set_xticks([])
         self.ax.set_yticks([])
-        self.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
+        self.ax.legend(loc="upper left", prop = { "size": 7 }, markerscale=0.6, bbox_to_anchor=(1, 1))
 
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 
@@ -74,7 +74,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'go', markersize=10, label='Cible')
 
     # Définition des limites des axes
-        self.ax.set_xlim(-100, 100)  
+        self.ax.set_xlim(-180, 180)  
         self.ax.set_ylim(-100, 100)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
-        self.ax.legend()  # Affichage de la légende
+        self.ax.legend(prop = { "size": 7 }, markerscale=0.6,)  # Affichage de la légende

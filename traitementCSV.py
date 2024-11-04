@@ -17,11 +17,11 @@ class Obstacles:
         if len(villes_etat) < 8:
             return self.generer_obstacles() # On recommence
 
-        # Sélectionner un nombre aléatoire de villes entre 6 et 8
-        nb_obstacles = np.random.randint(6, 8)
+        # Sélectionner un nombre aléatoire de villes entre 7 et 8
+        nb_obstacles = np.random.randint(7, 8)
         villes_choisies = villes_etat.sample(n=nb_obstacles)
 
-        # Trier les villes choisies par population (ordre décroissant)
+        # Trier les villes choisies par population (ordre décroissan t)
         villes_choisies = villes_choisies.sort_values(by='population', ascending=False).reset_index(drop=True)
 
         # Déterminer les bornes min/max pour la latitude et longitude
@@ -29,12 +29,12 @@ class Obstacles:
         lng_min, lng_max = villes_etat['lng'].min(), villes_etat['lng'].max()
 
         obstacles = []
-        taille_min, taille_max = 7, 15  # Définir la plage de tailles
-        distance_min = 20  # Distance minimale entre les obstacles pour éviter (trop) de chevauchement
+        taille_min, taille_max = 10, 35  # Définir la plage de tailles
+        distance_min = 10  # Distance minimale entre les obstacles pour éviter (trop) de chevauchement
 
         for index, ville in villes_choisies.iterrows():
             # Ajuster la latitude et la longitude pour qu'elles soient dans la plage -100 à 100
-            lat_ajustee = np.interp(ville['lat'], (lat_min, lat_max), (-100, 100))
+            lat_ajustee = np.interp(ville['lat'], (lat_min, lat_max), (-150, 150))
             lng_ajustee = np.interp(ville['lng'], (lng_min, lng_max), (-100, 100))
             
             # Calculer la taille de l'obstacle selon la position dans la liste triée
@@ -47,8 +47,8 @@ class Obstacles:
                 if distance < (taille_obstacle + distance_min):
                     valid_position = False
                     break
-                
-            # Réessayer la position si elle est trop proche d'un autre obstacle
+                # Réessayer la position si elle est trop proche d'un autre obstacle
+
             if valid_position:
                 obstacles.append((lat_ajustee, lng_ajustee, taille_obstacle)) # Ajouter l'obstacle à la liste
             else:

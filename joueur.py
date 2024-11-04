@@ -1,24 +1,16 @@
 import numpy as np  # Importation de NumPy pour les calculs mathématiques
+from traitementCSV import Obstcales
 
 class Joueur:  # Définition de la classe Joueur
     def __init__(self, accueil):  
         self.accueil = accueil  # Référence à l'interface d'accueil
-        self.obstacles = self.generer_obstacles()  # Génération des obstacles
+
+        # self.obstacles = self.generer_obstacles()  # Génération des obstacles
+        self.obstacles_instance = Obstcales() # Créer une instance de la classe Obstacles
+        self.obstacles = self.obstacles_instance.generer_obstacles()  # Génération des obstacles
+
         self.joueur_position = self.generer_position_valide_joueur()  # Position valide pour le joueur
         self.cible_position = self.generer_position_valide_cible()  # Position valide pour la cible
-
-
-
-#---------------------------------------------#
-#FAIRE LE RANDOM AVEC FICHIERS CSV
-#---------------------------------------------#
-
-
-
-
-    def generer_obstacles(self):  # Méthode pour générer des obstacles
-        """ Génération de trois obstacles aléatoires avec des positions et rayons. """
-        return [(np.random.uniform(-100, 100), np.random.uniform(-100, 100), np.random.uniform(5, 15)) for _ in range(3)]
 
     def generer_position_valide_joueur(self):  # Méthode pour générer la position du joueur
         """ Retourne une position valide pour le joueur. """

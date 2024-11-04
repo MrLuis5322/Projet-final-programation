@@ -1,5 +1,7 @@
 import numpy as np  
-import tkinter as tk  
+from joueur import Joueur
+import tkinter as tk
+import time
 
 # Fonction pour vérifier si un point est dans un cercle
 def touche_au_cercle(x, y, cercle_x, cercle_y, rayon):
@@ -44,6 +46,7 @@ class Tir:
         # Stocker les coordonnées des collisons
         collision_x = None 
         collision_y = None
+        cible_touchee = False
 
         # Vérification des collisions
         for i in range(len(x_translated)):
@@ -64,6 +67,7 @@ class Tir:
                 # Vérifier la collision avec la cible
                 if touche_au_cercle(x_translated[i], y_translated[i], x_cible, y_cible, 5):
                     print(f"Cible touchée en : ({x_translated[i]:.2f}, {y_translated[i]:.2f})")
+                    cible_touchee = True
                     collision = True
                     break 
 
@@ -87,24 +91,32 @@ class Tir:
         self.accueil.ax.legend(loc="upper left", prop = { "size": 7 }, markerscale=0.6, bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()  
 
-    def reset_plot(self):  # Méthode pour réinitialiser le graphique
-        self.accueil.ax.clear()  # Efface l'axe du graphique
-        self.accueil.plot_obstacles_and_goal()  # Rétrace les obstacles et la cible
-        # Supprimer les graduations
+        # Si la cible est touchée, ajoutez un délai, puis réinitialisez la scène
+        if cible_touchee:
+            self.cible_atteinte()  # Appelle la méthode pour gérer la réinitialisation après la cible atteinte
+            
+    def cible_atteinte(self):
+        self.accueil.after(800, self.reset_plot)  # Attente de 1 secondes avant réinitialisation
+
+    def reset_plot(self):
+        self.accueil.ax.clear()
+        
+        # Générer de nouveaux obstacles et mettre à jour les obstacles dans l'instance Tir
+        self.accueil.obstacles = self.accueil.obstacles_instance.generer_obstacles()
+        self.obstacles = self.accueil.obstacles  # Mettre à jour les obstacles dans Tir
+        
+        # Générer un nouveau joueur avec les nouveaux obstacles
+        self.accueil.joueur = Joueur(self.accueil, self.accueil.obstacles)
+        
+        # Tracer les obstacles et la cible
+        self.accueil.plot_obstacles_and_goal()
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])
-        self.accueil.ax.legend(loc="upper left", prop = { "size": 7 },markerscale=0.6, bbox_to_anchor=(1, 1))
-        self.accueil.canvas.draw()  # Met à jour le graphique(cnvas)
+        self.accueil.ax.legend(loc="upper left", prop={"size": 7}, markerscale=0.6, bbox_to_anchor=(1, 1))
+        self.accueil.canvas.draw()
 
     def plot_selected_function(self, choice):  # Méthode pour tracer une fonction sélectionnée
         func_text = self.accueil.function_types.get(choice)  # Récupère la fonction associée au choix
-        if func_text == "circle":  # Vérifie si la fonction sélectionnée est un cercle
-            self.plot_circle()  # Appelle une méthode pour tracer un cercle
-        else:
-            self.accueil.entry_func.delete(0, tk.END)  # Efface le champ de saisie
-            self.accueil.entry_func.insert(0, func_text)  # Insère la fonction sélectionnée dans le champ
-            self.plot_function()  # Appelle la méthode pour tracer la fonction
-
-    def plot_circle(self):  # Méthode pour tracer un cercle (à implémenter)
-        # Logique pour tracer un cercle touchant l'origine si on veut prendre en charge cela
-        pass  # À implémenter
+        self.accueil.entry_func.delete(0, tk.END)  # Efface le champ de saisie
+        self.accueil.entry_func.insert(0, func_text)  # Insère la fonction sélectionnée dans le champ
+        self.plot_function()  # Appelle la méthode pour tracer la fonction

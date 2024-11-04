@@ -43,7 +43,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.func_selector.pack(pady=10)  # Ajout de la combo box à la fenêtre
 
         # Création d'une entrée pour que l'utilisateur saisisse une fonction
-        self.entry_func = ctk.CTkEntry(self, placeholder_text="Entrez une fonction en x (ex: np.sin(x))")
+        self.entry_func = ctk.CTkEntry(self, placeholder_text="Entrez une fonction")
         self.entry_func.pack(pady=10)  # Ajout de l'entrée à la fenêtre
         
         # Création d'un bouton pour tracer la fonction saisie
@@ -66,12 +66,12 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             circle = Circle((x, y), r, color='red', alpha=0.5)  # Crée un cercle avec les coordonnées et le rayon
             self.ax.add_patch(circle)  # Ajout du cercle au tracé
 
-    # Tracé du joueur
+        # Tracé du joueur
         self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'bo', markersize=10, label='Joueur')
-    # Tracé de la cible
+        # Tracé de la cible
         self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'go', markersize=10, label='Cible')
 
-    # Définition des limites des axes
+        # Définition des limites des axes
         self.ax.set_xlim(-180, 180)  
         self.ax.set_ylim(-100, 100)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé

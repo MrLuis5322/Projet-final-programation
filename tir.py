@@ -29,7 +29,6 @@ class Tir:
         
         # Évaluer l'équation pour obtenir y
         try:
-            # Passer x_local comme "x" dans le contexte d'évaluation
             y_fct = eval(equation, {"x": x_fct, "np": np})
         except Exception as e:
             print(f"Erreur dans l'équation : {e}")
@@ -42,24 +41,45 @@ class Tir:
         # Initialiser les listes pour le tracé limité
         trajectoire_x = []
         trajectoire_y = []
+        # Stocker les coordonnées des collisons
+        collision_x = None 
+        collision_y = None
 
         # Vérification des collisions
-        collision_detected = False
         for i in range(len(x_translated)):
-            # Ajouter les points à la trajectoire si on n'est pas encore à la position du joueur
+            # Ajouter les points à la trajectoire si on n'est pas encore à la position du joueur ou atteint un obsatcle
             if x_translated[i] >= x_joueur: # x_joueur + ... afin de commencer a l'extrémité du cercle
+
+                # Vérifier la collision avec les obsatcles 
+                collision = False
+                for obstacle in self.obstacles:  # Itération sur les obstacles
+                    x, y, r = obstacle  # Décomposition de l'obsatcles
+                    if touche_au_cercle(x_translated[i], y_translated[i], x, y, r):
+                        print(f"Obstacle touché en : ({x_translated[i]:.2f}, {y_translated[i]:.2f})")
+                        collision_x = x_translated[i]
+                        collision_y = y_translated[i]
+                        collision = True
+                        break 
+
                 # Vérifier la collision avec la cible
                 if touche_au_cercle(x_translated[i], y_translated[i], x_cible, y_cible, 5):
-                    collision_detected = True
                     print(f"Cible touchée en : ({x_translated[i]:.2f}, {y_translated[i]:.2f})")
-                    break
+                    collision = True
+                    break 
 
-                 # Ajouter les points à la trajectoire
+                if collision:
+                    break  # Quitte la boucle
+
+                # Ajouter les points à la trajectoire
                 trajectoire_x.append(x_translated[i])
                 trajectoire_y.append(y_translated[i])
 
         # Trajectoire
         self.accueil.ax.plot(trajectoire_x, trajectoire_y, label=f'f(x)={equation}') 
+        # Effe de collision
+        if collision_x is not None and collision_y is not None:
+            self.accueil.ax.plot(collision_x, collision_y, 'ro', markersize=2)  # 'ro' pour 'red dot'
+    
         # Supprimer les graduations
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])

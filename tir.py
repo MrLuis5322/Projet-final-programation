@@ -69,7 +69,7 @@ class Tir:
                     print(f"Cible touchée en : ({x_translated[i]:.2f}, {y_translated[i]:.2f})")
                     cible_touchee = True
                     collision = True
-                    break 
+                    break
 
                 if collision:
                     break  # Quitte la boucle

@@ -65,7 +65,7 @@ class Tir:
                 if touche_au_cercle(x_translated[i], y_translated[i], x_cible, y_cible, 5):
                     print(f"Cible touchée en : ({x_translated[i]:.2f}, {y_translated[i]:.2f})")
                     collision = True
-                    break 
+                    break
 
                 if collision:
                     break  # Quitte la boucle

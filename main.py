@@ -10,7 +10,7 @@ class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
     def __init__(self):  # Constructeur de la classe
         super().__init__()  
 
-        self.title("Graph War des cool")  # Définition du titre de la fenêtre
+        self.title("Graphwar")  # Définition du titre de la fenêtre
         self.geometry("800x600")  # Définition de la taille de la fenêtre
 
         self.accueil = Accueil(self)  # Création d'une classe Accueil

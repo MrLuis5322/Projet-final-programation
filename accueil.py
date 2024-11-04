@@ -24,13 +24,13 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-
+        self.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre. Ce code je l'ai crecherche je le comprend pas trop mais ca marche
 
     def setup_ui(self):  # Méthode pour configurer l'interface utilisateur
 
-         # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
+        # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
         self.function_types = {
             "Linéaire (x)": "x",
             "Quadratique (x^2)": "x**2",
@@ -54,6 +54,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         # Création d'un bouton pour réinitialiser le tracé
         self.reset_button = ctk.CTkButton(self, text="Réinitialiser", command=self.tir.reset_plot)
         self.reset_button.pack(pady=10)  # Ajout du bouton à la fenêtre
+
+        # Supprimer les graduations
+        self.ax.set_xticks([])
+        self.ax.set_yticks([])
+        self.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
 
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 

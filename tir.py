@@ -51,20 +51,29 @@ class Tir:
                 # Vérifier la collision avec la cible
                 if touche_au_cercle(x_translated[i], y_translated[i], x_cible, y_cible, 5):
                     collision_detected = True
-                    print("cible")
+                    print(f"Cible touchée en : ({x_translated[i]:.2f}, {y_translated[i]:.2f})")
                     break
-    
+
                  # Ajouter les points à la trajectoire
                 trajectoire_x.append(x_translated[i])
                 trajectoire_y.append(y_translated[i])
-                
+
+        # Trajectoire
         self.accueil.ax.plot(trajectoire_x, trajectoire_y, label=f'f(x)={equation}') 
-        self.accueil.ax.legend() 
+        # Supprimer les graduations
+        self.accueil.ax.set_xticks([])
+        self.accueil.ax.set_yticks([])
+        # Placer la légende en dehors de la zone de tracé
+        self.accueil.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()  
 
     def reset_plot(self):  # Méthode pour réinitialiser le graphique
         self.accueil.ax.clear()  # Efface l'axe du graphique
         self.accueil.plot_obstacles_and_goal()  # Rétrace les obstacles et la cible
+        # Supprimer les graduations
+        self.accueil.ax.set_xticks([])
+        self.accueil.ax.set_yticks([])
+        self.accueil.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()  # Met à jour le graphique(cnvas)
 
     def plot_selected_function(self, choice):  # Méthode pour tracer une fonction sélectionnée

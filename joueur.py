@@ -14,7 +14,10 @@ class Joueur:  # Définition de la classe Joueur
         while True:  # Boucle infinie jusqu'à obtenir une position valide
             xpoint = np.random.randint(-170, 170)  # Génération d'un x aléatoire
             ypoint = np.random.randint(-90, 90) # Génération d'un y aléatoire
+            is_valide = True
             for (xobstacle, yobstacle, robstacle) in self.obstacles: # Pour chaque obstacle
                 distance = np.sqrt((xpoint-xobstacle)**2 + (ypoint - yobstacle)**2) # On calcul la distance entre le point et l'obstacle
-                if distance > (robstacle + 10):
-                    return (xpoint, ypoint)
+                if distance < (robstacle + 10):
+                    is_valide = False
+            if is_valide : return (xpoint, ypoint)
+            

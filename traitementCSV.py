@@ -34,8 +34,8 @@ class Obstacles:
 
         for index, ville in villes_choisies.iterrows():
             # Ajuster la latitude et la longitude pour qu'elles soient dans la plage -100 à 100
-            lat_ajustee = np.interp(ville['lat'], (lat_min, lat_max), (-150, 150))
-            lng_ajustee = np.interp(ville['lng'], (lng_min, lng_max), (-100, 100))
+            lat_ajustee = np.interp(ville['lat'], (lat_min, lat_max), (0, 300))
+            lng_ajustee = np.interp(ville['lng'], (lng_min, lng_max), (0, 200))
             
             # Calculer la taille de l'obstacle selon la position dans la liste triée
             taille_obstacle = np.interp(index, [0, len(villes_choisies) - 1], [taille_max, taille_min])

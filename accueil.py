@@ -72,7 +72,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'go', markersize=10, label='Cible')
 
         # Définition des limites des axes
-        self.ax.set_xlim(-180, 180)  
-        self.ax.set_ylim(-100, 100)  
+        self.ax.set_xlim(0, 360)  
+        self.ax.set_ylim(0, 200)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
         self.ax.legend(prop = { "size": 7 }, markerscale=0.6,)  # Affichage de la légende

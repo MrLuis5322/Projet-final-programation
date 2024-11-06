@@ -1,7 +1,7 @@
 import numpy as np  # Importation de NumPy pour les calculs mathématiques
 
 class Joueur:  # Définition de la classe Joueur
-    def __init__(self, accueil, obstacles):  
+    def __init__(self, accueil, obstacles):
         self.accueil = accueil  # Référence à l'interface d'accueil
         self.obstacles = self.accueil.get_obstacles() # Reference aux obstacles
         self.reference = (0, 0) # Reference au dernier point etant ete cree, sert a ne pas cree un point sur le dernier point cree

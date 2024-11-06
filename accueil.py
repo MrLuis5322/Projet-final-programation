@@ -13,7 +13,8 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def get_obstacles(self):
         return self.obstacles
     
-    def __init__(self, master):# Appel du constructeur de la classe parente
+    def __init__(self, master,res_width, res_height):# Appel du constructeur de la classe parente
+       
         super().__init__(master)
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         
@@ -23,7 +24,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-        self.ax.legend(loc="upper left", prop = { "size": 7 }, markerscale=0.6, bbox_to_anchor=(1, 1))
+        self.ax.legend(loc="upper left", prop = { "size": 20*res_width }, markerscale=0.6*res_width, bbox_to_anchor=(1, 1))
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre. Ce code je l'ai crecherche je le comprend pas trop mais ca marche
 

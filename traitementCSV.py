@@ -10,15 +10,15 @@ class Obstacles:
         
     def generer_obstacles(self):
         # Choisir un État aléatoire
-        etat_choisi = self.villes_data['state_id'].sample(n=1).iloc[0] # .sample retourn une liste de n=1 État et .iloc y accède
+        etat_choisi = self.villes_data['state_name'].sample(n=1).iloc[0] # .sample retourn une liste de n=1 État et .iloc y accède
         # Filtrer les villes de cet État
-        villes_etat = self.villes_data[self.villes_data['state_id'] == etat_choisi]
+        villes_etat = self.villes_data[self.villes_data['state_name'] == etat_choisi]
         # Vérifier si suffisamment de villes sont disponibles
-        if len(villes_etat) < 8:
+        if len(villes_etat) < 25:
             return self.generer_obstacles() # On recommence
 
-        # Sélectionner un nombre aléatoire de villes entre 7 et 8
-        nb_obstacles = np.random.randint(7, 8)
+        # Sélectionner un nombre de villes
+        nb_obstacles = np.random.randint(25)
         villes_choisies = villes_etat.sample(n=nb_obstacles)
 
         # Trier les villes choisies par population (ordre décroissan t)
@@ -29,29 +29,30 @@ class Obstacles:
         lng_min, lng_max = villes_etat['lng'].min(), villes_etat['lng'].max()
 
         obstacles = []
-        taille_min, taille_max = 10, 35  # Définir la plage de tailles
-        distance_min = 10  # Distance minimale entre les obstacles pour éviter (trop) de chevauchement
+        taille_min, taille_max = 5, 20  # Définir la plage de tailles
+        distance_min = 15  # Distance minimale entre les obstacles pour éviter (trop) de chevauchement
 
-        for index, ville in villes_choisies.iterrows():
-            # Ajuster la latitude et la longitude pour qu'elles soient dans la plage -100 à 100
-            lat_ajustee = np.interp(ville['lat'], (lat_min, lat_max), (0, 300))
-            lng_ajustee = np.interp(ville['lng'], (lng_min, lng_max), (0, 200))
-            
-            # Calculer la taille de l'obstacle selon la position dans la liste triée
-            taille_obstacle = np.interp(index, [0, len(villes_choisies) - 1], [taille_max, taille_min])
+        for index, ville in villes_choisies.iterrows(): # itération sur les villes
+            if len(obstacles) < 15:
+                # Ajuster la latitude et la longitude pour qu'elles soient dans la plage -100 à 100
+                lat_ajustee = np.interp(ville['lat'], (lat_min, lat_max), (0, 300)) # interpolation (comme code de physique)
+                lng_ajustee = np.interp(ville['lng'], (lng_min, lng_max), (0, 200))
+                
+                # Calculer la taille de l'obstacle selon la position dans la liste triée
+                taille_obstacle = np.interp(index, [0, len(villes_choisies) - 1], [taille_max, taille_min])
 
-            # Vérifier la distance avec les obstacles existants
-            valid_position = True
-            for x, y, _ in obstacles:
-                distance = np.sqrt((lat_ajustee - x) ** 2 + (lng_ajustee - y) ** 2) # Calcul de distance
-                if distance < (taille_obstacle + distance_min):
-                    valid_position = False
-                    break
-                # Réessayer la position si elle est trop proche d'un autre obstacle
+                # Vérifier la distance avec les obstacles existants
+                valid_position = True
+                for x, y, _ in obstacles:
+                    distance = np.sqrt((lat_ajustee - x) ** 2 + (lng_ajustee - y) ** 2) # Calcul de distance
+                    if distance < (taille_obstacle + distance_min):
+                        valid_position = False
+                        break
+                    # Réessayer la position si elle est trop proche d'un autre obstacle
 
-            if valid_position:
-                obstacles.append((lat_ajustee, lng_ajustee, taille_obstacle)) # Ajouter l'obstacle à la liste
-            else:
-                continue  # Passer à la ville suivante si trop proche
-
+                if valid_position:
+                    obstacles.append((lat_ajustee, lng_ajustee, taille_obstacle)) # Ajouter l'obstacle à la liste
+                else:
+                    continue  # Passer à la ville suivante si trop proche
+            else : break
         return obstacles

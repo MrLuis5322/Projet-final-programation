@@ -15,7 +15,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     
     def __init__(self, master,res_width, res_height):# Appel du constructeur de la classe parente
        
-        super().__init__(master)
+        super().__init__(master, res_height,res_width)
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         
         self.obstacles_instance = Obstacles() # Créer une instance de la classe Obstacles

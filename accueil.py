@@ -63,7 +63,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def plot_obstacles_and_goal(self):  # Méthode pour tracer les obstacles et la cible
         for obstacle in self.joueur.obstacles:  # Itération sur les obstacles
             x, y, r = obstacle  # Décomposition du tuple
-            circle = Circle((x, y), r, color='red', alpha=0.5)  # Crée un cercle avec les coordonnées et le rayon
+            circle = Circle((x, y), r, color='red', alpha=0.1)  # Crée un cercle avec les coordonnées et le rayon
             self.ax.add_patch(circle)  # Ajout du cercle au tracé
 
         # Tracé du joueur

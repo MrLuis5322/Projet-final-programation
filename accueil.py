@@ -20,7 +20,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.res_width = res_width
 
         self.score = 0
-        self.temps = 121 #Temps de jeu en sec 120 sec
+        self.temps = 61 #Temps de jeu en sec 120 sec
 
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         
@@ -35,6 +35,9 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre. Ce code je l'ai crecherche je le comprend pas trop mais ca marche
 
         self.update_timer()
+
+        self.cibles_touche = 0
+        self.viles_touche = 0
     def setup_ui(self):  # Méthode pour configurer l'interface utilisateur
 
         # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
@@ -88,11 +91,12 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def update_score(self, points):
         #Met à jour le score et update affichage
         self.score += points
-        self.score_label.configure(text=f"Score: {self.score}")
+        self.score_label.configure(f"Score: {self.score}")
 
     def end_game(self):
        
         self.timer_label.configure(text="Temps écoulé!")
+        self.master.ajouter_log(f"Partie terminé avec {self.score} points")
         #Ajouter une sauvgarde des log
 
 
@@ -117,3 +121,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.set_ylim(0, 200)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
         self.ax.legend(prop = { "size": 7 }, markerscale=0.6,)  # Affichage de la légende
+
+
+    def update_score_ville(self):
+        self.viles_touche +=1
+
+
+    def update_score_cible(self):
+        self.cibles_touche+=1

@@ -1,0 +1,21 @@
+Nom: Luis Lamontagne
+Email: luis.lamontagne@gmail.com
+Logs:
+
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Ajout d'un point
+Ajout d'un point
+Ajout d'un point
+Perte d'un point
+Ajout d'un point
+Le joueur s'est connecte.
+Ajout d'un point
+Partie terminé avec -1 points
+Ajout d'un point
+Ajout d'un point
+Partie terminé avec 3 points

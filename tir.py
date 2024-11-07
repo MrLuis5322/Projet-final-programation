@@ -88,6 +88,8 @@ class Tir:
 
             if collision:
                 self.accueil.update_score(-1)#-1 point pour le joueur
+                self.accueil.update_score_ville()
+                self.accueil.master.ajouter_log(f"Perte d'un point") #log
                 break  # Quitte la boucle
 
         # Trajectoire
@@ -106,6 +108,17 @@ class Tir:
     def cible_atteinte(self):
         self.accueil.after(800, self.reset_plot)  # Attente de 1 secondes avant réinitialisation
         self.accueil.update_score(1)#Ajouter 1 point
+        self.accueil.update_score_cible()
+        
+        self.accueil.master.ajouter_log(f"Ajout d'un point")#log
+
+
+
+
+
+
+
+
 
     def reset_plot(self):
         self.accueil.ax.clear()

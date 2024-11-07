@@ -15,7 +15,13 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     
     def __init__(self, master,res_width, res_height):# Appel du constructeur de la classe parente
        
-        super().__init__(master, res_height,res_width)
+        super().__init__(master)
+        self.res_height = res_height
+        self.res_width = res_width
+
+        self.score = 0
+        self.temps = 121 #Temps de jeu en sec 120 sec
+
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         
         self.obstacles_instance = Obstacles() # Créer une instance de la classe Obstacles
@@ -28,6 +34,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre. Ce code je l'ai crecherche je le comprend pas trop mais ca marche
 
+        self.update_timer()
     def setup_ui(self):  # Méthode pour configurer l'interface utilisateur
 
         # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
@@ -55,11 +62,44 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.reset_button = ctk.CTkButton(self, text="Réinitialiser", command=self.tir.reset_plot)
         self.reset_button.pack(pady=10)  # Ajout du bouton à la fenêtre
 
+
+
+        #Affichage minuterie et score
+        self.score_label = ctk.CTkLabel(self, text=f"Score: {self.score}")
+        self.score_label.pack(pady=10)
+        self.timer_label = ctk.CTkLabel(self, text=f"Temps restant: {self.temps}s")
+        self.timer_label.pack(pady=10)
         # Supprimer les graduations
         self.ax.set_xticks([])
         self.ax.set_yticks([])
 
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
+
+
+    def update_timer(self):
+        #Décrémente la minuterie et met à jour l'affichage
+        if self.temps > 0:
+            self.temps -= 1
+            self.timer_label.configure(text=f"Temps restant: {self.temps}s")
+            self.after(1000, self.update_timer)  # Recursivite pour apres 1 sec update le temps
+        else:
+            self.end_game()
+
+    def update_score(self, points):
+        #Met à jour le score et update affichage
+        self.score += points
+        self.score_label.configure(text=f"Score: {self.score}")
+
+    def end_game(self):
+       
+        self.timer_label.configure(text="Temps écoulé!")
+        #Ajouter une sauvgarde des log
+
+
+
+
+
+
 
     def plot_obstacles_and_goal(self):  # Méthode pour tracer les obstacles et la cible
         for obstacle in self.joueur.obstacles:  # Itération sur les obstacles

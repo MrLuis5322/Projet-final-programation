@@ -14,15 +14,18 @@ class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
         self.title("Graphwar")  # Définition du titre de la fenêtre
         self.geometry("800x600")  # Définition de la taille de la fenêtre
 
+        #Dimentions de l'ecran
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         res_width =1024/screen_width
         res_height = 800/screen_height
+
+
         self.accueil = Accueil(self,res_width,res_height)  # Création d'une classe Accueil
         self.accueil.pack(fill=tk.BOTH, expand=True)  # Ajout de l'interface Accueil à la fenêtre
      
 
-        self.show_accueil()
+        
 
         def show_accueil():
             self.accueil = Accueil(self, res_height, res_width)  # Création d'une classe Accueil

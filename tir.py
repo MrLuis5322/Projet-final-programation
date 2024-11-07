@@ -87,6 +87,7 @@ class Tir:
                 trajectoire_y.append(y_fct[i])
 
             if collision:
+                self.accueil.update_score(-1)#-1 point pour le joueur
                 break  # Quitte la boucle
 
         # Trajectoire
@@ -104,6 +105,7 @@ class Tir:
             
     def cible_atteinte(self):
         self.accueil.after(800, self.reset_plot)  # Attente de 1 secondes avant réinitialisation
+        self.accueil.update_score(1)#Ajouter 1 point
 
     def reset_plot(self):
         self.accueil.ax.clear()
@@ -115,6 +117,16 @@ class Tir:
         self.accueil.plot_obstacles_and_goal()
         # Tracer les obstacles et la cible
         self._finalize_plot()
+
+        self.accueil.temps = 121
+        if self.accueil.timer_label.cget("text") == "Temps écoulé!": #https://stackoverflow.com/questions/6112482/how-to-get-the-tkinter-label-text
+           
+            self.accueil.timer_label.configure(text=f"Temps restant: {self.accueil.temps}s")  # Remettre à jour l'affichage du timer
+            self.accueil.update_timer()
+
+        self.accueil.score = 0
+        self.accueil.update_score(0)
+       
 
     def plot_selected_function(self, choice): # Méthode pour tracer une fonction sélectionnée
         func_text = self.accueil.function_types.get(choice) # Récupère la fonction associée au choix

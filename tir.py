@@ -118,14 +118,16 @@ class Tir:
         # Tracer les obstacles et la cible
         self._finalize_plot()
 
-        self.accueil.temps = 121
+        
         if self.accueil.timer_label.cget("text") == "Temps écoulé!": #https://stackoverflow.com/questions/6112482/how-to-get-the-tkinter-label-text
-           
+            self.accueil.temps = 121
             self.accueil.timer_label.configure(text=f"Temps restant: {self.accueil.temps}s")  # Remettre à jour l'affichage du timer
             self.accueil.update_timer()
+            self.accueil.score = 0
+            self.accueil.update_score(0)
+        
 
-        self.accueil.score = 0
-        self.accueil.update_score(0)
+        
        
 
     def plot_selected_function(self, choice): # Méthode pour tracer une fonction sélectionnée

@@ -77,10 +77,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.set_yticks([])
 
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
+        #
 
 
     def update_timer(self):
-        #Décrémente la minuterie et met à jour l'affichage
+        #Diminue la minuterie et met à jour l'affichage
         if self.temps > 0:
             self.temps -= 1
             self.timer_label.configure(text=f"Temps restant: {self.temps}s")

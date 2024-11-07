@@ -133,7 +133,7 @@ class Tir:
 
         
         if self.accueil.timer_label.cget("text") == "Temps écoulé!": #https://stackoverflow.com/questions/6112482/how-to-get-the-tkinter-label-text
-            self.accueil.temps = 121
+            self.accueil.temps = 61
             self.accueil.timer_label.configure(text=f"Temps restant: {self.accueil.temps}s")  # Remettre à jour l'affichage du timer
             self.accueil.update_timer()
             self.accueil.score = 0

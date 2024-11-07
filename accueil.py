@@ -20,7 +20,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.res_width = res_width
 
         self.score = 0
-        self.temps = 61 #Temps de jeu en sec 120 sec
+        self.temps = 121 #Temps de jeu en sec 120 sec
 
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         
@@ -90,8 +90,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
 
     def update_score(self, points):
         #Met à jour le score et update affichage
-        self.score += points
-        self.score_label.configure(f"Score: {self.score}")
+        if points == 0:
+            self.score ==0
+        else:
+            self.score += points
+            self.score_label.configure(f"Score: {self.score}")
 
     def end_game(self):
        

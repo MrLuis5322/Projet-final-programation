@@ -100,7 +100,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def end_game(self):
        
         self.timer_label.configure(text="Temps écoulé!")
-        self.master.ajouter_log(f"Partie terminé avec {self.score} points")
+        self.master.ajouter_log(f"Partie termine avec {self.score} points")
         #Ajouter une sauvgarde des log
 
 

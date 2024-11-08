@@ -64,7 +64,9 @@ class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
         res_width = 1024 / screen_width
         res_height = 800 / screen_height
         print("Accueil affiché")
-
+        if self.accueil:
+            self.accueil.destroy()
+      
         self.accueil = Accueil(self, res_height, res_width)
         self.accueil.pack(fill=tk.BOTH, expand=True)
 

@@ -18,13 +18,14 @@ class Tir:
             return
         
         # Sécurité pour éviter les transaltion verticale
-        nb_plus = 0
-        nb_x = 0
-        if '+' in equation:
+        nb_plus, nb_moins, nb_x, no = 0, 0, 0, 0 
+        if '+' or '-' in equation:
             for i in equation:
                 if i == '+' : nb_plus += 1
                 if i == 'x' : nb_x += 1
-            if nb_plus >= nb_x :
+                if i == '-' and equation[no+1] != 'x': nb_moins += 1
+                no += 1
+            if nb_plus >= nb_x or nb_moins >= nb_x:
                 print("La fonction ne peut pas être translatée verticalement.")
                 return
         

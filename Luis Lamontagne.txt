@@ -28,3 +28,15 @@ Perte d'un point
 Perte d'un point
 Partie terminé avec 0 points
 Partie terminé avec -4 points
+Le joueur s'est connecte.
+Ajout d'un point
+Ajout d'un point
+Ajout d'un point
+Ajout d'un point
+Ajout d'un point
+Partie termine avec 0 points
+Partie termine avec 5 points
+Le joueur s'est connecte.
+Ajout d'un point
+Ajout d'un point
+Partie termine avec 0 points

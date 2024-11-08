@@ -95,7 +95,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             self.score ==0
         else:
             self.score += points
-            self.score_label.configure(f"Score: {self.score}")
+            self.score_label.configure(text=f"Score: {self.score}")
 
     def end_game(self):
        

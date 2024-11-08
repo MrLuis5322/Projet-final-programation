@@ -21,3 +21,10 @@ Ajout d'un point
 Partie terminé avec 3 points
 Le joueur s'est connecte.
 Partie terminé avec 0 points
+Le joueur s'est connecte.
+Perte d'un point
+Perte d'un point
+Perte d'un point
+Perte d'un point
+Partie terminé avec 0 points
+Partie terminé avec -4 points

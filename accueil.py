@@ -43,7 +43,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
         self.function_types = {
             "Linéaire": "x",
-            "Quadratique": "x**2",
+            "Quadratique": "0.01*x**2",
             "Exponentielle": "np.exp(x)",
             "Sinus": "np.sin(x)",
             "Cosinus": "np.cos(x)",

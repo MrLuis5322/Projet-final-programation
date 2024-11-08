@@ -17,6 +17,17 @@ class Tir:
             print("Veuillez entrer une fonction valide.")  # Affiche un message d'erreur
             return
         
+        # Sécurité pour éviter les transaltion verticale
+        nb_plus = 0
+        nb_x = 0
+        if '+' in equation:
+            for i in equation:
+                if i == '+' : nb_plus += 1
+                if i == 'x' : nb_x += 1
+            if nb_plus >= nb_x :
+                print("La fonction ne peut pas être translatée verticalement.")
+                return
+        
         # Position du joueur et de la cible
         joueur_pos = self.accueil.joueur.joueur_position 
         cible_pos = self.accueil.joueur.cible_position  
@@ -24,20 +35,8 @@ class Tir:
         x_joueur, y_joueur = joueur_pos 
         x_cible, y_cible = cible_pos
 
-        #Déterminer les limites du tracé selon la position de la cible
-        if x_cible > x_joueur:
-            x_max = 400  # Tracé vers la droite
-            x_min = x_joueur
-        else:
-            x_max = x_joueur  # Tracé vers la gauche
-            x_min = 0
-
-        # Générer des valeurs x entre les limites définies
-        x_fct = np.linspace(x_min, x_max, 2000)
-
-        # Inverser l'ordre des valeurs x et y si la cible est à gauche du joueur
-        if x_cible < x_joueur:
-            x_fct = x_fct[::-1]
+        # Générer des valeurs x entre les limites du plan (x = [0, 360], y = [0, 200])
+        x_fct = np.linspace(0, 360, 2000)
         
         # Évaluer l'équation pour obtenir y
         try:
@@ -46,11 +45,14 @@ class Tir:
             print(f"Erreur dans l'équation : {e}")
             return
         
-        # Appliquer la translation pour que le (0,0) de la fonction soit le joueur
-        if y_joueur > y_fct[0]:
-            y_fct = y_fct + (y_joueur - y_fct[0])
-        else:
-            y_fct = y_fct - (y_fct[0] - y_joueur)
+        # Faire une translation horizontale et vertical de la fonction afin de la faire commencer (0,0) au joueur (x_joueur, y_joueur)
+        x_fct = x_fct + x_joueur
+        y_fct = y_fct + y_joueur
+
+        # Appliquer une réflexion si le joueur est à droite de la cible
+        if x_joueur > x_cible:
+            # Calcul de la réflexion : inversion des valeurs x autour de x_joueur
+            x_fct = 2 * x_joueur - x_fct
 
         # Initialiser les listes pour le tracé limité
         trajectoire_x = []
@@ -96,7 +98,7 @@ class Tir:
         self.accueil.ax.plot(trajectoire_x, trajectoire_y, label=f'f(x)={equation}') 
         # Effe de collision
         if collision_x is not None and collision_y is not None:
-            self.accueil.ax.plot(collision_x, collision_y, 'ro', markersize=2)  # 'ro' pour 'red dot'
+            self.accueil.ax.plot(collision_x, collision_y, 'ro', markersize=3)  # 'ro' pour 'red dot'
     
         # Arranger le visuel
         self._finalize_plot()

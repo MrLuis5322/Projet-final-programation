@@ -3,7 +3,17 @@ import numpy as np
 
 class Obstacles: 
     def __init__(self):
-        self.villes_data = pd.read_csv(r'./uscities.csv') # Le ./ indique le répertoire courant
+        # Chein d'acces vers le fichier .csv dans l'application .exe crée avec PyInstaller 
+        if getattr(sys, 'frozen', False):
+            # Si le script est compilé par PyInstaller
+            base_path = sys._MEIPASS
+        else:
+            # Sinon, le script est exécuté directement
+            base_path = os.path.dirname(__file__)
+
+        # Charge le fichier CSV en utilisant le chemin d'accès correct
+        self.villes_data = pd.read_csv(os.path.join(base_path, 'uscities.csv'))
+
         # Supprimer les colonnes inutiles
         colonnes_a_supprimer = ['source', 'military', 'incorporated', 'zips', 'id', 'ranking', 'timezone', 'county_fips']
         self.villes_data = self.villes_data.drop(columns=colonnes_a_supprimer)

@@ -1,0 +1,20 @@
+Nom: seeroy
+Email: seeroy@amazon.com
+Logs:
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Le joueur s'est connecte.
+Perte d'un point
+Perte d'un point
+Ajout d'un point
+Ajout d'un point
+Ajout d'un point
+Partie termine avec 1 points
+Ajout d'un point
+Perte d'un point
+Ajout d'un point
+Ajout d'un point
+Partie termine avec 1 points

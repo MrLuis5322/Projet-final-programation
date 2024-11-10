@@ -7,8 +7,6 @@ class Formulaire(ctk.CTkFrame):
         super().__init__(maitre)  
         self.creer_widgets()  
 
-
-
     def creer_widgets(self):  
         self.onglets = ctk.CTkTabview(self)  
         self.onglets.pack(padx=20, pady=20, fill="both", expand=True)  #marges
@@ -51,7 +49,6 @@ class Formulaire(ctk.CTkFrame):
         # Bouton soumettre partie conection
         self.bouton_connexion_joueur = ctk.CTkButton(self.formulaire_connexion_joueur, text="Se connecter", command=self.soumettre_connexion_joueur) 
         self.bouton_connexion_joueur.pack(padx=20, pady=20) 
-
 
     def soumettre_creation_joueur(self): 
         # Récupérer les noms et email
@@ -108,8 +105,6 @@ class Formulaire(ctk.CTkFrame):
         self.master.nom_joueur_connecte = nom  # Sauvgarder joueur conecte
         #log joueur conecte
         self.ajouter_log(nom_fichier_joueur, "Le joueur s'est connecte.")  # Ajouter un log dans le fichier du joueur
-
-
 
     def ajouter_log(self, fichier_joueur, message_log):  # Ajouter log dans joueur
         # Ouvrir fichier et ajouter (a pour append)

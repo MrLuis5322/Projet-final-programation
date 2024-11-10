@@ -13,11 +13,12 @@ class Tir:
 
     def plot_function(self):  
         equation = self.accueil.entry_func.get()  # Récupère la fonction entrée par l'utilisateur
+        
         if not equation:  # Vérifie si la fonction est vide
-            print("Veuillez entrer une fonction valide.")  # Affiche un message d'erreur
+            print("Veuillez entrer une fonction valide.")  # Affiche un message d'erreur A AJOUTER AU LOG *****************************************************
             return
         
-        # Sécurité pour éviter les transaltion verticale
+        # Sécurité pour éviter les transaltion verticale (pour eviter une fonction qui ne partirait pas du joueur)
         nb_plus, nb_moins, nb_x, no = 0, 0, 0, 0 
         if '+' or '-' in equation:
             for i in equation:
@@ -80,7 +81,7 @@ class Tir:
                     trajectoire_y.append(y_fct[i])
 
             # Vérifier la collision avec la cible
-            if touche_au_cercle(x_fct[i], y_fct[i], x_cible, y_cible, 5):
+            if touche_au_cercle(x_fct[i], y_fct[i], x_cible, y_cible, 5*self.accueil.res_width):
                 print(f"Cible touchée en : ({x_fct[i]:.2f}, {y_fct[i]:.2f})")
                 cible_touchee = True
                 collision = True
@@ -99,8 +100,8 @@ class Tir:
         self.accueil.ax.plot(trajectoire_x, trajectoire_y, label=f'f(x)={equation}') 
         # Effe de collision
         if collision_x is not None and collision_y is not None:
-            self.accueil.ax.plot(collision_x, collision_y, 'ro', markersize=3)  # 'ro' pour 'red dot'
-    
+            self.accueil.ax.plot(collision_x, collision_y, 'x', markersize=15*self.accueil.res_width)
+
         # Arranger le visuel
         self._finalize_plot()
 
@@ -112,16 +113,7 @@ class Tir:
         self.accueil.after(800, self.reset_plot)  # Attente de 1 secondes avant réinitialisation
         self.accueil.update_score(1)#Ajouter 1 point
         self.accueil.update_score_cible()
-        
         self.accueil.master.ajouter_log(f"Ajout d'un point")#log
-
-
-
-
-
-
-
-
 
     def reset_plot(self):
         self.accueil.ax.clear()
@@ -134,17 +126,12 @@ class Tir:
         # Tracer les obstacles et la cible
         self._finalize_plot()
 
-        
         if self.accueil.timer_label.cget("text") == "Temps écoulé!": #https://stackoverflow.com/questions/6112482/how-to-get-the-tkinter-label-text
             self.accueil.temps = 61
             self.accueil.timer_label.configure(text=f"Temps restant: {self.accueil.temps}s")  # Remettre à jour l'affichage du timer
             self.accueil.update_timer()
             self.accueil.score = 0
             self.accueil.update_score(0)
-        
-
-        
-       
 
     def plot_selected_function(self, choice): # Méthode pour tracer une fonction sélectionnée
         func_text = self.accueil.function_types.get(choice) # Récupère la fonction associée au choix
@@ -155,5 +142,5 @@ class Tir:
     def _finalize_plot(self):
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])
-        self.accueil.ax.legend(loc="upper left", prop={"size": 7}, markerscale=0.6, bbox_to_anchor=(1, 1))
+        self.accueil.ax.legend(loc="upper left", prop={"size": 20*self.accueil.res_width}, markerscale=0.6*self.accueil.res_width, bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()

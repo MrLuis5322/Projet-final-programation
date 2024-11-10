@@ -1,3 +1,0 @@
-Nom: test
-Email: test@test.test
-Logs:

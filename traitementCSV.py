@@ -6,7 +6,7 @@ import sys
 class Obstacles: 
     def __init__(self):
         # Chein d'acces vers le fichier .csv dans l'application .exe crée avec PyInstaller 
-        if getattr(sys, 'frozen', False):
+        if getattr(sys, 'frozen', False): 
             # Si le script est compilé par PyInstaller
             base_path = sys._MEIPASS
         else:
@@ -20,7 +20,7 @@ class Obstacles:
         colonnes_a_supprimer = ['source', 'military', 'incorporated', 'zips', 'id', 'ranking', 'timezone', 'county_fips']
         self.villes_data = self.villes_data.drop(columns=colonnes_a_supprimer)
         
-    def generer_obstacles(self):
+    def generer_obstacles(self): # Retourne une liste d'obstacles aleatoire
         # Choisir un État aléatoire
         etat_choisi = self.villes_data['state_name'].sample(n=1).iloc[0] # .sample retourn une liste de n=1 État et .iloc y accède
         # Filtrer les villes de cet État

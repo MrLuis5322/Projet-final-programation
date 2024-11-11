@@ -109,7 +109,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         # Tracé du joueur
         self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=20*self.res_width, label='Joueur') #FIX LE PROBLEME *******
         # Tracé de la cible
-        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', 'orange', markersize=20*self.res_width, label='Cible') # DE TOUCHER AVANT DE TOUCHER
+        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=20*self.res_width, label='Cible') # DE TOUCHER AVANT DE TOUCHER
 
         # Définition des limites des axes
         self.ax.set_xlim(0, 360)  

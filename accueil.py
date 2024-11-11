@@ -114,7 +114,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.set_xlim(0, 360)  
         self.ax.set_ylim(0, 200)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
-        self.ax.legend(prop = { "size": 7*self.res}, markerscale=0.6*self.res,) # Affichage de la légende
+        self.ax.legend(prop = { "size": 15*self.res}, markerscale=0.6*self.res,) # Affichage de la légende
 
     def update_score_ville(self): # QUAND EST CE QUE LA METHODE DE UPDATE LES POINTS DE LUIS EST OPTIMALE??? **************************************************
         self.viles_touche +=1

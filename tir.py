@@ -97,7 +97,7 @@ class Tir:
                 break  # Quitte la boucle
 
         # Trajectoire
-        self.accueil.ax.plot(trajectoire_x, trajectoire_y, label=f'f(x)={equation}') 
+        self.accueil.ax.plot(trajectoire_x, trajectoire_y) #label=f'f(x)={equation}
         # Effe de collision
         if collision_x is not None and collision_y is not None:
             self.accueil.ax.plot(collision_x, collision_y, 'x', markersize=15*self.accueil.res)
@@ -142,5 +142,5 @@ class Tir:
     def _finalize_plot(self):
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])
-        self.accueil.ax.legend(loc="upper left", prop={"size": 20*self.accueil.res}, markerscale=0.6*self.accueil.res, bbox_to_anchor=(1, 1))
+        self.accueil.ax.legend(loc="upper left", prop={"size": 15*self.accueil.res}, markerscale=0.6*self.accueil.res, bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()

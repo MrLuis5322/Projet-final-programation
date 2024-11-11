@@ -73,8 +73,8 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.timer_label.pack(pady=10)
 
         # N'afficher que le millieu des graduations (sinon le jeu est trop facile)
-        self.ax.set_xticks([180])
-        self.ax.set_yticks([100])
+        self.ax.set_xticks([])
+        self.ax.set_yticks([])
 
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 

@@ -45,7 +45,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             "Linéaire": "x",
             "Quadratique": "0.01*x**2",
             "Exponentielle": "np.exp(x)",
-            "Sinus": "np.sin(x)",
+            "Sinus": "np.sin(x*0.1)*10",
             "Cosinus": "np.cos(x)",
         }
 

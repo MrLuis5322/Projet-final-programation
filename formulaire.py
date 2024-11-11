@@ -12,7 +12,7 @@ class Formulaire(ctk.CTkFrame):
         self.onglets.pack(padx=20, pady=20, fill="both", expand=True)  #marges
 
         # Partie creer joueur
-        self.onglets.add("Créer un Joueur")  
+        self.onglets.add("Créer un Joueur")
         self.formulaire_creation_joueur = ctk.CTkFrame(self.onglets.tab("Créer un Joueur"))  
         self.formulaire_creation_joueur.pack(fill="both", expand=True)  
 

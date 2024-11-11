@@ -12,12 +12,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def get_obstacles(self): # Fonction qui retourne les obstacles
         return self.obstacles
     
-    def __init__(self, master, res_width, res_height): # Appel du constructeur
+    def __init__(self, master, res): # Appel du constructeur
         super().__init__(master) # Super permet d'appeler plusieurs inheritance
 
         # On passe en parametre le facteur de resolution de lutilisateur et on le stock dans une variable
-        self.res_height = res_height
-        self.res_width = res_width
+        self.res = res
 
         self.score = 0 # On set le score a 0
         self.temps = 121 # On set le temps a 120 secondes
@@ -30,7 +29,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-        self.ax.legend(loc="upper left", prop = { "size": 15*res_width }, markerscale=0.6*res_width, bbox_to_anchor=(1, 1)) # Place la legend et definit sa taille selon la resolution de lutilisateur
+        self.ax.legend(loc="upper left", prop = { "size": 15*res }, markerscale=0.6*res, bbox_to_anchor=(1, 1)) # Place la legend et definit sa taille selon la resolution de lutilisateur
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre
 
@@ -107,15 +106,15 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             self.ax.add_patch(circle)  # Ajout du cercle au tracé
 
         # Tracé du joueur
-        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15*self.res_width, label='Joueur') #FIX LE PROBLEME *******
+        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15*self.res, label='Joueur') #FIX LE PROBLEME *******
         # Tracé de la cible
-        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15*self.res_width, label='Cible') # DE TOUCHER AVANT DE TOUCHER
+        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15*self.res, label='Cible') # DE TOUCHER AVANT DE TOUCHER
 
         # Définition des limites des axes
         self.ax.set_xlim(0, 360)  
         self.ax.set_ylim(0, 200)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
-        self.ax.legend(prop = { "size": 7*self.res_width }, markerscale=0.6*self.res_width,) # Affichage de la légende
+        self.ax.legend(prop = { "size": 7*self.res}, markerscale=0.6*self.res,) # Affichage de la légende
 
     def update_score_ville(self): # QUAND EST CE QUE LA METHODE DE UPDATE LES POINTS DE LUIS EST OPTIMALE??? **************************************************
         self.viles_touche +=1

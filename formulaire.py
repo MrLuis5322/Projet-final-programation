@@ -34,7 +34,6 @@ class Formulaire(ctk.CTkFrame):
         self.formulaire_connexion_joueur = ctk.CTkFrame(self.onglets.tab("Se connecter"))  
         self.formulaire_connexion_joueur.pack(fill="both", expand=True)  
 
-        
         self.label_nom_connexion = ctk.CTkLabel(self.formulaire_connexion_joueur, text="Nom:")  
         self.label_nom_connexion.pack(padx=20, pady=(20, 10), anchor="w")  
         self.champ_nom_connexion = ctk.CTkEntry(self.formulaire_connexion_joueur, placeholder_text="Entrez votre nom")  
@@ -55,7 +54,6 @@ class Formulaire(ctk.CTkFrame):
         nom = self.champ_nom_creation.get()  
         email = self.champ_email_creation.get() 
 
-        
         nom_fichier_joueur = self.nettoyer_nom_fichier(nom) 
 
         # fichier existe deja?
@@ -79,7 +77,6 @@ class Formulaire(ctk.CTkFrame):
         nom = self.champ_nom_connexion.get()  
         email = self.champ_email_connexion.get() 
 
-        
         nom_fichier_joueur = self.nettoyer_nom_fichier(nom)  
 
         # Vérifier si le joueur existe
@@ -100,7 +97,6 @@ class Formulaire(ctk.CTkFrame):
 
         print(f"Connexion réussie pour le joueur {nom}")  
         print(f"Email: {email}") 
-
 
         self.master.nom_joueur_connecte = nom  # Sauvgarder joueur conecte
         #log joueur conecte

@@ -6,19 +6,19 @@ class Formulaire(ctk.CTkFrame):
     def __init__(self, maitre=None):  
         self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts") #code trouve sur internet pour faire instence aux fichiers dans accounts
         super().__init__(maitre)  
-        self.creer_widgets()  
+        self.creer_widgets()
 
-    def creer_widgets(self):  
+    def creer_widgets(self):
         self.onglets = ctk.CTkTabview(self)  
         self.onglets.pack(padx=20, pady=20, fill="both", expand=True)  #marges
 
         # Partie creer joueur
         self.onglets.add("Créer un Joueur")
         self.formulaire_creation_joueur = ctk.CTkFrame(self.onglets.tab("Créer un Joueur"))  
-        self.formulaire_creation_joueur.pack(fill="both", expand=True)  
+        self.formulaire_creation_joueur.pack(fill="both", expand=True)
 
-        self.label_nom_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Nom:")  
-        self.label_nom_creation.pack(padx=20, pady=(20, 10), anchor="w")  
+        self.label_nom_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Nom:")
+        self.label_nom_creation.pack(padx=20, pady=(20, 10), anchor="w")
         self.champ_nom_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre nom")  
         self.champ_nom_creation.pack(padx=20, pady=(20, 10), fill="x")  # etendre le texte horizontalement
 

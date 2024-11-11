@@ -58,11 +58,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.entry_func.pack(pady=10)  # Ajout de l'entrée à la fenêtre
         
         # Création d'un bouton pour tracer la fonction saisie
-        self.plot_button = ctk.CTkButton(self, text="Tracer la fonction", command=self.tir.plot_function)
+        self.plot_button = ctk.CTkButton(self, 100, 30, 20, 0, text="Tirer", command=self.tir.plot_function, fg_color = 'Red')
         self.plot_button.pack(pady=10)  # Ajout du bouton à la fenêtre
 
         # Création d'un bouton pour réinitialiser le tracé
-        self.reset_button = ctk.CTkButton(self, text="Réinitialiser", command=self.tir.reset_plot)
+        self.reset_button = ctk.CTkButton(self, 100, 30, 20, 0, text="Réinitialiser", command=self.tir.reset_plot, fg_color = 'Orange')
         self.reset_button.pack(pady=10)  # Ajout du bouton à la fenêtre
 
         #Affichage minuterie et score

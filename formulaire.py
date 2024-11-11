@@ -81,7 +81,7 @@ class Formulaire(ctk.CTkFrame):
         nom_fichier_joueur = os.path.join(self.DOSSIER_JOUEURS, self.nettoyer_nom_fichier(nom)) 
 
         # Vérifier si le joueur existe
-        #si il existe pas alors erreur
+        # si il existe pas alors erreur
         if not os.path.exists(nom_fichier_joueur):  
             print(f"Joueur {nom} non trouvé.")  
             return  

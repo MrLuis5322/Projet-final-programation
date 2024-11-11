@@ -81,7 +81,7 @@ class Tir:
                     trajectoire_y.append(y_fct[i])
 
             # Vérifier la collision avec la cible
-            if touche_au_cercle(x_fct[i], y_fct[i], x_cible, y_cible, 5*self.accueil.res_width):
+            if touche_au_cercle(x_fct[i], y_fct[i], x_cible, y_cible, 5*self.accueil.res):
                 print(f"Cible touchée en : ({x_fct[i]:.2f}, {y_fct[i]:.2f})")
                 cible_touchee = True
                 collision = True
@@ -100,7 +100,7 @@ class Tir:
         self.accueil.ax.plot(trajectoire_x, trajectoire_y, label=f'f(x)={equation}') 
         # Effe de collision
         if collision_x is not None and collision_y is not None:
-            self.accueil.ax.plot(collision_x, collision_y, 'x', markersize=15*self.accueil.res_width)
+            self.accueil.ax.plot(collision_x, collision_y, 'x', markersize=15*self.accueil.res)
 
         # Arranger le visuel
         self._finalize_plot()
@@ -142,5 +142,5 @@ class Tir:
     def _finalize_plot(self):
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])
-        self.accueil.ax.legend(loc="upper left", prop={"size": 20*self.accueil.res_width}, markerscale=0.6*self.accueil.res_width, bbox_to_anchor=(1, 1))
+        self.accueil.ax.legend(loc="upper left", prop={"size": 20*self.accueil.res}, markerscale=0.6*self.accueil.res, bbox_to_anchor=(1, 1))
         self.accueil.canvas.draw()

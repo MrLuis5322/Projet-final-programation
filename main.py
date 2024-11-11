@@ -11,8 +11,8 @@ class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
 
         screen_width = self.winfo_screenwidth() # Est egal a la largeur de lecran de lutilisateur
         screen_height = self.winfo_screenheight() # Est egal a la hauteur de lecran de lutilisateur
-        res_width = 1024 / screen_width # Le facteur de resolution voulue base sur la largeur
-        res_height = 800 / screen_height # Le facteur de resolution voulue base sur la hauteur
+        res_width = 2560 / screen_width # Le facteur de resolution voulue base sur la largeur
+        res_height = 1600 / screen_height # Le facteur de resolution voulue base sur la hauteur
 
         self.geometry(f"{screen_width}x{screen_height}")  # Définition de la taille de la fenêtre avec la resolution de lutilisateur
 

@@ -30,7 +30,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-        self.ax.legend(loc="upper left", prop = { "size": 40*res_width }, markerscale=1*res_width, bbox_to_anchor=(1, 1)) # Place la legend et definit sa taille selon la resolution de lutilisateur
+        self.ax.legend(loc="upper left", prop = { "size": 15*res_width }, markerscale=0.6*res_width, bbox_to_anchor=(1, 1)) # Place la legend et definit sa taille selon la resolution de lutilisateur
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre
 
@@ -107,9 +107,9 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             self.ax.add_patch(circle)  # Ajout du cercle au tracé
 
         # Tracé du joueur
-        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=40*self.res_width, label='Joueur') #FIX LE PROBLEME *******
+        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15*self.res_width, label='Joueur') #FIX LE PROBLEME *******
         # Tracé de la cible
-        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=40*self.res_width, label='Cible') # DE TOUCHER AVANT DE TOUCHER
+        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15*self.res_width, label='Cible') # DE TOUCHER AVANT DE TOUCHER
 
         # Définition des limites des axes
         self.ax.set_xlim(0, 360)  

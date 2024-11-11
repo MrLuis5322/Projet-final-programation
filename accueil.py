@@ -46,7 +46,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             "Quadratique": "0.01*x**2",
             "Exponentielle": "np.exp(x)",
             "Sinus": "np.sin(x*0.1)*10",
-            "Cosinus": "np.cos(x)",
+            "Cosinus": "np.cos(x*0.1)*10",
         }
 
         # Création d'une combo box pour sélectionner le type de fonction

@@ -4,6 +4,7 @@ import os  # os pour manipuler fichier sur windows (marche pour mac??) https://w
 
 class Formulaire(ctk.CTkFrame):  
     def __init__(self, maitre=None):  
+        self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts") #code trouve sur internet pour faire instence aux fichiers dans accounts
         super().__init__(maitre)  
         self.creer_widgets()  
 
@@ -54,7 +55,7 @@ class Formulaire(ctk.CTkFrame):
         nom = self.champ_nom_creation.get()  
         email = self.champ_email_creation.get() 
 
-        nom_fichier_joueur = self.nettoyer_nom_fichier(nom) 
+        nom_fichier_joueur = os.path.join(self.DOSSIER_JOUEURS, self.nettoyer_nom_fichier(nom))
 
         # fichier existe deja?
         if os.path.exists(nom_fichier_joueur): 
@@ -77,7 +78,7 @@ class Formulaire(ctk.CTkFrame):
         nom = self.champ_nom_connexion.get()  
         email = self.champ_email_connexion.get() 
 
-        nom_fichier_joueur = self.nettoyer_nom_fichier(nom)  
+        nom_fichier_joueur = os.path.join(self.DOSSIER_JOUEURS, self.nettoyer_nom_fichier(nom)) 
 
         # Vérifier si le joueur existe
         #si il existe pas alors erreur

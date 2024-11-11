@@ -47,3 +47,4 @@ Partie termine avec 2 points
 Perte d'un point
 Ajout d'un point
 Partie termine avec 0 points
+Le joueur s'est connecte.

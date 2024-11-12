@@ -50,20 +50,37 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         }
 
         # Création d'une combo box pour sélectionner le type de fonction
-        self.func_selector = ctk.CTkComboBox(self, values=list(self.function_types.keys()), command=self.tir.plot_selected_function)
+        self.func_selector = ctk.CTkComboBox(master = self, 
+                                             values=list(self.function_types.keys()), 
+                                             command=self.tir.plot_selected_function)
         self.func_selector.pack(pady=10)  # Ajout de la combo box à la fenêtre
 
         # Création d'une entrée pour que l'utilisateur saisisse une fonction
-        self.entry_func = ctk.CTkEntry(self, placeholder_text="Entrez une fonction")
+        self.entry_func = ctk.CTkEntry(master = self, 
+                                       placeholder_text="Entrez une fonction")
         self.entry_func.pack(pady=10)  # Ajout de l'entrée à la fenêtre
         
         # Création d'un bouton pour tracer la fonction saisie
-        self.plot_button = ctk.CTkButton(self, 100, 30, 20, 0, text="Tirer", command=self.tir.plot_function, fg_color = 'Red')
-        self.plot_button.pack(pady=10)  # Ajout du bouton à la fenêtre
+        self.plot_button = ctk.CTkButton(master = self, 
+                                         width = 100, 
+                                         height = 30, 
+                                         border_width = 0, 
+                                         corner_radius = 20, 
+                                         text="Tirer", 
+                                         command=self.tir.plot_function, 
+                                         fg_color = 'Red')
+        self.plot_button.place(x=500, y = 50, anchor = "center")  # Ajout du bouton à la fenêtre
 
         # Création d'un bouton pour réinitialiser le tracé
-        self.reset_button = ctk.CTkButton(self, 100, 30, 20, 0, text="Réinitialiser", command=self.tir.reset_plot, fg_color = 'Orange')
-        self.reset_button.pack(pady=10)  # Ajout du bouton à la fenêtre
+        self.reset_button = ctk.CTkButton(master = self, 
+                                          width = 100, 
+                                          height = 30, 
+                                          border_width = 0, 
+                                          corner_radius = 20, 
+                                          text="Réinitialiser", 
+                                          command=self.tir.reset_plot, 
+                                          fg_color = 'Orange')
+        self.reset_button.place(x=500, y = 80, anchor = "center")  # Ajout du bouton à la fenêtre
 
         #Affichage minuterie et score
         self.score_label = ctk.CTkLabel(self, text=f"Score: {self.score}")

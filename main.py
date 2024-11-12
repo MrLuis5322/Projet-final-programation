@@ -37,16 +37,10 @@ class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
         # Créer un menu Fichier
         file_menu = tk.Menu(menu_bar, tearoff=0) # Création de l'onglet fichier
         menu_bar.add_cascade(label="Fichier", menu=file_menu) # Ajout de l'onglet fichier
-        file_menu.add_command(label="Ouvrir", command=self.open_file) # Ajout de la commande ouvrir
-        file_menu.add_command(label="Enregistrer", command=self.save_file) # Ajout de la commande enregistrer
+        file_menu.add_command(label="Jouer", command=self.show_accueil) # Ajout de la commande acceuil
+        file_menu.add_command(label="Se connecter", command=self.show_formulaire) # Ajout de la commande formulaire
         file_menu.add_separator() # Ajout d'un séparateur après enrigistrer et avant quitter
         file_menu.add_command(label="Quitter", command=self.quit_game) # Ajout de la commande quitter
-
-        # Créer un menu Affichage
-        view_menu = tk.Menu(menu_bar, tearoff=0) # Création de l'onglet affichage
-        menu_bar.add_cascade(label="Affichage", menu=view_menu) # Ajout de l'onglet affichage
-        view_menu.add_command(label="Accueil", command=self.show_accueil) # Ajout de la commande acceuil
-        view_menu.add_command(label="Formulaire", command=self.show_formulaire) # Ajout de la commande formulaire
         
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.quit_game

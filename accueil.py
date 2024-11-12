@@ -27,18 +27,20 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.obstacles = self.obstacles_instance.generer_obstacles()  # Génération de la liste des obstacles
         self.joueur = Joueur(self, self.obstacles)  # Création d'une instance de Joueur
         self.tir = Tir(self)
-        
+
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
         self.ax.legend(loc="upper left", 
                        prop = { "size": 15*res }, 
                        markerscale=0.6*res, 
                        bbox_to_anchor=(1, 1)) # Place la légende et définit sa taille selon la resolution de l'utilisateur
+        self.ax.set_facecolor('#363737')
         self.canvas = FigureCanvasTkAgg(self.fig, 
                                         master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().place(x = 0, 
                                           y = 300, 
                                           relheight = 0.8, 
                                           relwidth = 1)  # Ajout du canvas à la fenêtre
+        self.fig.set_facecolor('black')
 
         self.update_timer()
 
@@ -63,7 +65,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                              corner_radius = 20,
                                              values=list(self.function_types.keys()), 
                                              command=self.tir.plot_selected_function)
-        self.func_selector.place(x = 750, y = 50)  # Ajout de la combo box à la fenêtre
+        self.func_selector.place(x = 750, y = 10)  # Ajout de la combo box à la fenêtre
 
         # Création d'une entrée pour que l'utilisateur saisisse une fonction
         self.entry_func = ctk.CTkEntry(master = self, 
@@ -71,7 +73,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                        height = 80,
                                        corner_radius = 20,
                                        placeholder_text="Entrez une fonction")
-        self.entry_func.place(x = 750, y = 50)  # Ajout de l'entrée à la fenêtre
+        self.entry_func.place(x = 750, y = 100)  # Ajout de l'entrée à la fenêtre
         
         # Création d'un bouton pour tracer la fonction saisie
         self.plot_button = ctk.CTkButton(master = self, 
@@ -82,7 +84,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                          text="Tirer", 
                                          command=self.tir.plot_function, 
                                          fg_color = 'Red')
-        self.plot_button.place(x=500, y = 50)  # Ajout du bouton à la fenêtre
+        self.plot_button.place(x=500, y = 100)  # Ajout du bouton à la fenêtre
 
         # Création d'un bouton pour réinitialiser le tracé
         self.reset_button = ctk.CTkButton(master = self, 
@@ -93,16 +95,22 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                           text="Réinitialiser", 
                                           command=self.tir.reset_plot, 
                                           fg_color = 'Orange')
-        self.reset_button.place(x=500, y = 0)  # Ajout du bouton à la fenêtre
+        self.reset_button.place(x=500, y = 10)  # Ajout du bouton à la fenêtre
 
         #Affichage minuterie et score
         self.score_label = ctk.CTkLabel(master = self, 
+                                        width = 150, 
+                                        height = 80, 
+                                        corner_radius = 20, 
                                         text=f"Score: {self.score}")
-        self.score_label.place(x = 1000, y = 50)
+        self.score_label.place(x = 1000, y = 100)
 
         self.timer_label = ctk.CTkLabel( master = self, 
+                                        width = 150, 
+                                        height = 80, 
+                                        corner_radius = 20, 
                                         text=f"Temps restant: {self.temps}s")
-        self.timer_label.place(x = 1000, y = 50)
+        self.timer_label.place(x = 1000, y = 10)
 
         # N'afficher que le millieu des graduations (sinon le jeu est trop facile)
         self.ax.set_xticks([])

@@ -1,10 +1,10 @@
 import customtkinter as ctk  
 import tkinter as tk  
-import os  # os pour manipuler fichier sur windows (marche pour mac??) https://www.geeksforgeeks.org/os-module-python-examples/
+import os  # os pour manipuler fichier sur windows https://www.geeksforgeeks.org/os-module-python-examples/
 
 class Formulaire(ctk.CTkFrame):  
     def __init__(self, maitre=None):  
-        self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts") #code trouve sur internet pour faire instence aux fichiers dans accounts
+        self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts") # code trouvé sur internet pour faire instence aux fichiers dans accounts
         super().__init__(maitre)  
         self.creer_widgets()
 
@@ -12,7 +12,7 @@ class Formulaire(ctk.CTkFrame):
         self.onglets = ctk.CTkTabview(self)  
         self.onglets.pack(padx=20, pady=20, fill="both", expand=True)  #marges
 
-        # Partie creer joueur
+        # Partie créer joueur
         self.onglets.add("Créer un Joueur")
         self.formulaire_creation_joueur = ctk.CTkFrame(self.onglets.tab("Créer un Joueur"))  
         self.formulaire_creation_joueur.pack(fill="both", expand=True)
@@ -20,7 +20,7 @@ class Formulaire(ctk.CTkFrame):
         self.label_nom_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Nom:")
         self.label_nom_creation.pack(padx=20, pady=(20, 10), anchor="w")
         self.champ_nom_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre nom")  
-        self.champ_nom_creation.pack(padx=20, pady=(20, 10), fill="x")  # etendre le texte horizontalement
+        self.champ_nom_creation.pack(padx=20, pady=(20, 10), fill="x")  # Étendre le texte horizontalement
 
         self.label_email_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Email:")  
         self.label_email_creation.pack(padx=20, pady=(10, 10), anchor="w")  
@@ -57,23 +57,23 @@ class Formulaire(ctk.CTkFrame):
 
         nom_fichier_joueur = os.path.join(self.DOSSIER_JOUEURS, self.nettoyer_nom_fichier(nom))
 
-        # fichier existe deja?
+        # Fichier existe déjà?
         if os.path.exists(nom_fichier_joueur): 
             print(f"Le joueur {nom} a deja ete cree.")  
             return 
 
-        # creation fichier
-        with open(nom_fichier_joueur, "w") as fichierE:  # Ouvrir fichier en ecriture w pour write
+        # Création fichier
+        with open(nom_fichier_joueur, "w") as fichierE:  # Ouvrir fichier en écriture w pour write
             fichierE.write(f"Nom: {nom}\n")  # Écrire nom
             fichierE.write(f"Email: {email}\n")  # Écrire email
             fichierE.write("Logs:\n")  # Ajouter de logs:
 
-        #message dans la console
+        # Message dans la console
         print("----------------Joueur créé----------------")  
         print(f"Nom: {nom}")  
         print(f"Email: {email}") 
 
-    #partie de conexion
+    # Partie de conexion
     def soumettre_connexion_joueur(self): 
         nom = self.champ_nom_connexion.get()  
         email = self.champ_email_connexion.get() 
@@ -86,12 +86,12 @@ class Formulaire(ctk.CTkFrame):
             print(f"Joueur {nom} non trouvé.")  
             return  
 
-        # Lecture (j'utulise le with pour que le fichier soit ferme apres)
+        # Lecture (j'utilise le with pour que le fichier soit fermé après)
         with open(nom_fichier_joueur, "r") as fichierL:  # Ouvrir fichie lecture (r pour read)
             lignes = fichierL.readlines()  # Lire lignes
             email_fichier = lignes[1].strip().split(": ")[1]  # Extraire l'email du fichier (1 pour ligne 2)
 
-        #Email
+        # Email
         if email_fichier != email:  # Email mauvais
             print(f"Email incorrect pour le joueur {nom}.") 
             return  
@@ -99,8 +99,8 @@ class Formulaire(ctk.CTkFrame):
         print(f"Connexion réussie pour le joueur {nom}")  
         print(f"Email: {email}") 
 
-        self.master.nom_joueur_connecte = nom  # Sauvgarder joueur conecte
-        #log joueur conecte
+        self.master.nom_joueur_connecte = nom  # Sauvegarder joueur conecté
+        # log joueur conecté
         self.ajouter_log(nom_fichier_joueur, "Le joueur s'est connecte.")  # Ajouter un log dans le fichier du joueur
 
     def ajouter_log(self, fichier_joueur, message_log):  # Ajouter log dans joueur
@@ -110,7 +110,7 @@ class Formulaire(ctk.CTkFrame):
 
         print(f"Log ajouté: {message_log}")  # Afficher un message dans la console pour confirmer l'ajout du log
 
-    def nettoyer_nom_fichier(self, nom_fichier):  # Supprimer mauais caracteres
+    def nettoyer_nom_fichier(self, nom_fichier):  # Supprimer mauvais caractères
        
        return self.master.clean_filename(nom_fichier)
 

@@ -15,11 +15,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def __init__(self, master, res): # Appel du constructeur
         super().__init__(master) # Super permet d'appeler plusieurs inheritance
 
-        # On passe en parametre le facteur de resolution de lutilisateur et on le stock dans une variable
+        # On passe en paramètre le facteur de résolution de l'utilisateur et on le stock dans une variable
         self.res = res
 
-        self.score = 0 # On set le score a 0
-        self.temps = 121 # On set le temps a 120 secondes
+        self.score = 0 # On set le score à 0
+        self.temps = 121 # On set le temps à 120 secondes
 
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         
@@ -29,7 +29,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-        self.ax.legend(loc="upper left", prop = { "size": 15*res }, markerscale=0.6*res, bbox_to_anchor=(1, 1)) # Place la legend et definit sa taille selon la resolution de lutilisateur
+        self.ax.legend(loc="upper left", prop = { "size": 15*res }, markerscale=0.6*res, bbox_to_anchor=(1, 1)) # Place la légende et définit sa taille selon la resolution de l'utilisateur
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # Création d'un canvas pour afficher la figure
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)  # Ajout du canvas à la fenêtre
 
@@ -78,16 +78,16 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 
     def update_timer(self):
-        #Diminue la minuterie et met à jour l'affichage
+        # Diminue la minuterie et met à jour l'affichage
         if self.temps > 0:
             self.temps -= 1
             self.timer_label.configure(text=f"Temps restant: {self.temps}s")
-            self.after(1000, self.update_timer)  # Recursivite pour apres 1 sec update le temps
+            self.after(1000, self.update_timer)  # Récursivite pour après 1 sec update le temps
         else:
             self.end_game()
 
     def update_score(self, points):
-        #Met à jour le score et update affichage
+        # Met à jour le score et update affichage
         if points == 0:
             self.score ==0
         else:
@@ -97,7 +97,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def end_game(self):
         self.timer_label.configure(text="Temps écoulé!")
         self.master.ajouter_log(f"Partie termine avec {self.score} points")
-        #Ajouter une sauvgarde des log
+        # Ajouter une sauvgarde des log
 
     def plot_obstacles_and_goal(self):  # Méthode pour tracer les obstacles et la cible
         for obstacle in self.joueur.obstacles:  # Itération sur les obstacles
@@ -106,9 +106,9 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             self.ax.add_patch(circle)  # Ajout du cercle au tracé
 
         # Tracé du joueur
-        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15*self.res, label='Joueur') #FIX LE PROBLEME *******
+        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15*self.res, label='Joueur')
         # Tracé de la cible
-        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15*self.res, label='Cible') # DE TOUCHER AVANT DE TOUCHER
+        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15*self.res, label='Cible')
 
         # Définition des limites des axes
         self.ax.set_xlim(0, 360)  
@@ -116,7 +116,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
         self.ax.legend(prop = { "size": 15*self.res}, markerscale=0.6*self.res,) # Affichage de la légende
 
-    def update_score_ville(self): # QUAND EST CE QUE LA METHODE DE UPDATE LES POINTS DE LUIS EST OPTIMALE??? **************************************************
+    def update_score_ville(self):
         self.viles_touche +=1
 
     def update_score_cible(self):

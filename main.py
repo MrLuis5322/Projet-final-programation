@@ -95,7 +95,7 @@ class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
         return f"{filename}.txt"
 
 if __name__ == "__main__":  # Vérification si ce fichier est exécuté en tant que programme principal
-    app = GraphWarGame()  # Création d'une instance de GraphWarGame
+    app = GraphWarGame()  # Création d'une instance de GraphWarGame 
     app.update()  # Ajout de l'appel update() pour forcer le rendu de la fenêtre
     app.protocol("WM_DELETE_WINDOW", app.quit_game) # Permet d'éviter le bug lorsqu'on ferme la fenetre avec x
     app.mainloop()  # Démarrage de la boucle principale de l'application

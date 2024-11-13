@@ -3,32 +3,28 @@ from customtkinter import CTk
 from accueil import Accueil
 from formulaire import Formulaire
 import numpy as np
+from menu import Menu
 
-class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
-    def __init__(self):  # Constructeur de la classe
-        super().__init__() # Super permet d'appeler plusieurs inheritance
+class GraphWarGame(CTk):
+    def __init__(self):
+        super().__init__()
 
-        self.title("Graphwar")  # Définition du titre de la fenêtre
+        self.title("Graphwar")
 
-        screen_width = self.winfo_screenwidth() # Est égal à la largeur de l'écran de l'utilisateur
-        screen_height = self.winfo_screenheight() # Est égal a la hauteur de l'écran de l'utilisateur
-        res_width = screen_width / 1707 # Le facteur de résolution voulue basée sur la largeur
-        res_height = screen_height / 1067 # Le facteur de résolution voulue basée sur la hauteur
-        res = np.sqrt((res_height**2) + (res_width**2)) # Le facteur de résolution utilisé
+        self.geometry("1920x1080")  # Ajuste la taille de la fenêtre si nécessaire
 
-        self.geometry(f"{screen_width}x{screen_height}")  # Définition de la taille de la fenêtre avec la resolution de lutilisateur
+        
+        self.accueil = None
+        self.formulaire = None
+        self.nom_joueur_connecte = None
+        
+        self.show_menu()  # Afficher le menu principal
+        self.creation_menu()
 
-        self.accueil = Accueil(self, res) # Crée une instance accueil (notre main window)
-        self.accueil.pack(fill=tk.BOTH, expand=True) # Place le layout de accueil
-
-        self.creation_menu() # Appeler la fonction pour afficher le menu
-
-        # Ajouter une zone de logs, ajout si on a le temps (problème en lien avec la réénitialisation)
-        # self.zone_logs = tk.Text(self, wrap=tk.WORD, height=10, width=50)
-        # self.zone_logs.pack(padx=20, pady=20)
-
-        self.formulaire = None # Aucun formulaire remplis
-        self.nom_joueur_connecte = None # Aucun joueur connecté
+    def show_menu(self):
+        self.clear_main_frame()
+        self.menu = Menu(self, self)
+        self.menu.pack(fill=tk.BOTH, expand=True)
 
     def creation_menu(self):
         menu_bar = tk.Menu(self) # Création de la bar de menu 
@@ -69,14 +65,39 @@ class GraphWarGame(CTk):  # Définition de la classe principale pour le jeu
         self.accueil.pack(fill=tk.BOTH, expand=True)
 
     def show_formulaire(self):
-        self.clear_main_frame() 
-        print("Formulaire affiché")
-        self.formulaire = Formulaire(self)
-        self.formulaire.pack(fill=tk.BOTH, expand=True)  # Afficher fomulaire
+        print("Essayer d'afficher le formulaire...")
+        self.clear_main_frame()  # Efface les widgets précédents
 
-    def clear_main_frame(self): # Éfface tous les widgets enfants avant d'en ajouter de nouveaux
-        for widget in self.winfo_children(): # Pour chaque widget
+    # Créez une nouvelle instance de formulaire
+        self.formulaire = Formulaire(self)  # Crée une nouvelle instance de Formulaire
+
+    # Utiliser grid pour centrer le formulaire dans la fenêtre
+        self.formulaire.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+
+    # Configurer la grille pour centrer le formulaire
+        self.grid_rowconfigure(0, weight=1)  # Permet à la ligne 0 de se redimensionner
+        self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
+
+
+    # Créez une nouvelle instance de formulaire et centrez-la dans la fenêtre principale
+        self.formulaire = Formulaire(self)  # Crée une nouvelle instance de Formulaire
+    
+    # Utiliser grid pour centrer le formulaire dans la fenêtre
+        self.formulaire.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+
+    # Configurer la grille pour centrer le formulaire
+        self.grid_rowconfigure(0, weight=1)  # Permet à la ligne 0 de se redimensionner
+        self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
+
+
+
+
+    def clear_main_frame(self):
+        print("Effacement des widgets...")
+        for widget in self.winfo_children():  # Pour chaque widget enfant
+            print(f"Effacement du widget: {widget}")
             widget.pack_forget()  # Utilise pack_forget() pour masquer les widgets
+
 
     def ajouter_log(self, message_log):
         if self.nom_joueur_connecte:

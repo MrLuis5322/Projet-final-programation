@@ -1,73 +1,69 @@
 import customtkinter as ctk  
 import tkinter as tk  
-import os  # os pour manipuler fichier sur windows https://www.geeksforgeeks.org/os-module-python-examples/
+import os
 
 class Formulaire(ctk.CTkFrame):  
     def __init__(self, maitre=None):  
-        self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts") # code trouvé sur internet pour faire instence aux fichiers dans accounts
+        self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts")  # Code pour accéder aux fichiers dans "accounts"
         super().__init__(maitre)  
+        self.grid(row=0, column=0, sticky="nsew")  # Le formulaire occupe tout l'espace disponible
+        self.master.grid_rowconfigure(0, weight=1)  # Configure la première ligne de la fenêtre principale pour pouvoir redimensionner
+        self.master.grid_columnconfigure(0, weight=1)  # Configure la première colonne de la fenêtre principale pour pouvoir redimensionner
         self.creer_widgets()
 
     def creer_widgets(self):
-        self.onglets = ctk.CTkTabview(master = self)  
-        self.onglets.place(x=750, 
-                           y=750,
-                           relheight = 1,
-                           relwidth = 1)
+        # Créer un cadre qui contiendra le formulaire et le centrer
+        cadre = ctk.CTkFrame(self) 
+        cadre.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        cadre.grid_rowconfigure(0, weight=1)  # Permet au formulaire de prendre tout l'espace vertical
+        cadre.grid_columnconfigure(0, weight=1)  # Permet au formulaire de prendre tout l'espace horizontal
+
+        # Partie onglets
+        self.onglets = ctk.CTkTabview(master=cadre)  
+        self.onglets.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)  # Le formulaire occupera tout l'espace disponible dans le cadre
 
         # Partie créer joueur
-        self.onglets.add("Créer un Joueur")
+        self.onglets.add("Créer un Joueur")  # Ajout de l'onglet "Créer un Joueur"
         self.formulaire_creation_joueur = ctk.CTkFrame(self.onglets.tab("Créer un Joueur"))  
-        self.formulaire_creation_joueur.place(x = 0,
-                                              y = 0,)
+        self.formulaire_creation_joueur.grid(row=0, column=0, padx=20, pady=20)
 
         self.label_nom_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Nom:")
-        self.label_nom_creation.place(x = 10,
-                                      y = 10)
+        self.label_nom_creation.grid(row=0, column=0, pady=5)
         
         self.champ_nom_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre nom")  
-        self.champ_nom_creation.place(x = 10,
-                                      y = 10)
+        self.champ_nom_creation.grid(row=1, column=0, pady=5)
 
         self.label_email_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Email:")  
-        self.label_email_creation.place(x = 10,
-                                        y = 10)  
+        self.label_email_creation.grid(row=2, column=0, pady=5)  
         
         self.champ_email_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre email")  
-        self.champ_email_creation.place(x = 10,
-                                        y = 10)  
+        self.champ_email_creation.grid(row=3, column=0, pady=5)  
 
-        self.bouton_creation_joueur = ctk.CTkButton(self.formulaire_creation_joueur, text="Créer Joueur", command=self.soumettre_creation_joueur) #bouton soumettre
-        self.bouton_creation_joueur.place(x = 10,
-                                          y = 10)  
+        self.bouton_creation_joueur = ctk.CTkButton(self.formulaire_creation_joueur, text="Créer Joueur", command=self.soumettre_creation_joueur)
+        self.bouton_creation_joueur.grid(row=4, column=0, pady=10)
 
-        # Partie conection
-        self.onglets.add("Se connecter")  
+        # Partie connexion
+        self.onglets.add("Se connecter")  # Ajout de l'onglet "Se connecter"
         self.formulaire_connexion_joueur = ctk.CTkFrame(self.onglets.tab("Se connecter"))  
-        self.formulaire_connexion_joueur.place(fill="both", 
-                                               expand=True)  
+        self.formulaire_connexion_joueur.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)  # Utilisation de grid ici
+
+        # Configuration du grid
+        self.formulaire_connexion_joueur.grid_columnconfigure(0, weight=1)  # Pour que les widgets prennent tout l'espace
 
         self.label_nom_connexion = ctk.CTkLabel(self.formulaire_connexion_joueur, text="Nom:")  
-        self.label_nom_connexion.place(x = 10,
-                                       y = 10)  
+        self.label_nom_connexion.grid(row=0, column=0, pady=5)
         
         self.champ_nom_connexion = ctk.CTkEntry(self.formulaire_connexion_joueur, placeholder_text="Entrez votre nom")  
-        self.champ_nom_connexion.place(x = 10,
-                                       y = 10)  
+        self.champ_nom_connexion.grid(row=1, column=0, pady=5)
 
-     
-        self.label_email_connexion = ctk.CTkLabel(self.formulaire_connexion_joueur, text="Email:")  # Créer un label pour l'email
-        self.label_email_connexion.place(x = 10,
-                                         y = 10)  # Ajouter le label pour l'email
+        self.label_email_connexion = ctk.CTkLabel(self.formulaire_connexion_joueur, text="Email:")  
+        self.label_email_connexion.grid(row=2, column=0, pady=5)
         
-        self.champ_email_connexion = ctk.CTkEntry(self.formulaire_connexion_joueur, placeholder_text="Entrez votre email")  # Champ de saisie pour l'email
-        self.champ_email_connexion.place(x = 10,
-                                         y = 10)  # Ajouter le champ de texte pour l'email
+        self.champ_email_connexion = ctk.CTkEntry(self.formulaire_connexion_joueur, placeholder_text="Entrez votre email")  
+        self.champ_email_connexion.grid(row=3, column=0, pady=5)
 
-        # Bouton soumettre partie conection
         self.bouton_connexion_joueur = ctk.CTkButton(self.formulaire_connexion_joueur, text="Se connecter", command=self.soumettre_connexion_joueur) 
-        self.bouton_connexion_joueur.place(x = 10,
-                                           y = 10) 
+        self.bouton_connexion_joueur.grid(row=4, column=0, pady=10)
 
     def soumettre_creation_joueur(self): 
         # Récupérer les noms et email
@@ -78,7 +74,7 @@ class Formulaire(ctk.CTkFrame):
 
         # Fichier existe déjà?
         if os.path.exists(nom_fichier_joueur): 
-            print(f"Le joueur {nom} a deja ete cree.")  
+            print(f"Le joueur {nom} a déjà été créé.")  
             return 
 
         # Création fichier
@@ -92,7 +88,7 @@ class Formulaire(ctk.CTkFrame):
         print(f"Nom: {nom}")  
         print(f"Email: {email}") 
 
-    # Partie de conexion
+    # Partie de connexion
     def soumettre_connexion_joueur(self): 
         nom = self.champ_nom_connexion.get()  
         email = self.champ_email_connexion.get() 
@@ -100,29 +96,29 @@ class Formulaire(ctk.CTkFrame):
         nom_fichier_joueur = os.path.join(self.DOSSIER_JOUEURS, self.nettoyer_nom_fichier(nom)) 
 
         # Vérifier si le joueur existe
-        # si il existe pas alors erreur
+        # Si il n'existe pas alors erreur
         if not os.path.exists(nom_fichier_joueur):  
             print(f"Joueur {nom} non trouvé.")  
             return  
 
         # Lecture (j'utilise le with pour que le fichier soit fermé après)
-        with open(nom_fichier_joueur, "r") as fichierL:  # Ouvrir fichie lecture (r pour read)
+        with open(nom_fichier_joueur, "r") as fichierL:  # Ouvrir fichier en lecture (r pour read)
             lignes = fichierL.readlines()  # Lire lignes
             email_fichier = lignes[1].strip().split(": ")[1]  # Extraire l'email du fichier (1 pour ligne 2)
 
-        # Email
-        if email_fichier != email:  # Email mauvais
+        # Vérification de l'email
+        if email_fichier != email:  # Email incorrect
             print(f"Email incorrect pour le joueur {nom}.") 
             return  
 
         print(f"Connexion réussie pour le joueur {nom}")  
         print(f"Email: {email}") 
 
-        self.master.nom_joueur_connecte = nom  # Sauvegarder joueur conecté
-        # log joueur conecté
-        self.ajouter_log(nom_fichier_joueur, "Le joueur s'est connecte.")  # Ajouter un log dans le fichier du joueur
+        self.master.nom_joueur_connecte = nom  # Sauvegarder le joueur connecté
+        # Log du joueur connecté
+        self.ajouter_log(nom_fichier_joueur, "Le joueur s'est connecté.")  # Ajouter un log dans le fichier du joueur
 
-    def ajouter_log(self, fichier_joueur, message_log):  # Ajouter log dans joueur
+    def ajouter_log(self, fichier_joueur, message_log):  # Ajouter log dans le fichier du joueur
         # Ouvrir fichier et ajouter (a pour append)
         with open(fichier_joueur, "a") as fichier: 
             fichier.write(f"{message_log}\n")  
@@ -130,6 +126,4 @@ class Formulaire(ctk.CTkFrame):
         print(f"Log ajouté: {message_log}")  # Afficher un message dans la console pour confirmer l'ajout du log
 
     def nettoyer_nom_fichier(self, nom_fichier):  # Supprimer mauvais caractères
-       
-       return self.master.clean_filename(nom_fichier)
-
+        return self.master.clean_filename(nom_fichier)

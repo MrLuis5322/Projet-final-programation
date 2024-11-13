@@ -29,10 +29,10 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.tir = Tir(self)
 
         self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-        self.ax.legend(loc="upper left", 
-                       prop = { "size": 15*res }, 
+        self.ax.legend(loc="upper left", prop = { "size": 15*res }, 
                        markerscale=0.6*res, 
                        bbox_to_anchor=(1, 1)) # Place la légende et définit sa taille selon la resolution de l'utilisateur
+        
         self.ax.set_facecolor('#363737')
         self.canvas = FigureCanvasTkAgg(self.fig, 
                                         master=self)  # Création d'un canvas pour afficher la figure

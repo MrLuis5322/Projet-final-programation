@@ -52,17 +52,17 @@ class GraphWarGame(CTk):
         print("fichier enregistré")
 
     def show_accueil(self):
-        self.clear_main_frame()  # Éfface les widgets précédents
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        res_width = screen_width / 1707 # Le facteur de résolution voulue basée sur la largeur
-        res_height = screen_height / 1067 # Le facteur de résolution voulue basée sur la hauteur
-        res = (res_height + res_width) / 2 # Le facteur de résolution utilisé
-        print("Accueil affiché")
+        self.clear_main_frame()  # Efface les widgets précédents
+     
         if self.accueil:
             self.accueil.destroy()
-        self.accueil = Accueil(self, res)
-        self.accueil.pack(fill=tk.BOTH, expand=True)
+    # Utilise grid() au lieu de pack()
+        self.accueil = Accueil(self, res=1)
+    # Remplace pack() par grid() si nécessaire
+        self.accueil.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+
+
+
 
     def show_formulaire(self):
         print("Essayer d'afficher le formulaire...")
@@ -79,23 +79,13 @@ class GraphWarGame(CTk):
         self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
 
 
-    # Créez une nouvelle instance de formulaire et centrez-la dans la fenêtre principale
-        self.formulaire = Formulaire(self)  # Crée une nouvelle instance de Formulaire
-    
-    # Utiliser grid pour centrer le formulaire dans la fenêtre
-        self.formulaire.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
-
-    # Configurer la grille pour centrer le formulaire
-        self.grid_rowconfigure(0, weight=1)  # Permet à la ligne 0 de se redimensionner
-        self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
-
 
 
 
     def clear_main_frame(self):
-        print("Effacement des widgets...")
+        
         for widget in self.winfo_children():  # Pour chaque widget enfant
-            print(f"Effacement du widget: {widget}")
+           
             widget.pack_forget()  # Utilise pack_forget() pour masquer les widgets
 
 

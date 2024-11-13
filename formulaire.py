@@ -11,6 +11,8 @@ class Formulaire(ctk.CTkFrame):
         self.master.grid_columnconfigure(0, weight=1)  # Configure la première colonne de la fenêtre principale pour pouvoir redimensionner
         self.creer_widgets()
 
+
+    
     def creer_widgets(self):
         # Créer un cadre qui contiendra le formulaire et le centrer
         cadre = ctk.CTkFrame(self) 

@@ -22,22 +22,26 @@ class GraphWarGame(CTk):
         self.creation_menu()
 
     def show_menu(self):
-        self.clear_main_frame()
-        self.menu = Menu(self)  # Passer l'instance de GraphWarGame à Menu
-        self.menu.pack(fill=tk.BOTH, expand=True)
+        print("Retour au menu")  # Affichage dans le terminal pour déboguer
+        self.clear_main_frame()  # Efface les widgets précédents
+        self.menu = Menu(self, self)  # Créer une nouvelle instance de Menu
+        self.menu.place(relwidth=1, relheight=1)  # Utiliser place pour occuper toute la fenêtre
+
 
 
     def creation_menu(self):
-        menu_bar = tk.Menu(self) # Création de la bar de menu 
-        self.config(menu=menu_bar) # Configuration du menu
+        menu_bar = tk.Menu(self)  # Création de la barre de menu
+        self.config(menu=menu_bar)  # Configuration du menu
 
-        # Créer un menu Fichier
-        file_menu = tk.Menu(menu_bar, tearoff=0) # Création de l'onglet fichier
-        menu_bar.add_cascade(label="Fichier", menu=file_menu) # Ajout de l'onglet fichier
-        file_menu.add_command(label="Jouer", command=self.show_accueil) # Ajout de la commande acceuil
-        file_menu.add_command(label="Se connecter", command=self.show_formulaire) # Ajout de la commande formulaire
-        file_menu.add_separator() # Ajout d'un séparateur après enrigistrer et avant quitter
-        file_menu.add_command(label="Quitter", command=self.quit_game) # Ajout de la commande quitter
+    # Créer un menu Fichier
+        file_menu = tk.Menu(menu_bar, tearoff=0)  # Création de l'onglet fichier
+        menu_bar.add_cascade(label="Fichier", menu=file_menu)  # Ajout de l'onglet fichier
+        file_menu.add_command(label="Jouer", command=self.show_accueil)  # Commande pour afficher l'accueil
+        file_menu.add_command(label="Se connecter", command=self.show_formulaire)  # Commande pour afficher le formulaire
+        file_menu.add_separator()  # Ajout d'un séparateur
+        file_menu.add_command(label="Retour au menu", command=self.show_menu)  # Ajout de la commande retour au menu
+        file_menu.add_separator()  # Ajout d'un séparateur avant quitter
+        file_menu.add_command(label="Quitter", command=self.quit_game)  # Commande pour quitter l'application
         
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.quit_game
@@ -94,10 +98,9 @@ class GraphWarGame(CTk):
 
 
     def clear_main_frame(self):
-        
         for widget in self.winfo_children():  # Pour chaque widget enfant
-           
-            widget.pack_forget()  # Utilise pack_forget() pour masquer les widgets
+            widget.place_forget()  # Utilise place_forget() pour masquer les widgets
+
 
 
     def ajouter_log(self, message_log):

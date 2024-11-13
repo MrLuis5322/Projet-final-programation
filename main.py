@@ -23,8 +23,9 @@ class GraphWarGame(CTk):
 
     def show_menu(self):
         self.clear_main_frame()
-        self.menu = Menu(self, self)
+        self.menu = Menu(self)  # Passer l'instance de GraphWarGame à Menu
         self.menu.pack(fill=tk.BOTH, expand=True)
+
 
     def creation_menu(self):
         menu_bar = tk.Menu(self) # Création de la bar de menu 
@@ -52,14 +53,24 @@ class GraphWarGame(CTk):
         print("fichier enregistré")
 
     def show_accueil(self):
+        print("Affichage de l'écran d'accueil")
         self.clear_main_frame()  # Efface les widgets précédents
-     
+    
         if self.accueil:
-            self.accueil.destroy()
-    # Utilise grid() au lieu de pack()
+            self.accueil.destroy()  # Détruire l'écran précédent si nécessaire
+    
+    # Créer une nouvelle instance de Accueil
         self.accueil = Accueil(self, res=1)
-    # Remplace pack() par grid() si nécessaire
+    
+    # Utiliser grid() pour afficher l'écran d'accueil dans une grille
         self.accueil.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+    
+    # Configurer la grille pour permettre à l'écran d'accueil de s'adapter à la taille de la fenêtre
+        self.grid_rowconfigure(0, weight=1)  # Permet à la ligne 0 de se redimensionner
+        self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
+
+        print("Ecran d'accueil affiché")
+
 
 
 

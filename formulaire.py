@@ -9,46 +9,65 @@ class Formulaire(ctk.CTkFrame):
         self.creer_widgets()
 
     def creer_widgets(self):
-        self.onglets = ctk.CTkTabview(self)  
-        self.onglets.pack(padx=20, pady=20, fill="both", expand=True)  #marges
+        self.onglets = ctk.CTkTabview(master = self)  
+        self.onglets.place(x=750, 
+                           y=750,
+                           relheight = 1,
+                           relwidth = 1)
 
         # Partie créer joueur
         self.onglets.add("Créer un Joueur")
         self.formulaire_creation_joueur = ctk.CTkFrame(self.onglets.tab("Créer un Joueur"))  
-        self.formulaire_creation_joueur.pack(fill="both", expand=True)
+        self.formulaire_creation_joueur.place(x = 0,
+                                              y = 0,)
 
         self.label_nom_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Nom:")
-        self.label_nom_creation.pack(padx=20, pady=(20, 10), anchor="w")
+        self.label_nom_creation.place(x = 10,
+                                      y = 10)
+        
         self.champ_nom_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre nom")  
-        self.champ_nom_creation.pack(padx=20, pady=(20, 10), fill="x")  # Étendre le texte horizontalement
+        self.champ_nom_creation.place(x = 10,
+                                      y = 10)
 
         self.label_email_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Email:")  
-        self.label_email_creation.pack(padx=20, pady=(10, 10), anchor="w")  
+        self.label_email_creation.place(x = 10,
+                                        y = 10)  
+        
         self.champ_email_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre email")  
-        self.champ_email_creation.pack(padx=20, pady=(10, 10), fill="x")  
+        self.champ_email_creation.place(x = 10,
+                                        y = 10)  
 
         self.bouton_creation_joueur = ctk.CTkButton(self.formulaire_creation_joueur, text="Créer Joueur", command=self.soumettre_creation_joueur) #bouton soumettre
-        self.bouton_creation_joueur.pack(padx=20, pady=20)  
+        self.bouton_creation_joueur.place(x = 10,
+                                          y = 10)  
 
         # Partie conection
         self.onglets.add("Se connecter")  
         self.formulaire_connexion_joueur = ctk.CTkFrame(self.onglets.tab("Se connecter"))  
-        self.formulaire_connexion_joueur.pack(fill="both", expand=True)  
+        self.formulaire_connexion_joueur.place(fill="both", 
+                                               expand=True)  
 
         self.label_nom_connexion = ctk.CTkLabel(self.formulaire_connexion_joueur, text="Nom:")  
-        self.label_nom_connexion.pack(padx=20, pady=(20, 10), anchor="w")  
+        self.label_nom_connexion.place(x = 10,
+                                       y = 10)  
+        
         self.champ_nom_connexion = ctk.CTkEntry(self.formulaire_connexion_joueur, placeholder_text="Entrez votre nom")  
-        self.champ_nom_connexion.pack(padx=20, pady=(20, 10), fill="x")  
+        self.champ_nom_connexion.place(x = 10,
+                                       y = 10)  
 
      
         self.label_email_connexion = ctk.CTkLabel(self.formulaire_connexion_joueur, text="Email:")  # Créer un label pour l'email
-        self.label_email_connexion.pack(padx=20, pady=(10, 10), anchor="w")  # Ajouter le label pour l'email
+        self.label_email_connexion.place(x = 10,
+                                         y = 10)  # Ajouter le label pour l'email
+        
         self.champ_email_connexion = ctk.CTkEntry(self.formulaire_connexion_joueur, placeholder_text="Entrez votre email")  # Champ de saisie pour l'email
-        self.champ_email_connexion.pack(padx=20, pady=(10, 10), fill="x")  # Ajouter le champ de texte pour l'email
+        self.champ_email_connexion.place(x = 10,
+                                         y = 10)  # Ajouter le champ de texte pour l'email
 
         # Bouton soumettre partie conection
         self.bouton_connexion_joueur = ctk.CTkButton(self.formulaire_connexion_joueur, text="Se connecter", command=self.soumettre_connexion_joueur) 
-        self.bouton_connexion_joueur.pack(padx=20, pady=20) 
+        self.bouton_connexion_joueur.place(x = 10,
+                                           y = 10) 
 
     def soumettre_creation_joueur(self): 
         # Récupérer les noms et email

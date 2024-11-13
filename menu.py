@@ -1,5 +1,6 @@
 import tkinter as tk
 import customtkinter as ctk
+import webbrowser  # Import pour ouvrir des liens dans le navigateur
 
 class Menu(tk.Frame):
     def __init__(self, parent, game):
@@ -9,31 +10,44 @@ class Menu(tk.Frame):
 
         # Bouton pour accéder à l'accueil (Jouer)
         btn_play = ctk.CTkButton(self, 
-                            width = 200,
-                            height = 50,
-                            corner_radius = 20,
+                            width=200,
+                            height=50,
+                            corner_radius=20,
                             text="Jouer", 
                             command=self.game.show_accueil,  # Appeler la méthode show_accueil de GraphWarGame
-                            fg_color = 'blue')
-        btn_play.place(x = 750, y = 250)  # Positionnement avec place
+                            fg_color='blue')
+        btn_play.place(x=750, y=250)  # Positionnement avec place
 
         # Bouton pour se connecter
         btn_login = ctk.CTkButton(self, 
                                   text="Se connecter", 
                                   command=self.game.show_formulaire,
-                                  width = 200,
-                                  height = 50,
-                                  corner_radius = 20,
-                                  fg_color = 'blue')
-        btn_login.place(x = 750, y = 310)
+                                  width=200,
+                                  height=50,
+                                  corner_radius=20,
+                                  fg_color='blue')
+        btn_login.place(x=750, y=310)
+
+        # Bouton pour le tutoriel
+        btn_tutorial = ctk.CTkButton(self, 
+                                     text="Tutoriel",
+                                     command=self.open_tutorial,
+                                     width=200,
+                                     height=50,
+                                     corner_radius=20,
+                                     fg_color='blue')
+        btn_tutorial.place(x=750, y=370)
 
         # Bouton pour quitter le jeu
         btn_quit = ctk.CTkButton(self, 
-                                 width = 200,
-                                 height = 50,
-                                 corner_radius = 20,
+                                 width=200,
+                                 height=50,
+                                 corner_radius=20,
                                  text="Quitter", 
                                  command=self.game.quit_game,
-                                 fg_color = 'blue')
-        btn_quit.place(x = 750, y = 370)
+                                 fg_color='blue')
+        btn_quit.place(x=750, y=430)
 
+    def open_tutorial(self):
+        # Ouvre la vidéo YouTube dans un navigateur web
+        webbrowser.open("https://www.youtube.com/watch?v=EHuQe7SKwkA")  # Remplace par l'URL de la vidéo tutoriel

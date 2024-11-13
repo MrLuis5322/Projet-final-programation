@@ -8,6 +8,7 @@ from tir import Tir
 from traitementCSV import Obstacles
 from matplotlib.patches import Circle
 
+
 class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
     def get_obstacles(self): # Fonction qui retourne les obstacles
         return self.obstacles

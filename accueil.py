@@ -133,7 +133,9 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def update_score(self, points):
         # Met à jour le score et update affichage
         if points == 0:
-            self.score ==0
+            self.score == 0
+        elif points < 0:
+            self.score = 0
         else:
             self.score += points
             self.score_label.configure(text=f"Score: {self.score}")

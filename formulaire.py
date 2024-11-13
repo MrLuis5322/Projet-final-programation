@@ -7,16 +7,17 @@ class Formulaire(ctk.CTkFrame):
         self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts")  # Code pour accéder aux fichiers dans "accounts"
         super().__init__(maitre)  
         self.grid(row=0, column=0, sticky="nsew")  # Le formulaire occupe tout l'espace disponible
-        self.master.grid_rowconfigure(0, weight=1)  # Configure la première ligne de la fenêtre principale pour pouvoir redimensionner
-        self.master.grid_columnconfigure(0, weight=1)  # Configure la première colonne de la fenêtre principale pour pouvoir redimensionner
+        
+        # Configuration du maître pour le centrage
+        self.master.grid_rowconfigure(0, weight=1)  # Redimensionner verticalement
+        self.master.grid_columnconfigure(0, weight=1)  # Redimensionner horizontalement
+
         self.creer_widgets()
 
-
-    
     def creer_widgets(self):
         # Créer un cadre qui contiendra le formulaire et le centrer
         cadre = ctk.CTkFrame(self) 
-        cadre.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        cadre.grid(row=0, column=0, padx=50, pady=50, sticky="nsew")  # Ajuster padx/pady pour plus de centrage
         cadre.grid_rowconfigure(0, weight=1)  # Permet au formulaire de prendre tout l'espace vertical
         cadre.grid_columnconfigure(0, weight=1)  # Permet au formulaire de prendre tout l'espace horizontal
 
@@ -30,7 +31,7 @@ class Formulaire(ctk.CTkFrame):
         self.formulaire_creation_joueur.grid(row=0, column=0, padx=20, pady=20)
 
         self.label_nom_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Nom:")
-        self.label_nom_creation.grid(row=0, column=0, pady=5)
+        self.label_nom_creation.grid(row=0, column=0, pady=20)
         
         self.champ_nom_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre nom")  
         self.champ_nom_creation.grid(row=1, column=0, pady=5)
@@ -66,6 +67,9 @@ class Formulaire(ctk.CTkFrame):
 
         self.bouton_connexion_joueur = ctk.CTkButton(self.formulaire_connexion_joueur, text="Se connecter", command=self.soumettre_connexion_joueur) 
         self.bouton_connexion_joueur.grid(row=4, column=0, pady=10)
+
+    # Méthodes soumettre_creation_joueur, soumettre_connexion_joueur, ajouter_log, nettoyer_nom_fichier
+
 
     def soumettre_creation_joueur(self): 
         # Récupérer les noms et email

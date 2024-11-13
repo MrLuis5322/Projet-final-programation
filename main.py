@@ -11,15 +11,28 @@ class GraphWarGame(CTk):
 
         self.title("Graphwar")
 
-        self.geometry("1920x1080")  # Ajuste la taille de la fenêtre si nécessaire
+        # Taille de la fenêtre
+        window_width = 1920
+        window_height = 1080
 
-        
+        # Obtenir la taille de l'écran
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        # Calculer les coordonnées pour centrer la fenêtre
+        x_cordinate = int((screen_width/2) - (window_width/2))
+        y_cordinate = int((screen_height/2) - (window_height/2))
+
+        # Appliquer la position calculée
+        self.geometry(f"{window_width}x{window_height}+{x_cordinate}+{y_cordinate}")
+
         self.accueil = None
         self.formulaire = None
         self.nom_joueur_connecte = None
         
         self.show_menu()  # Afficher le menu principal
         self.creation_menu()
+
 
     def show_menu(self):
         print("Retour au menu")  # Affichage dans le terminal pour déboguer
@@ -86,12 +99,15 @@ class GraphWarGame(CTk):
     # Créez une nouvelle instance de formulaire
         self.formulaire = Formulaire(self)  # Crée une nouvelle instance de Formulaire
 
-    # Utiliser grid pour centrer le formulaire dans la fenêtre
-        self.formulaire.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+    # Utiliser place pour centrer le formulaire dans la fenêtre
+        self.formulaire.place(relx=0.5, rely=0.5, anchor="center")
 
-    # Configurer la grille pour centrer le formulaire
-        self.grid_rowconfigure(0, weight=1)  # Permet à la ligne 0 de se redimensionner
-        self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
+    # Configurer la grille pour permettre au formulaire de s'adapter
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+    print("Formulaire centré affiché")
+
 
 
 
@@ -118,6 +134,15 @@ class GraphWarGame(CTk):
         for char in caracteres_invalides:
             filename = filename.replace(char, '_')
         return f"{filename}.txt"
+
+    def centrer_fenetre(self, largeur, hauteur):
+        ecran_largeur = self.winfo_screenwidth()
+        ecran_hauteur = self.winfo_screenheight()
+        position_x = int((ecran_largeur - largeur) / 2)
+        position_y = int((ecran_hauteur - hauteur) / 2)
+        self.geometry(f"{largeur}x{hauteur}+{position_x}+{position_y}")
+
+
 
 if __name__ == "__main__":  # Vérification si ce fichier est exécuté en tant que programme principal
     app = GraphWarGame()  # Création d'une instance de GraphWarGame 

@@ -1,0 +1,6 @@
+Nom: xx
+Email: xxx
+Logs:
+Le joueur s'est connecté.
+Ajout d'un point
+Partie termine avec 1 points

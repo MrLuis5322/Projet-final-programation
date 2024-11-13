@@ -120,12 +120,16 @@ class Formulaire(ctk.CTkFrame):
         # Log du joueur connecté
         self.ajouter_log(nom_fichier_joueur, "Le joueur s'est connecté.")  # Ajouter un log dans le fichier du joueur
 
-    def ajouter_log(self, fichier_joueur, message_log):  # Ajouter log dans le fichier du joueur
-        # Ouvrir fichier et ajouter (a pour append)
-        with open(fichier_joueur, "a") as fichier: 
-            fichier.write(f"{message_log}\n")  
+    def ajouter_log(self, fichier_joueur, message_log):
+    # Vérifier que le fichier se trouve dans le bon dossier
+        if not fichier_joueur.startswith(self.DOSSIER_JOUEURS):
+            fichier_joueur = os.path.join(self.DOSSIER_JOUEURS, fichier_joueur)
 
-        print(f"Log ajouté: {message_log}")  # Afficher un message dans la console pour confirmer l'ajout du log
+    # Ajouter le log dans le fichier
+        with open(fichier_joueur, "a") as fichier: 
+            fichier.write(f"{message_log}\n")
+
+        print(f"Log ajouté: {message_log}")
 
     def nettoyer_nom_fichier(self, nom_fichier):  # Supprimer mauvais caractères
         return self.master.clean_filename(nom_fichier)

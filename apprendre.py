@@ -12,10 +12,7 @@ class Apprendre(tk.Frame):
 
         # Fonction pour générer un test aléatoire
         def generate_random_test():
-            categories = ["Maths", "Vocabulaire", "Géographie", "Histoire"]
-            test_type = random.choice(categories)
-            test_button.config(text=f"Test de {test_type}")
-            print(f"Test de {test_type} lancé !")  # Affiche dans la console pour l'instant
+            print("test")
 
         # Créer un bouton pour générer un test aléatoire
         test_button = ctk.CTkButton(self, 
@@ -27,12 +24,4 @@ class Apprendre(tk.Frame):
                                     fg_color='blue')
         test_button.pack(pady=20)
 
-        # Bouton pour fermer la fenêtre
-        close_button = ctk.CTkButton(self, 
-                                     text="Retour", 
-                                     command=self.destroy, 
-                                     width=200,
-                                     height=50,
-                                     corner_radius=20,
-                                     fg_color='red')
-        close_button.pack(pady=10)
+       

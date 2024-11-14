@@ -4,6 +4,7 @@ from accueil import Accueil
 from formulaire import Formulaire
 import numpy as np
 from menu import Menu
+from apprendre import Apprendre
 
 class GraphWarGame(CTk):
     def __init__(self):
@@ -37,7 +38,7 @@ class GraphWarGame(CTk):
     def show_menu(self):
         print("Retour au menu")  # Affichage dans le terminal pour déboguer
         self.clear_main_frame()  # Efface les widgets précédents
-        self.menu = Menu(self, self)  # Créer une nouvelle instance de Menu
+        self.menu = Menu(self)  # Créer une nouvelle instance de Menu
         self.menu.place(relwidth=1, relheight=1)  # Utiliser place pour occuper toute la fenêtre
 
 
@@ -46,15 +47,25 @@ class GraphWarGame(CTk):
         menu_bar = tk.Menu(self)  # Création de la barre de menu
         self.config(menu=menu_bar)  # Configuration du menu
 
-    # Créer un menu Fichier
         file_menu = tk.Menu(menu_bar, tearoff=0)  # Création de l'onglet fichier
         menu_bar.add_cascade(label="Fichier", menu=file_menu)  # Ajout de l'onglet fichier
         file_menu.add_command(label="Jouer", command=self.show_accueil)  # Commande pour afficher l'accueil
         file_menu.add_command(label="Se connecter", command=self.show_formulaire)  # Commande pour afficher le formulaire
+        file_menu.add_command(label="Apprendre", command=self.afficher_apprendre)  # Nouveau bouton pour Apprendre
         file_menu.add_separator()  # Ajout d'un séparateur
-        file_menu.add_command(label="Retour au menu", command=self.show_menu)  # Ajout de la commande retour au menu
+        file_menu.add_command(label="Retour au menu", command=self.show_menu)  # Commande retour au menu
         file_menu.add_separator()  # Ajout d'un séparateur avant quitter
         file_menu.add_command(label="Quitter", command=self.quit_game)  # Commande pour quitter l'application
+       
+
+
+    def afficher_apprendre(self):
+        print("Affichage de la fenêtre d'apprentissage")
+        self.clear_main_frame()  # Efface les widgets précédents
+        self.apprendre = Apprendre(self)  # Créer une nouvelle instance de Apprendre
+        self.apprendre.place(relwidth=1, relheight=1)  # Afficher la fenêtre d'apprentissage dans la fenêtre principale
+
+
         
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.quit_game
@@ -116,6 +127,7 @@ class GraphWarGame(CTk):
     def clear_main_frame(self):
         for widget in self.winfo_children():  # Pour chaque widget enfant
             widget.place_forget()  # Utilise place_forget() pour masquer les widgets
+
 
 
 

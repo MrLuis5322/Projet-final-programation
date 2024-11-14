@@ -32,7 +32,7 @@ class Apprendre(tk.Frame):
         self.function_var = tk.StringVar(value="Linéaire")  # Valeur initiale = Linéaire
         
         # Menu déroulant pour sélectionner la fonction
-        self.function_menu = ctk.CTkOptionMenu(self, values=["Linéaire", "Quadratique", "Sinus", "Exponentielle", "Cosinus", "Racine carrée"], variable=self.function_var, command=self.update_interface)
+        self.function_menu = ctk.CTkOptionMenu(self, values=["Linéaire", "Quadratique", "Sinus", "Cosinus", "Exponentielle", "Racine carrée"], variable=self.function_var, command=self.update_interface)
         self.function_menu.pack(pady=20)
         
         # Ajouter un menu déroulant pour choisir le type de plan
@@ -54,7 +54,7 @@ class Apprendre(tk.Frame):
         self.a_slider = self.create_slider("a", self.a_var, -3, 3, 0.1)
         self.h_slider = self.create_slider("h (Déplacement horizontal)", self.h_var, -5, 5, 1)
         self.k_slider = self.create_slider("k (Déplacement vertical)", self.k_var, -5, 5, 1)
-        self.b_slider = self.create_slider("b (Amplitude pour Sinus/Exponentielle/Cosinus/Linéaire)", self.b_var, -5, 5, 0.1)
+        self.b_slider = self.create_slider("b", self.b_var, -5, 5, 0.1)
         
         # Créer un bouton pour afficher la courbe
         self.plot_button = ctk.CTkButton(self, text="Tracer la fonction", command=self.plot_function)

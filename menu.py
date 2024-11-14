@@ -1,10 +1,12 @@
 import tkinter as tk
 import customtkinter as ctk
 import webbrowser  # Import pour ouvrir des liens dans le navigateur
+from apprendre import Apprendre
+
 
 class Menu(tk.Frame):
-    def __init__(self, parent, game):
-        super().__init__(parent)
+    def __init__(self, game):
+        super().__init__(game)
         self.game = game
         self.place(relwidth=1, relheight=1)  # Utilisation de place ici pour occuper tout l'espace
 
@@ -42,6 +44,16 @@ class Menu(tk.Frame):
                                      fg_color='blue')
         btn_tutorial.pack(pady=10)
 
+        # Bouton pour l'apprentissage
+        btn_learning = ctk.CTkButton(container, 
+                                     text="Apprentissage",
+                                     command=self.game.afficher_apprendre,  # Assurez-vous que cela appelle la bonne fonction
+                                     width=200,
+                                     height=50,
+                                     corner_radius=20,
+                                     fg_color='blue')
+        btn_learning.pack(pady=10)
+
         # Bouton pour quitter le jeu
         btn_quit = ctk.CTkButton(container, 
                                  width=200,
@@ -54,4 +66,9 @@ class Menu(tk.Frame):
 
     def open_tutorial(self):
         # Ouvre la vidéo YouTube dans un navigateur web
-        webbrowser.open("https://www.youtube.com/watch?v=EHuQe7SKwkA")  # Remplace par l'URL de la vidéo tutoriel
+        webbrowser.open("https://www.youtube.com/watch?v=EHuQe7SKwkA")  # Remplace par l'URL de la vidéo tutoriel 
+
+    def open_learning_window(self):
+        # Ouvre la fenêtre d'apprentissage
+        apprendre_window = Apprendre(self)  # Crée une nouvelle instance de la fenêtre Apprendre
+        apprendre_window.grab_set()  # Empêche de revenir à la fenêtre principale tant que celle-ci est ouverte

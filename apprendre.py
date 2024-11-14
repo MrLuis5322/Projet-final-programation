@@ -189,7 +189,7 @@ class Apprendre(tk.Frame):
         self.canvas.draw()
 
 
-# Lancer l'application
+# Lancer l'application pour test uniquement
 if __name__ == "__main__":
     root = ctk.CTk()  # Créer la fenêtre principale
     app = Apprendre(root)  # Créer l'application

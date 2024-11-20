@@ -97,10 +97,25 @@ class Apprendre(tk.Frame):
 
     # Créer un cadre HTML (widget) dans la fenêtre pour afficher la page Web
         html_frame = HtmlFrame(nouvelle_fenetre, horizontal_scrollbar="auto")
-        html_frame.pack(fill="both", expand=True)
+        html_frame.place(relwidth=1, relheight=1)
 
     # Charger la page Web dans le HtmlFrame
-        url = "https://www.example.com"  # Remplacer par l'URL que vous voulez afficher
+        function = self.function_var.get()  # Récupérer la fonction sélectionnée
+
+        if function == "Quadratique":
+           url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-polynomiale-de-degre-2-m1124"
+        elif function == "Sinus":
+            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-sinus-m1171"
+        elif function == "Exponentielle":
+            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-exponentielle-m1143"
+        elif function == "Cosinus":
+            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-cosinus-m1177"
+        elif function == "Racine carrée":
+            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-racine-carree-m1131"
+        elif function == "Linéaire":
+            url = "https://www.example.com"
+
+        #url = "https://www.example.com"  # Remplacer par l'URL que vous voulez afficher
         html_frame.load_url(url)
 
     def est_online(self):

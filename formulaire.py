@@ -33,13 +33,13 @@ class Formulaire(ctk.CTkFrame):
         self.label_nom_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Nom:")
         self.label_nom_creation.grid(row=0, column=0, pady=20)
         
-        self.champ_nom_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre nom")  
+        self.champ_nom_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Nom")  
         self.champ_nom_creation.grid(row=1, column=0, pady=5)
 
-        self.label_email_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Email:")  
+        self.label_email_creation = ctk.CTkLabel(self.formulaire_creation_joueur, text="Mot de passe:")  
         self.label_email_creation.grid(row=2, column=0, pady=5)  
         
-        self.champ_email_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Entrez votre email")  
+        self.champ_email_creation = ctk.CTkEntry(self.formulaire_creation_joueur, placeholder_text="Mot de passe")  
         self.champ_email_creation.grid(row=3, column=0, pady=5)  
 
         self.bouton_creation_joueur = ctk.CTkButton(self.formulaire_creation_joueur, text="Créer Joueur", command=self.soumettre_creation_joueur)

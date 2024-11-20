@@ -103,17 +103,17 @@ class Apprendre(tk.Frame):
         function = self.function_var.get()  # Récupérer la fonction sélectionnée
 
         if function == "Quadratique":
-           url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-polynomiale-de-degre-2-m1124"
+           url = "https://en.wikipedia.org/wiki/Quadratic_function"
         elif function == "Sinus":
-            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-sinus-m1171"
+            url = "https://en.wikipedia.org/wiki/Sine_and_cosine"
         elif function == "Exponentielle":
-            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-exponentielle-m1143"
+            url = "https://en.wikipedia.org/wiki/Exponentiation"
         elif function == "Cosinus":
-            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-cosinus-m1177"
+            url = "https://en.wikipedia.org/wiki/Sine_and_cosine"
         elif function == "Racine carrée":
-            url = "https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/la-fonction-racine-carree-m1131"
+            url = "https://en.wikipedia.org/wiki/Square_root"
         elif function == "Linéaire":
-            url = "https://www.example.com"
+            url = "https://en.wikipedia.org/wiki/Linear_function"
 
         #url = "https://www.example.com"  # Remplacer par l'URL que vous voulez afficher
         html_frame.load_url(url)

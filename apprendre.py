@@ -4,6 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+from tkinterweb import HtmlFrame  # Importer HtmlFrame de tkinterweb
+import socket
+from tkinter import messagebox
+
 class Apprendre(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -15,9 +19,10 @@ class Apprendre(tk.Frame):
         # Créer une figure et un axe pour le graphique
         self.fig, self.ax = plt.subplots(figsize=(5, 4))  # Taille réduite pour le graphique
         self.canvas = None
-        
+       
         # Appeler la fonction pour créer l'interface avec les sliders et le bouton
         self.create_function_interface()
+        
 
     def create_function_interface(self):
         # Explication des fonctions disponibles
@@ -50,7 +55,7 @@ class Apprendre(tk.Frame):
         self.slider_frame = ctk.CTkFrame(self)
         self.slider_frame.pack(pady=10)
 
-        # Créer les sliders pour les paramètres
+        # Créer les sliders et les paramètres (label, variable, min, max, indentation)
         self.a_slider = self.create_slider("a", self.a_var, -3, 3, 0.1)
         self.h_slider = self.create_slider("h (Déplacement horizontal)", self.h_var, -5, 5, 1)
         self.k_slider = self.create_slider("k (Déplacement vertical)", self.k_var, -5, 5, 1)
@@ -60,6 +65,10 @@ class Apprendre(tk.Frame):
         self.plot_button = ctk.CTkButton(self, text="Tracer la fonction", command=self.plot_function)
         self.plot_button.pack(pady=20)
         
+        #ouvrir lien internet
+        self.link = ctk.CTkButton(self, text="En apprendre plus", command=self.ouvrir_lien)
+        self.link.pack(pady = 25)
+
         # Placer les sliders dans le frame
         self.a_slider.grid(row=0, column=0, padx=5)  # Grille pour aligner horizontalement
         self.h_slider.grid(row=0, column=1, padx=5)
@@ -72,6 +81,37 @@ class Apprendre(tk.Frame):
         
         # Placer un graphique linéaire vide au départ
         self.plot_function()
+        
+
+    def ouvrir_lien(self):
+        # Vérifier la connexion
+        if not self.est_online():
+        # Afficher un message d'erreur si l'application est hors ligne
+            messagebox.showerror("Erreur de connexion", "Aucune connexion Internet. Impossible d'afficher la page.")
+            return  # Sortir de la fonction si pas de connexion
+    
+    # Création de la fenêtre secondaire
+        nouvelle_fenetre = tk.Toplevel()
+        nouvelle_fenetre.title("Fenêtre avec page Web")
+        nouvelle_fenetre.geometry("800x600")  # Taille de la fenêtre
+
+    # Créer un cadre HTML (widget) dans la fenêtre pour afficher la page Web
+        html_frame = HtmlFrame(nouvelle_fenetre, horizontal_scrollbar="auto")
+        html_frame.pack(fill="both", expand=True)
+
+    # Charger la page Web dans le HtmlFrame
+        url = "https://www.example.com"  # Remplacer par l'URL que vous voulez afficher
+        html_frame.load_url(url)
+
+    def est_online(self):
+        try:
+        # On tente de se connecter à un serveur public (par exemple, Google) port 80 pour HTTP, 5 secondes pour se conecter sinon echec
+        #Cette méthode tente d'établir une connexion réseau à un hôte et un port spécifiés.
+            socket.create_connection(("www.google.com", 80), timeout=5)
+            return True  # Connexion réussie
+        #Cette exception est levée si une erreur se produit lors de la résolution du nom de domaine (par exemple, si www.google.com ne peut pas être trouvé) ou si le temps de 5 sec est fini
+        except (socket.timeout, socket.gaierror):
+            return False  # Pas de connexion
 
     def create_slider(self, label, variable, min_value, max_value, resolution):
         # Créer un slider avec un label

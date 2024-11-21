@@ -1,5 +1,5 @@
-import customtkinter as ctk  
-import tkinter as tk  
+import customtkinter as ctk
+import tkinter as tk
 import os
 
 class Formulaire(ctk.CTkFrame):  
@@ -7,19 +7,37 @@ class Formulaire(ctk.CTkFrame):
         self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts")
         super().__init__(maitre)  # Le maitre est la nouvelle fenêtre (Toplevel)
 
+        # Configuration de la fenêtre pour qu'elle prenne tout l'espace disponible
         self.grid(row=0, column=0, sticky="nsew")  # Le formulaire occupe tout l'espace de son maître
-
-        # Configuration du maître pour le centrage
         self.master.grid_rowconfigure(0, weight=1)
         self.master.grid_columnconfigure(0, weight=1)
 
+        # Centrage de la fenêtre du formulaire
+        self.centrez_fenetre()
+
         self.creer_widgets()
 
+    def centrez_fenetre(self):
+        # Récupérer la taille de l'écran
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+
+        # Calculer la taille de la fenêtre formulaire
+        self.master.update_idletasks()  # Mettre à jour les dimensions après la création des widgets
+        window_width = self.master.winfo_width()
+        window_height = self.master.winfo_height()
+
+        # Calculer la position pour centrer la fenêtre
+        position_top = int(screen_height / 2 - window_height / 2)
+        position_left = int(screen_width / 2 - window_width / 2)
+
+        # Placer la fenêtre au centre
+        self.master.geometry(f"{window_width}x{window_height}+{position_left}+{position_top}")
 
     def creer_widgets(self):
         # Créer un cadre qui contiendra le formulaire et le centrer
         cadre = ctk.CTkFrame(self) 
-        cadre.grid(row=0, column=0, padx=50, pady=50, sticky="nsew")  # Ajuster padx/pady pour plus de centrage
+        cadre.grid(row=0, column=0, padx=800, pady=300, sticky="nsew")  # Ajuster padx/pady pour plus de centrage
         cadre.grid_rowconfigure(0, weight=1)  # Permet au formulaire de prendre tout l'espace vertical
         cadre.grid_columnconfigure(0, weight=1)  # Permet au formulaire de prendre tout l'espace horizontal
 
@@ -70,7 +88,6 @@ class Formulaire(ctk.CTkFrame):
         self.bouton_connexion_joueur = ctk.CTkButton(self.formulaire_connexion_joueur, text="Se connecter", command=self.soumettre_connexion_joueur) 
         self.bouton_connexion_joueur.grid(row=4, column=0, pady=10)
 
-    # Méthodes soumettre_creation_joueur, soumettre_connexion_joueur, ajouter_log, nettoyer_nom_fichier
 
 
     def soumettre_creation_joueur(self): 

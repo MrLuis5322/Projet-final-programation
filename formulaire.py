@@ -4,15 +4,17 @@ import os
 
 class Formulaire(ctk.CTkFrame):  
     def __init__(self, maitre=None):  
-        self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts")  # Code pour accéder aux fichiers dans "accounts"
-        super().__init__(maitre)  
-        self.grid(row=0, column=0, sticky="nsew")  # Le formulaire occupe tout l'espace disponible
-        
+        self.DOSSIER_JOUEURS = os.path.join(os.path.dirname(__file__), "accounts")
+        super().__init__(maitre)  # Le maitre est la nouvelle fenêtre (Toplevel)
+
+        self.grid(row=0, column=0, sticky="nsew")  # Le formulaire occupe tout l'espace de son maître
+
         # Configuration du maître pour le centrage
-        self.master.grid_rowconfigure(0, weight=1)  # Redimensionner verticalement
-        self.master.grid_columnconfigure(0, weight=1)  # Redimensionner horizontalement
+        self.master.grid_rowconfigure(0, weight=1)
+        self.master.grid_columnconfigure(0, weight=1)
 
         self.creer_widgets()
+
 
     def creer_widgets(self):
         # Créer un cadre qui contiendra le formulaire et le centrer

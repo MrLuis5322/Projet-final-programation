@@ -20,7 +20,8 @@ class Menu(tk.Frame):
         self.after(100, self.update_background)  # Appeler la mise à jour après 100ms
 
         # Conteneur central pour aligner les boutons verticalement au centre
-        container = tk.Frame(self)
+        container = tk.Frame(self, background='red')  # Fond transparent
+
         container.place(relx=0.5, rely=0.5, anchor="center")  # Centrer le conteneur au milieu de la fenêtre
 
         # Bouton pour accéder à l'accueil (Jouer)

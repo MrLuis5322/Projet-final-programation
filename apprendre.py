@@ -8,10 +8,21 @@ from tkinterweb import HtmlFrame  # Importer HtmlFrame de tkinterweb
 import socket
 from tkinter import messagebox
 
+from PIL import Image, ImageTk  # Import pour gérer les images
+
+
 class Apprendre(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.parent = parent
+        self.bg_image = Image.open("learn.jpg")  # Remplacez par le chemin de votre image
+        self.bg_label = tk.Label(self)  # Créer un Label sans image pour le moment
+
+        self.bg_label.place(relwidth=1, relheight=1)  # Placer le label dans toute la fenêtre
         
+        # Utiliser `after` pour appeler la mise à jour de l'image après l'initialisation complète de la fenêtre
+        self.after(100, self.update_background)  # Appeler la mise à jour après 100ms
+
         # Créer un titre pour la fenêtre d'apprentissage
         self.title_label = ctk.CTkLabel(self, text="Fenêtre d'Apprentissage", font=("Arial", 20))
         self.title_label.pack(pady=10)  # Afficher le titre
@@ -128,6 +139,10 @@ class Apprendre(tk.Frame):
         except (socket.timeout, socket.gaierror):
             return False  # Pas de connexion
 
+
+
+
+
     def create_slider(self, label, variable, min_value, max_value, resolution):
         # Créer un slider avec un label
         frame = ctk.CTkFrame(self.slider_frame)  # Ajouter les sliders au même frame
@@ -243,6 +258,15 @@ class Apprendre(tk.Frame):
         self.canvas.get_tk_widget().pack(pady=20)
         self.canvas.draw()
 
+
+    def update_background(self):
+        """Mise à jour de l'image de fond pour qu'elle remplisse la fenêtre"""
+        # Redimensionner l'image de fond pour s'adapter à la taille actuelle de la fenêtre
+        self.bg_image_resized = self.bg_image.resize((self.parent.winfo_width(), self.parent.winfo_height()))
+        self.bg_photo = ImageTk.PhotoImage(self.bg_image_resized)  # Convertir en format compatible Tkinter
+
+        self.bg_label.config(image=self.bg_photo)  # Assigner l'image redimensionnée au label
+        self.bg_label.image = self.bg_photo  # Garder une référence à l'image pour éviter qu'elle ne soit supprimée
 
 # Lancer l'application pour test uniquementt
 if __name__ == "__main__":

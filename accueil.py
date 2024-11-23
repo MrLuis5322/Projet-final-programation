@@ -16,6 +16,8 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     def __init__(self, master, res):  # Appel du constructeur
         super().__init__(master)  # Super permet d'appeler plusieurs inheritance
 
+        image = 
+
         self.res = res  # Facteur de résolution
         self.score = 0  # Score initial
         self.temps = 121  # Temps initial

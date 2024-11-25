@@ -39,7 +39,15 @@ class GraphWarGame(CTk):
         print("Retour au menu")  # Affichage dans le terminal pour déboguer
         self.clear_main_frame()  # Efface les widgets précédents
         self.menu = Menu(self)  # Créer une nouvelle instance de Menu
+
+    # Forcer la mise à jour du fond d'écran
+        self.menu.update_idletasks()  # Met à jour la fenêtre après avoir ajouté l'image de fond
+
+    # Placer le menu et les autres widgets
         self.menu.place(relwidth=1, relheight=1)  # Utiliser place pour occuper toute la fenêtre
+
+    # Forcer une mise à jour de la fenêtre après ajout du menu et de l'image de fond
+        self.update()  # Met à jour la fenêtre (force le redessinage)
 
 
 
@@ -66,6 +74,17 @@ class GraphWarGame(CTk):
         self.apprendre.place(relwidth=1, relheight=1)  # Afficher la fenêtre d'apprentissage dans la fenêtre principale
 
 
+    def show_formulaire(self):
+        print("Essayer d'afficher le formulaire...")
+        self.clear_main_frame()  # Efface les widgets précédents
+
+    # Créez une nouvelle instance de formulaire
+        self.formulaire = Formulaire(self)  # Crée une nouvelle instance de Formulaire
+    
+        self.formulaire.place(relwidth=1, relheight=1)  # Afficher la fenêtre d'apprentissage dans la fenêtre principale
+    
+        print("Formulaire centré affiché")
+
         
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.quit_game
@@ -74,11 +93,7 @@ class GraphWarGame(CTk):
         self.withdraw()
         self.quit()
 
-    def open_file(self): # INCOMPLET: Nous pouvons compléter si nous avons le temps
-        print("fichier ouvert")
-
-    def save_file(self): # INCOMPLET: Nous pouvons compléter si nous avons le temps
-        print("fichier enregistré")
+    
 
     def show_accueil(self):
         print("Affichage de l'écran d'accueil")
@@ -103,21 +118,8 @@ class GraphWarGame(CTk):
 
 
 
-    def show_formulaire(self):
-        print("Essayer d'afficher le formulaire...")
-        self.clear_main_frame()  # Efface les widgets précédents
+    
 
-    # Créez une nouvelle instance de formulaire
-        self.formulaire = Formulaire(self)  # Crée une nouvelle instance de Formulaire
-
-    # Utiliser place pour centrer le formulaire dans la fenêtre
-        self.formulaire.place(relx=0.5, rely=0.5, anchor="center")
-
-    # Configurer la grille pour permettre au formulaire de s'adapter
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-
-    print("Formulaire centré affiché")
 
 
 

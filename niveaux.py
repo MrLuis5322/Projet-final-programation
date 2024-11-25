@@ -28,6 +28,7 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.obstacles = self.obstacles_instance.generer_obstacles()  # Liste des obstacles
         #ajouter obstacles ici self.obstacles = {[5,5,5], [1,1,1]}
 
+        self.numero_Niveau = 1
 
         self.joueur = Joueur(self, self.obstacles)  # Instance de Joueur
         self.tir = Tir(self)
@@ -95,22 +96,12 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             height=50,
             corner_radius=20,
             text="Niveau suivant",
-            command=self.niveauSuivant,
+            command=self.tir.reset_plot,
             fg_color='blue2',
         )
         self.nextlvl.pack(side=tk.LEFT, padx=10, pady=10)
 
-        # Labels
-        self.score_label = ctk.CTkLabel(
-            master=widget_frame,
-            width=150,
-            height=50,
-            corner_radius=20,
-            fg_color='#363737',
-            text_color='white',
-            text=f"Score: {self.score}",
-        )
-        self.score_label.pack(side=tk.LEFT, padx=10, pady=10)
+        
 
         
 
@@ -163,6 +154,11 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             label='Cible',
         )
 
+
+        # Définir un titre dynamique basé sur la variable x (niveau)
+          # Exemple de niveau, vous pouvez ajuster en fonction du niveau actuel du jeu
+        self.ax.set_title(f"Niveau {self.numero_Niveau}")  # Ajouter le titre avec la variable x
+
     # Configurer les limites et l'aspect des axes
         self.ax.set_xlim(0, 360)
         self.ax.set_ylim(0, 200)
@@ -179,6 +175,7 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
 
 
     def niveauSuivant(self):
+        self.numero_Niveau =+1
         print("")
         if (self.cibles_touche == 0):
             print("")

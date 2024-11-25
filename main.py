@@ -5,6 +5,7 @@ from formulaire import Formulaire
 import numpy as np
 from menu import Menu
 from apprendre import Apprendre
+from niveaux import Niveaux
 
 class GraphWarGame(CTk):
     def __init__(self):
@@ -28,6 +29,7 @@ class GraphWarGame(CTk):
         self.geometry(f"{window_width}x{window_height}+{x_cordinate}+{y_cordinate}")
 
         self.accueil = None
+        self.niveaux = None
         self.formulaire = None
         self.nom_joueur_connecte = None
         
@@ -58,6 +60,7 @@ class GraphWarGame(CTk):
         file_menu = tk.Menu(menu_bar, tearoff=0)  # Création de l'onglet fichier
         menu_bar.add_cascade(label="Fichier", menu=file_menu)  # Ajout de l'onglet fichier
         file_menu.add_command(label="Jouer", command=self.show_accueil)  # Commande pour afficher l'accueil
+        file_menu.add_command(label="Niveaux", command=self.show_niveaux)
         file_menu.add_command(label="Se connecter", command=self.show_formulaire)  # Commande pour afficher le formulaire
         file_menu.add_command(label="Apprendre", command=self.afficher_apprendre)  # Nouveau bouton pour Apprendre
         file_menu.add_separator()  # Ajout d'un séparateur
@@ -114,11 +117,24 @@ class GraphWarGame(CTk):
 
         print("Ecran d'accueil affiché")
 
+    def show_niveaux(self):
+        print("Affichage de l'écran des niveaux")
 
+        self.clear_main_frame()
 
+        if self.niveaux:
+            self.niveaux.destroy()
+        
+        self.niveaux = Niveaux(self,res = 1)
 
+        self.niveaux.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
 
-    
+    # Configurer la grille pour permettre à l'écran d'accueil de s'adapter à la taille de la fenêtre
+        self.grid_rowconfigure(0, weight=1)  # Permet à la ligne 0 de se redimensionner
+        self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
+
+        print("Ecran des niveaux affiché")
+
 
 
 

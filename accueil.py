@@ -27,6 +27,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
 
         self.obstacles_instance = Obstacles()  # Instance de la classe Obstacles
         self.obstacles = self.obstacles_instance.generer_obstacles()  # Liste des obstacles
+        #ajouter obstacles ici self.obstacles = {[5,5,5], [1,1,1]}
         self.joueur = Joueur(self, self.obstacles)  # Instance de Joueur
         self.tir = Tir(self)
 

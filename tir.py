@@ -91,10 +91,13 @@ class Tir:
                 trajectoire_y.append(y_fct[i])
 
             if collision:
-                self.accueil.update_score(-1)#-1 point pour le joueur
-                self.accueil.update_score_ville()
-                self.accueil.master.ajouter_log(f"Perte d'un point") #log
-                break  # Quitte la boucle
+                try:
+                    self.accueil.update_score(-1)#-1 point pour le joueur
+                    self.accueil.update_score_ville()
+                    self.accueil.master.ajouter_log(f"Perte d'un point") #log
+                    break  # Quitte la boucle
+                except:
+                    break
 
         # Trajectoire
         self.accueil.ax.plot(trajectoire_x, trajectoire_y) #label=f'f(x)={equation}
@@ -110,10 +113,14 @@ class Tir:
             self.cible_atteinte()  # Appelle la méthode pour gérer la réinitialisation après la cible atteinte
             
     def cible_atteinte(self):
+        
         self.accueil.after(800, self.reset_plot)  # Attente de 1 secondes avant réinitialisation
-        self.accueil.update_score(1)#Ajouter 1 point
-        self.accueil.update_score_cible()
-        self.accueil.master.ajouter_log(f"Ajout d'un point")#log
+        try:
+            self.accueil.update_score(1)#Ajouter 1 point
+            self.accueil.update_score_cible()
+            self.accueil.master.ajouter_log(f"Ajout d'un point")#log
+        except:
+            return
 
     def reset_plot(self):
         self.accueil.ax.clear()
@@ -121,7 +128,7 @@ class Tir:
         self.accueil.obstacles = self.accueil.obstacles_instance.generer_obstacles()
         self.obstacles = self.accueil.obstacles
         # Générer un nouveau joueur avec les nouveaux obstacles
-        self.accueil.joueur = Joueur(self.accueil, self.accueil.obstacles)
+        self.accueil.joueur = Joueur(self.accueil, self.accueil.obstacles, self.accueil.type, self.accueil.numero_Niveau)
         self.accueil.plot_obstacles_and_goal()
         # Tracer les obstacles et la cible
         self._finalize_plot()

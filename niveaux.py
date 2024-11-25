@@ -16,7 +16,7 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     
     def __init__(self, master, res):  # Appel du constructeur
         super().__init__(master)  # Super permet d'appeler plusieurs inheritance
-
+        self.type = "fixe"
         self.res = res  # Facteur de résolution
         
 
@@ -24,13 +24,14 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.fig.set_facecolor('gray')
         self.ax.set_facecolor('white')
 
-        self.obstacles_instance = Obstacles()  # Instance de la classe Obstacles
-        self.obstacles = self.obstacles_instance.generer_obstacles()  # Liste des obstacles
+        self.obstacles = self.generer_obstacles_fixes()  # Liste des obstacles
+
+
         #ajouter obstacles ici self.obstacles = {[5,5,5], [1,1,1]}
 
         self.numero_Niveau = 1
 
-        self.joueur = Joueur(self, self.obstacles)  # Instance de Joueur
+        self.joueur = Joueur(self, self.obstacles, self.type, self.numero_Niveau)  # Instance de Joueur
         self.tir = Tir(self)
 
         # Création de l'interface utilisateur
@@ -44,6 +45,39 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
 
         self.cibles_touche = 0
         self.villes_touche = 0
+
+
+    def generer_obstacles_fixes(self):
+        """
+        Cette méthode génère des obstacles fixes avec les coordonnées et tailles spécifiées.
+        """
+        obstacles = []
+        taille_min, taille_max = 5, 25  # Plage de tailles des obstacles
+        x_range = (0, 340)  # Plage pour les coordonnées x
+        y_range = (0, 180)  # Plage pour les coordonnées y
+
+        # Définir des positions fixes pour les obstacles (exemple)
+        fixed_positions = [
+            (50, 50, 10),
+            (100, 75, 15),
+            (150, 100, 20),
+            (200, 50, 5),
+            (250, 120, 25),
+            (300, 150, 10),
+            (75, 150, 20),
+            (50, 180, 10),
+            (200, 180, 15),
+            (150, 50, 25),
+        ]
+
+        # Vérification si les obstacles sont dans les bornes spécifiées
+        for (x, y, taille) in fixed_positions:
+            if 0 <= x <= 340 and 0 <= y <= 180 and taille_min <= taille <= taille_max:
+                obstacles.append((x, y, taille))
+        
+        # Retourner la liste des obstacles fixes
+        return obstacles
+
 
     def setup_ui(self):  # Interface utilisateur
         # Conteneur pour les widgets
@@ -115,9 +149,7 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         else:
             self.end_game()
 
-    def update_score(self, points):  # Mise à jour du score
-        self.score = max(0, self.score + points)
-        self.score_label.configure(text=f"Score: {self.score}")
+    
 
     def end_game(self):  # Fin de la partie
         self.timer_label.configure(text="Temps écoulé!")
@@ -165,13 +197,17 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.set_aspect('equal', 'box')
         self.ax.legend(prop={"size": 15 * self.res}, markerscale=0.6 * self.res)
 
+    # Ajouter des graduations manuelles sur l'axe x et y
+        self.ax.set_xticks(np.arange(0, 361, 50))  # Axes X de 0 à 360 avec des intervalles de 50
+        self.ax.set_yticks(np.arange(0, 201, 20))  # Axes Y de 0 à 200 avec des intervalles de 20
+
+    # Ajouter des étiquettes personnalisées (facultatif)
+        self.ax.set_xticklabels([f'{x}°' for x in np.arange(0, 361, 50)])  # Exemple d'étiquettes pour l'axe x
+        self.ax.set_yticklabels([f'{y}m' for y in np.arange(0, 201, 20)])  # Exemple d'étiquettes pour l'axe y
 
 
-    def update_score_ville(self):
-        self.villes_touche +=1
 
-    def update_score_cible(self):
-        self.cibles_touche +=1
+    
 
 
     def niveauSuivant(self):

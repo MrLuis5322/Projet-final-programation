@@ -16,7 +16,8 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
     
     def __init__(self, master, res):  # Appel du constructeur
         super().__init__(master)  # Super permet d'appeler plusieurs inheritance
-
+        self.type = "random"
+        self.numero_Niveau = None
         self.res = res  # Facteur de résolution
         self.score = 0  # Score initial
         self.temps = 121  # Temps initial
@@ -28,7 +29,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.obstacles_instance = Obstacles()  # Instance de la classe Obstacles
         self.obstacles = self.obstacles_instance.generer_obstacles()  # Liste des obstacles
         #ajouter obstacles ici self.obstacles = {[5,5,5], [1,1,1]}
-        self.joueur = Joueur(self, self.obstacles)  # Instance de Joueur
+        self.joueur = Joueur(self, self.obstacles, "random", None)  # Instance de Joueur
         self.tir = Tir(self)
 
         # Création de l'interface utilisateur

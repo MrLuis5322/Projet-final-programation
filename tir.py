@@ -123,22 +123,75 @@ class Tir:
             return
 
     def reset_plot(self):
-        self.accueil.ax.clear()
-        # Générer de nouveaux obstacles et mettre à jour les obstacles dans l'instance Tir
-        self.accueil.obstacles = self.accueil.obstacles_instance.generer_obstacles()
-        self.obstacles = self.accueil.obstacles
-        # Générer un nouveau joueur avec les nouveaux obstacles
-        self.accueil.joueur = Joueur(self.accueil, self.accueil.obstacles, self.accueil.type, self.accueil.numero_Niveau)
-        self.accueil.plot_obstacles_and_goal()
-        # Tracer les obstacles et la cible
-        self._finalize_plot()
+        if self.accueil.type == "random":
+            self.accueil.ax.clear()  # Effacer le graphique
 
-        if self.accueil.timer_label.cget("text") == "Temps écoulé!": #https://stackoverflow.com/questions/6112482/how-to-get-the-tkinter-label-text
-            self.accueil.temps = 61
-            self.accueil.timer_label.configure(text=f"Temps restant: {self.accueil.temps}s")  # Remettre à jour l'affichage du timer
-            self.accueil.update_timer()
-            self.accueil.score = 0
-            self.accueil.update_score(0)
+            # Redessiner les axes et autres configurations
+            self.accueil.ax.set_xlim(0, 360)  # Exemple de limite x
+            self.accueil.ax.set_ylim(0, 200)  # Exemple de limite y
+
+            # Générer de nouveaux obstacles et mettre à jour les obstacles dans l'instance Tir
+            self.accueil.obstacles = self.accueil.obstacles_instance.generer_obstacles()
+            self.obstacles = self.accueil.obstacles
+            
+            # Générer un nouveau joueur avec les nouveaux obstacles
+            self.accueil.joueur = Joueur(self.accueil, self.accueil.obstacles, self.accueil.type, self.accueil.numero_Niveau)
+            self.accueil.plot_obstacles_and_goal()
+
+            # Finaliser le tracé (ajuster axes, légendes, etc.)
+            self._finalize_plot()
+
+            # Réinitialiser le timer si nécessaire
+            if self.accueil.timer_label.cget("text") == "Temps écoulé!":
+                self.accueil.temps = 61
+                self.accueil.timer_label.configure(text=f"Temps restant: {self.accueil.temps}s")
+                self.accueil.update_timer()
+                self.accueil.score = 0
+                self.accueil.update_score(0)
+
+        elif self.accueil.type == "fixe":
+            self.accueil.numero_Niveau += 1
+            self.accueil.ax.clear()  # Effacer le graphique
+
+            # Redessiner les axes et autres configurations
+            self.accueil.ax.set_xlim(0, 360)  # Exemple de limite x
+            self.accueil.ax.set_ylim(0, 200)  # Exemple de limite y
+
+            if self.accueil.numero_Niveau <= 3:
+                # Générer de nouveaux obstacles et mettre à jour les obstacles dans l'instance Tir
+                self.accueil.obstacles = self.accueil.generer_obstacles_fixes(self.accueil.numero_Niveau)
+                self.obstacles = self.accueil.obstacles
+
+                # Générer un nouveau joueur avec les nouveaux obstacles
+                self.accueil.joueur = Joueur(self.accueil, self.accueil.obstacles, self.accueil.type, self.accueil.numero_Niveau)
+                self.accueil.plot_obstacles_and_goal()
+
+                # Finaliser le tracé (ajuster axes, légendes, etc.)
+                self._finalize_plot()
+
+            elif self.accueil.numero_Niveau > 3:
+                # Effacer tout sur l'écran
+                self.accueil.ax.clear()
+
+                # Ajouter un message de réussite avec fond vert
+                success_frame = tk.Frame(self.accueil.master, bg="green", width=1920, height=1080)  # Utiliser les dimensions de la fenêtre
+                success_frame.grid(row=0, column=0, sticky="nsew")  # Utiliser grid pour occuper toute la fenêtre
+
+                success_message = "Félicitations! Vous avez terminé tous les niveaux!"
+                success_label = tk.Label(success_frame, text=success_message, font=("Arial", 16), fg="white", bg="green")
+                success_label.pack(expand=True)  # Centrer le texte dans le cadre
+
+                # Attendre 3 secondes, puis retourner au menu principal
+                self.accueil.master.after(3100, success_frame.destroy)
+                #success_frame.destroy.after(2900)
+                self.accueil.master.after(3000, self.accueil.master.show_menu)  # 3000 ms = 3 secondes
+
+    
+
+
+
+  
+
 
     def plot_selected_function(self, choice): # Méthode pour tracer une fonction sélectionnée
         func_text = self.accueil.function_types.get(choice) # Récupère la fonction associée au choix

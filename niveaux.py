@@ -23,13 +23,13 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
         self.fig.set_facecolor('gray')
         self.ax.set_facecolor('white')
+        self.numero_Niveau = 1
 
-        self.obstacles = self.generer_obstacles_fixes()  # Liste des obstacles
+        self.obstacles = self.generer_obstacles_fixes(self.numero_Niveau)  # Liste des obstacles
 
 
         #ajouter obstacles ici self.obstacles = {[5,5,5], [1,1,1]}
 
-        self.numero_Niveau = 1
 
         self.joueur = Joueur(self, self.obstacles, self.type, self.numero_Niveau)  # Instance de Joueur
         self.tir = Tir(self)
@@ -47,7 +47,7 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.villes_touche = 0
 
 
-    def generer_obstacles_fixes(self):
+    def generer_obstacles_fixes(self, niveau):
         """
         Cette méthode génère des obstacles fixes avec les coordonnées et tailles spécifiées.
         """
@@ -57,18 +57,46 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         y_range = (0, 180)  # Plage pour les coordonnées y
 
         # Définir des positions fixes pour les obstacles (exemple)
-        fixed_positions = [
-            (50, 50, 10),
-            (100, 75, 15),
-            (150, 100, 20),
-            (200, 50, 5),
-            (250, 120, 25),
-            (300, 150, 10),
-            (75, 150, 20),
-            (50, 180, 10),
-            (200, 180, 15),
-            (150, 50, 25),
-        ]
+        if niveau == 1:
+            fixed_positions = [
+                (50, 50, 10),
+                (100, 75, 15),
+                (150, 100, 20),
+                (200, 50, 5),
+                (250, 120, 25),
+                (300, 150, 10),
+                (75, 150, 20),
+                (50, 180, 10),
+                (200, 180, 15),
+                (150, 50, 25),
+            ]
+        elif niveau == 2:
+            fixed_positions = [
+                (60, 55, 12),   # Changement des coordonnées pour le niveau 2
+                (110, 85, 17),
+                (160, 120, 22),
+                (210, 55, 7),
+                (260, 130, 27),
+                (310, 160, 12),
+                (85, 160, 22),
+                (60, 190, 12),
+                (210, 190, 17),
+                (160, 55, 27),
+            ]
+        elif niveau == 3:
+            fixed_positions = [
+                (70, 60, 14),   # Changement des coordonnées pour le niveau 3
+                (120, 95, 18),
+                (170, 130, 23),
+                (220, 60, 9),
+                (270, 140, 29),
+                (320, 170, 14),
+                (95, 170, 24),
+                (70, 200, 14),
+                (220, 200, 19),
+                (170, 60, 29),
+            ]
+
 
         # Vérification si les obstacles sont dans les bornes spécifiées
         for (x, y, taille) in fixed_positions:

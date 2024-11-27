@@ -17,7 +17,7 @@ class Joueur:  # Définition de la classe Joueur
                 self.joueur_position = (200,25)
                 self.cible_position = (350,125)
             elif niveau == 2:
-                self.joueur_position = (50,50)
+                self.joueur_position = (150,50)
                 self.cible_position = (300,150) 
             elif niveau == 3:
                 self.joueur_position = (50,50)

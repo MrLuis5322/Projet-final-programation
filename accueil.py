@@ -8,6 +8,7 @@ from tir import Tir
 from traitementCSV import Obstacles
 from matplotlib.patches import Circle
 import matplotlib.image as mpimg
+from matplotlib.lines import Line2D
 
 
 class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
@@ -144,7 +145,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
 
     def plot_obstacles_and_goal(self):  # Tracé des obstacles et de la cible
         # Charger l'image pour l'arrière-plan
-        background_image = mpimg.imread('landscapefromabove.jpg')  # Ariere plan
+        background_image = mpimg.imread('landscapefromabove.jpg')  # Arrière-plan
 
         # Afficher l'image en arrière-plan
         self.ax.imshow(background_image, extent=[0, 360, 0, 200], aspect='auto')
@@ -178,8 +179,22 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.ax.set_ylim(0, 200)
         self.ax.set_aspect('equal', 'box')
 
-        # Ajouter une légende si nécessaire
-        self.ax.legend(prop={"size": 15 * self.res}, markerscale=0.6 * self.res)
+        # Légende avec les images : Ajouter des objets de légende personnalisés avec Line2D
+        joueur_couleur = '#808080'  # Gris
+        ennemi_couleur = '#6B8E23'  # Vert armée
+        legend_elements = [
+            Line2D([0], [0], marker='o', color='w', markerfacecolor=joueur_couleur, markersize=15, label='Joueur'),
+            Line2D([0], [0], marker='o', color='w', markerfacecolor=ennemi_couleur, markersize=15, label='Ennemi')
+        ]
+        self.ax.legend(handles=legend_elements, loc='upper right', bbox_to_anchor=(1.1, 1), title='Légende')
+
+        # Ajouter des graduations manuelles sur l'axe x et y
+        self.ax.set_xticks(np.arange(0, 361, 50))  # Axes X de 0 à 360 avec des intervalles de 50
+        self.ax.set_yticks(np.arange(0, 201, 20))  # Axes Y de 0 à 200 avec des intervalles de 20
+
+        # Ajouter des étiquettes personnalisées (facultatif)
+        self.ax.set_xticklabels([f'{x}°' for x in np.arange(0, 361, 50)])  # Exemple d'étiquettes pour l'axe x
+        self.ax.set_yticklabels([f'{y}m' for y in np.arange(0, 201, 20)])  # Exemple d'étiquettes pour l'axe y
 
 
 

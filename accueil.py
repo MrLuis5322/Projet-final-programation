@@ -143,41 +143,45 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.master.ajouter_log(f"Partie terminée avec {self.score} points")
 
     def plot_obstacles_and_goal(self):  # Tracé des obstacles et de la cible
-    # Charger l'image pour l'arrière-plan
-        background_image = mpimg.imread('landscapefromabove.jpg')  # Remplacez par le chemin de votre image
+        # Charger l'image pour l'arrière-plan
+        background_image = mpimg.imread('landscapefromabove.jpg')  # Ariere plan
 
-    # Afficher l'image en arrière-plan
+        # Afficher l'image en arrière-plan
         self.ax.imshow(background_image, extent=[0, 360, 0, 200], aspect='auto')
 
-    # Tracer les obstacles
+        # Tracer les obstacles
         for obstacle in self.joueur.obstacles:
             x, y, r = obstacle
             circle = Circle((x, y), r, color='red', alpha=0.5)
             self.ax.add_patch(circle)
 
-    # Tracer la position du joueur
-        self.ax.plot(
-            self.joueur.joueur_position[0],
-            self.joueur.joueur_position[1],
-            'v',
-            markersize=15 * self.res,
-            label='Joueur',
-        )
+        # Charger l'image de l'avion pour le joueur (avec fond transparent)
+        joueur_image = mpimg.imread('PlayerPlane.png')  # Remplacez par le chemin de l'image de l'avion
 
-    # Tracer la position de la cible
-        self.ax.plot(
-            self.joueur.cible_position[0],
-            self.joueur.cible_position[1],
-            'o',
-            markersize=15 * self.res,
-            label='Cible',
-        )
+        # Tracer la position du joueur en utilisant l'image de l'avion
+        self.ax.imshow(joueur_image, 
+                    extent=[self.joueur.joueur_position[0] - 10, self.joueur.joueur_position[0] + 10, 
+                            self.joueur.joueur_position[1] - 10, self.joueur.joueur_position[1] + 10], 
+                    aspect='auto', alpha=1.0)  # Garder la transparence du fond
 
-    # Configurer les limites et l'aspect des axes
+        # Charger l'image de la cible
+        cible_image = mpimg.imread('EnemyPlane.png')  # Remplacez par le chemin de l'image de la cible
+
+        # Tracer la position de la cible en utilisant l'image
+        self.ax.imshow(cible_image, 
+                    extent=[self.joueur.cible_position[0] - 10, self.joueur.cible_position[0] + 10, 
+                            self.joueur.cible_position[1] - 10, self.joueur.cible_position[1] + 10], 
+                    aspect='auto')
+
+        # Configurer les limites et l'aspect des axes
         self.ax.set_xlim(0, 360)
         self.ax.set_ylim(0, 200)
         self.ax.set_aspect('equal', 'box')
+
+        # Ajouter une légende si nécessaire
         self.ax.legend(prop={"size": 15 * self.res}, markerscale=0.6 * self.res)
+
+
 
 
 

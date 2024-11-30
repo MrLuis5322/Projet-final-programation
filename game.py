@@ -8,48 +8,47 @@ from tir import Tir
 from traitementCSV import Obstacles
 from matplotlib.patches import Circle
 
-
-class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
-    def get_obstacles(self): # Fonction qui retourne les obstacles
-        return self.obstacles
+class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
     
-    def __init__(self, master, res): # Appel du constructeur
-        super().__init__(master) # Super permet d'appeler plusieurs inheritance
+    def __init__(self, parent): # Appel du constructeur
+        super().__init__(parent) # Super permet d'appeler plusieurs inheritance
+        self.parent = parent
 
-        # On passe en paramètre le facteur de résolution de l'utilisateur et on le stock dans une variable
-        self.res = res
-
-        self.score = 0 # On set le score à 0
-        self.temps = 121 # On set le temps à 120 secondes
-
-        self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
-        
-        self.obstacles_instance = Obstacles() # Créer une instance de la classe Obstacles
-        self.obstacles = self.obstacles_instance.generer_obstacles()  # Génération de la liste des obstacles
-        self.joueur = Joueur(self, self.obstacles)  # Création d'une instance de Joueur
+        # Création des classes utiles pour la partie
+        self.obstacles_instance = Obstacles()
+        self.obstacles = self.obstacles_instance.generer_obstacles()
+        self.joueur = Joueur(self, self.obstacles)
         self.tir = Tir(self)
-
-        self.setup_ui()  # Appel de la méthode pour configurer l'interface utilisateur
-        self.ax.legend(loc="upper left", prop = { "size": 15*res }, 
-                       markerscale=0.6*res, 
-                       bbox_to_anchor=(1, 1)) # Place la légende et définit sa taille selon la resolution de l'utilisateur
-        
-        self.ax.set_facecolor('#363737')
-        self.canvas = FigureCanvasTkAgg(self.fig, 
-                                        master=self)  # Création d'un canvas pour afficher la figure
-        self.canvas.get_tk_widget().place(x = 0, 
-                                          y = 300, 
-                                          relheight = 0.8, 
-                                          relwidth = 1)  # Ajout du canvas à la fenêtre
-        self.fig.set_facecolor('#363737')
-
-        self.update_timer()
 
         self.cibles_touche = 0
         self.viles_touche = 0
+        self.score = 0 # Score du joueur
+        self.temps = 121 # Temps pour que le joueur tire le plus de cibles possible
 
-    def setup_ui(self): # Méthode pour configurer l'interface utilisateur
-        # Définition des types de fonctions disponibles dans le menu déroulant(a ajouter)
+        self.config(bg = 'gray14')
+
+        self.rowconfigure((0, 1), weight = 1, uniform = 'a') # Vertical 
+        self.rowconfigure(2, weight = 8, uniform = 'a')
+        self.columnconfigure((0, 1, 2, 3), weight = 1, uniform = 'a') # Horizontal
+        self.columnconfigure(4, weight = 2, uniform = 'a')
+
+        self.create_widgets()
+        
+        #self.update_timer()
+
+    def create_figure(self):
+        self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
+        self.ax.legend(loc="upper left", prop = { "size": 15}, 
+                       markerscale=0.6, 
+                       bbox_to_anchor=(1, 1)) # Place la légende et définit sa taille selon la resolution de l'utilisateur
+        self.canvas = FigureCanvasTkAgg(self.fig, 
+                                        master=self)  # Création d'un canvas pour afficher la figure
+        self.canvas.get_tk_widget().grid(row = 2, column = 0, sticky = 'nswe', columnspan = 10, rowspan = 8)  # Ajout du canvas à la fenêtre
+        self.ax.set_facecolor('#242424')
+        self.fig.set_facecolor('#242424')
+
+    def create_widgets(self): # Méthode pour configurer l'interface utilisateur
+        self.create_figure()
         self.function_types = {
             "Linéaire": "x",
             "Quadratique": "0.01*x**2",
@@ -57,25 +56,17 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             "Sinus": "np.sin(x*0.1)*10",
             "Cosinus": "np.cos(x*0.1)*10",
         }
-
-        # Création d'une combo box pour sélectionner le type de fonction
         self.func_selector = ctk.CTkComboBox(master = self, 
                                              width = 200,
                                              height = 50,
                                              corner_radius = 20,
                                              values=list(self.function_types.keys()), 
                                              command=self.tir.plot_selected_function)
-        self.func_selector.place(x = 750, y = 20)  # Ajout de la combo box à la fenêtre
-
-        # Création d'une entrée pour que l'utilisateur saisisse une fonction
         self.entry_func = ctk.CTkEntry(master = self, 
                                        width = 200,
                                        height = 50,
                                        corner_radius = 20,
                                        placeholder_text="Entrez une fonction")
-        self.entry_func.place(x = 750, y = 110)  # Ajout de l'entrée à la fenêtre
-        
-        # Création d'un bouton pour tracer la fonction saisie
         self.plot_button = ctk.CTkButton(master = self, 
                                          width = 100, 
                                          height = 50, 
@@ -84,9 +75,6 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                          text="Tirer", 
                                          command=self.tir.plot_function, 
                                          fg_color = 'blue')
-        self.plot_button.place(x=500, y = 110)  # Ajout du bouton à la fenêtre
-
-        # Création d'un bouton pour réinitialiser le tracé
         self.reset_button = ctk.CTkButton(master = self, 
                                           width = 100, 
                                           height = 50, 
@@ -95,9 +83,14 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                           text="Réinitialiser", 
                                           command=self.tir.reset_plot, 
                                           fg_color = 'blue2')
-        self.reset_button.place(x=500, y = 20)  # Ajout du bouton à la fenêtre
-
-        #Affichage minuterie et score
+        self.main_menu = ctk.CTkButton(master = self, 
+                                          width = 100, 
+                                          height = 50, 
+                                          border_width = 0, 
+                                          corner_radius = 20, 
+                                          text="Retour au menu", 
+                                          command=lambda:self.parent.changeWindow(0, 2), 
+                                          fg_color = 'blue2')
         self.score_label = ctk.CTkLabel(master = self, 
                                         width = 100, 
                                         height = 50, 
@@ -105,8 +98,6 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                         fg_color = '#363737',
                                         text_color = 'white',
                                         text=f"Score: {self.score}")
-        self.score_label.place(x = 1000, y = 110)
-
         self.timer_label = ctk.CTkLabel( master = self, 
                                         width = 100, 
                                         height = 50, 
@@ -115,21 +106,33 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
                                         fg_color = '#363737',
 
                                         text=f"Temps restant: {self.temps}s")
-        self.timer_label.place(x = 1000, y = 20)
-
+        self.logs = ctk.CTkTextbox(master = self,
+                                   fg_color = 'white',
+                                   font = ('Helvetica', 10),
+                                   state = 'disabled')
         self.ax.set_xticks([])
         self.ax.set_yticks([])
-
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 
-    def update_timer(self):
+    def layout_widgets(self):
+        self.func_selector.grid(row = 0, column = 0)
+        self.entry_func.grid(row = 1, column = 0)
+        self.plot_button.grid(row = 0, column = 1)
+        self.reset_button.grid(row = 1, column = 1) 
+        self.reset_button.grid(row = 0, column = 2)
+        self.score_label.grid(row = 1, column = 2)
+        self.timer_label.grid(row = 0, column = 3)
+        self.main_menu.grid(row = 1, column = 3)
+        self.logs.grid(row = 0, column = 4, sticky = 'nswe')
+
+    #def update_timer(self):
         # Diminue la minuterie et met à jour l'affichage
-        if self.temps > 0:
-            self.temps -= 1
-            self.timer_label.configure(text=f"Temps restant: {self.temps}s")
-            self.after(1000, self.update_timer)  # Récursivite pour après 1 sec update le temps
-        else:
-            self.end_game()
+        #if self.temps > 0:
+            #self.temps -= 1
+            #self.timer_label.configure(text=f"Temps restant: {self.temps}s")
+            #self.after(1000, self.update_timer)  # Récursivite pour après 1 sec update le temps
+        #else:
+            #self.end_game()
 
     def update_score(self, points):
         # Met à jour le score et update affichage
@@ -153,15 +156,15 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             self.ax.add_patch(circle)  # Ajout du cercle au tracé
 
         # Tracé du joueur
-        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15*self.res, label='Joueur')
+        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15, label='Joueur')
         # Tracé de la cible
-        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15*self.res, label='Cible')
+        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15, label='Cible')
 
         # Définition des limites des axes
         self.ax.set_xlim(0, 360)  
         self.ax.set_ylim(0, 200)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
-        self.ax.legend(prop = { "size": 15*self.res}, markerscale=0.6*self.res,) # Affichage de la légende
+        self.ax.legend(prop = { "size": 15}, markerscale=0.6) # Affichage de la légende
 
     def update_score_ville(self):
         self.viles_touche +=1

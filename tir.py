@@ -81,7 +81,7 @@ class Tir:
                     trajectoire_y.append(y_fct[i])
 
             # Vérifier la collision avec la cible
-            if touche_au_cercle(x_fct[i], y_fct[i], x_cible, y_cible, 5*self.accueil.res):
+            if touche_au_cercle(x_fct[i], y_fct[i], x_cible, y_cible, 5):
                 print(f"Cible touchée en : ({x_fct[i]:.2f}, {y_fct[i]:.2f})")
                 cible_touchee = True
                 collision = True

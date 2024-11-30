@@ -1,5 +1,5 @@
 Nom: test
-Email: test@test.test
+Email: test
 Logs:
 Le joueur s'est connecte.
 Le joueur s'est connecte.

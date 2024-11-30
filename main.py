@@ -1,151 +1,42 @@
-import tkinter as tk
 from customtkinter import CTk
-from accueil import Accueil
-from formulaire import Formulaire
-import numpy as np
-from menu import Menu
+import customtkinter as ctk
+import tkinter as tk
+from menu_principal import Main_menu
+from login import Login
+from game import Game
 
 class GraphWarGame(CTk):
     def __init__(self):
         super().__init__()
+        self.title("Graphwar") # Nom de la fenêtre
+        self.windowList = [tk.Frame(self), tk.Frame(self), tk.Frame(self)] # On crée des placeholders pour pouvoir créer nos autres windows par la suite (pas optimal)
 
-        self.title("Graphwar")
-
-        # Taille de la fenêtre
-        window_width = 1920
-        window_height = 1080
-
-        # Obtenir la taille de l'écran
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-
-        # Calculer les coordonnées pour centrer la fenêtre
-        x_cordinate = int((screen_width/2) - (window_width/2))
-        y_cordinate = int((screen_height/2) - (window_height/2))
-
-        # Appliquer la position calculée
-        self.geometry(f"{window_width}x{window_height}+{x_cordinate}+{y_cordinate}")
-
-        self.accueil = None
-        self.formulaire = None
-        self.nom_joueur_connecte = None
+        self.rowconfigure(0, weight = 1, uniform = 'a') # Vertical
+        self.columnconfigure(0, weight = 1, uniform = 'a') # Horizontal
         
-        self.show_menu()  # Afficher le menu principal
-        self.creation_menu()
+        self.geometry(f"{self.winfo_screenwidth()}x{self.winfo_screenheight()}") # Taille de la fenêtre selon la resolution de l'utilisateur
 
+    def setupWindow(self):
+        m = Main_menu(self)
+        l = Login(self)
+        g = Game(self)
+        self.windowList = [m, l, g] # Liste avec tout les menus
+        m.grid(row = 0, column = 0, sticky = 'nsew')
 
-    def show_menu(self):
-        print("Retour au menu")  # Affichage dans le terminal pour déboguer
-        self.clear_main_frame()  # Efface les widgets précédents
-        self.menu = Menu(self, self)  # Créer une nouvelle instance de Menu
-        self.menu.place(relwidth=1, relheight=1)  # Utiliser place pour occuper toute la fenêtre
+    def changeWindow(self, sindex, findex):
+        print('window')
+        if self.windowList[findex].winfo_ismapped():
+            self.windowList[findex].grid_forget()
+        self.windowList[sindex].grid(row = 0, column = 0, sticky = 'nsew')
+        self.windowList[sindex].layout_widgets()
 
-
-
-    def creation_menu(self):
-        menu_bar = tk.Menu(self)  # Création de la barre de menu
-        self.config(menu=menu_bar)  # Configuration du menu
-
-    # Créer un menu Fichier
-        file_menu = tk.Menu(menu_bar, tearoff=0)  # Création de l'onglet fichier
-        menu_bar.add_cascade(label="Fichier", menu=file_menu)  # Ajout de l'onglet fichier
-        file_menu.add_command(label="Jouer", command=self.show_accueil)  # Commande pour afficher l'accueil
-        file_menu.add_command(label="Se connecter", command=self.show_formulaire)  # Commande pour afficher le formulaire
-        file_menu.add_separator()  # Ajout d'un séparateur
-        file_menu.add_command(label="Retour au menu", command=self.show_menu)  # Ajout de la commande retour au menu
-        file_menu.add_separator()  # Ajout d'un séparateur avant quitter
-        file_menu.add_command(label="Quitter", command=self.quit_game)  # Commande pour quitter l'application
-        
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.quit_game
-
-    def quit_game(self): # Permet d'éviter le bug de ne pas pouvoir relancer
+    def quit_game(self): # Permet d'éviter le bug de ne pas pouvoir relancer 
         self.withdraw()
         self.quit()
 
-    def open_file(self): # INCOMPLET: Nous pouvons compléter si nous avons le temps
-        print("fichier ouvert")
-
-    def save_file(self): # INCOMPLET: Nous pouvons compléter si nous avons le temps
-        print("fichier enregistré")
-
-    def show_accueil(self):
-        print("Affichage de l'écran d'accueil")
-        self.clear_main_frame()  # Efface les widgets précédents
-    
-        if self.accueil:
-            self.accueil.destroy()  # Détruire l'écran précédent si nécessaire
-    
-    # Créer une nouvelle instance de Accueil
-        self.accueil = Accueil(self, res=1)
-    
-    # Utiliser grid() pour afficher l'écran d'accueil dans une grille
-        self.accueil.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
-    
-    # Configurer la grille pour permettre à l'écran d'accueil de s'adapter à la taille de la fenêtre
-        self.grid_rowconfigure(0, weight=1)  # Permet à la ligne 0 de se redimensionner
-        self.grid_columnconfigure(0, weight=1)  # Permet à la colonne 0 de se redimensionner
-
-        print("Ecran d'accueil affiché")
-
-
-
-
-
-    def show_formulaire(self):
-        print("Essayer d'afficher le formulaire...")
-        self.clear_main_frame()  # Efface les widgets précédents
-
-    # Créez une nouvelle instance de formulaire
-        self.formulaire = Formulaire(self)  # Crée une nouvelle instance de Formulaire
-
-    # Utiliser place pour centrer le formulaire dans la fenêtre
-        self.formulaire.place(relx=0.5, rely=0.5, anchor="center")
-
-    # Configurer la grille pour permettre au formulaire de s'adapter
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-
-    print("Formulaire centré affiché")
-
-
-
-
-
-
-    def clear_main_frame(self):
-        for widget in self.winfo_children():  # Pour chaque widget enfant
-            widget.place_forget()  # Utilise place_forget() pour masquer les widgets
-
-
-
-    def ajouter_log(self, message_log):
-        if self.nom_joueur_connecte:
-            # Construire le nom du fichier du joueur
-            nom_fichier_joueur = self.clean_filename(self.nom_joueur_connecte)  # vérification des caractères speciaux pour pas qu'il aie de ?&"$?"& dans le nom du fichier
-            # Ajout log
-            self.formulaire.ajouter_log(nom_fichier_joueur, message_log)
-        else:
-            print("Aucun joueur connecté. Impossible d'ajouter un log.")
-
-    def clean_filename(self, filename):
-    # Remplacer les caractères invalides dans le nom de fichier
-        caracteres_invalides = ['/', '\\', ':', '*', '?', '"', '<', '>', '|']
-        for char in caracteres_invalides:
-            filename = filename.replace(char, '_')
-        return f"{filename}.txt"
-
-    def centrer_fenetre(self, largeur, hauteur):
-        ecran_largeur = self.winfo_screenwidth()
-        ecran_hauteur = self.winfo_screenheight()
-        position_x = int((ecran_largeur - largeur) / 2)
-        position_y = int((ecran_hauteur - hauteur) / 2)
-        self.geometry(f"{largeur}x{hauteur}+{position_x}+{position_y}")
-
-
-
-if __name__ == "__main__":  # Vérification si ce fichier est exécuté en tant que programme principal
-    app = GraphWarGame()  # Création d'une instance de GraphWarGame 
-    app.update()  # Ajout de l'appel update() pour forcer le rendu de la fenêtre
-    app.protocol("WM_DELETE_WINDOW", app.quit_game) # Permet d'éviter le bug lorsqu'on ferme la fenetre avec x
-    app.mainloop()  # Démarrage de la boucle principale de l'application
+if __name__ == "__main__":
+    app = GraphWarGame()
+    app.setupWindow()
+    app.update
+    app.protocol("WM_DELETE_WINDOW", app.quit_game)
+    app.mainloop()

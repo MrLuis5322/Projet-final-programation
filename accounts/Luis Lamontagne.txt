@@ -1,5 +1,5 @@
 Nom: Luis Lamontagne
-Email: luis.lamontagne@gmail.com
+Email: inter
 Logs:
 
 Le joueur s'est connecte.
@@ -15,19 +15,19 @@ Perte d'un point
 Ajout d'un point
 Le joueur s'est connecte.
 Ajout d'un point
-Partie terminé avec -1 points
+Partie terminï¿½ avec -1 points
 Ajout d'un point
 Ajout d'un point
-Partie terminé avec 3 points
+Partie terminï¿½ avec 3 points
 Le joueur s'est connecte.
-Partie terminé avec 0 points
+Partie terminï¿½ avec 0 points
 Le joueur s'est connecte.
 Perte d'un point
 Perte d'un point
 Perte d'un point
 Perte d'un point
-Partie terminé avec 0 points
-Partie terminé avec -4 points
+Partie terminï¿½ avec 0 points
+Partie terminï¿½ avec -4 points
 Le joueur s'est connecte.
 Ajout d'un point
 Ajout d'un point

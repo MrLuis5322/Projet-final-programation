@@ -4,6 +4,7 @@ import tkinter as tk
 from menu_principal import Main_menu
 from login import Login
 from game import Game
+from settings import Settings
 
 class GraphWarGame(CTk):
     def __init__(self):
@@ -19,16 +20,20 @@ class GraphWarGame(CTk):
     def setupWindow(self):
         m = Main_menu(self)
         l = Login(self)
+        s = Settings(self)
         g = Game(self)
-        self.windowList = [m, l, g] # Liste avec tout les menus
+        self.windowList = [m, l, s, g] # Liste avec tout les menus
         m.grid(row = 0, column = 0, sticky = 'nsew')
 
     def changeWindow(self, sindex, findex):
-        print('window')
         if self.windowList[findex].winfo_ismapped():
             self.windowList[findex].grid_forget()
         self.windowList[sindex].grid(row = 0, column = 0, sticky = 'nsew')
         self.windowList[sindex].layout_widgets()
+    
+    def showWindow(self, sindex):
+        self.windowList[sindex].layout_widgets
+        self.windowList[sindex].grid(row = 0, column = 0)
 
     def quit_game(self): # Permet d'éviter le bug de ne pas pouvoir relancer 
         self.withdraw()

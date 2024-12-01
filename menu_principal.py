@@ -28,13 +28,13 @@ class Main_menu(tk.Frame):
                                  corner_radius=50,
                                  text="Jouer", 
                                  font = ('Helvetica', 30),
-                                 command=lambda:self.parent.changeWindow(2, 0), # Change la fenêtre pour jouer
+                                 command=lambda:self.parent.changeWindow(3, 0), # Change la fenêtre pour jouer
                                  text_color='gray14',
                                  hover_color = 'orange',
                                  fg_color='dark orange')
         self.btn_login = ctk.CTkButton(master = self,
                                   text="Se connecter", 
-                                  command=lambda:self.parent.changeWindow(1, 0), # Change la fenêtre pour login
+                                  command=lambda:self.parent.showWindow(1), # Change la fenêtre pour login
                                   width=300,
                                   height=75,
                                   corner_radius=75,
@@ -48,7 +48,7 @@ class Main_menu(tk.Frame):
                                  corner_radius=75,
                                  text="Réglages", 
                                  font = ('Helvetica', 30),
-                                 command=lambda:self.parent.changeWindow(2, 0), # Change le fenêtre pour les réglages
+                                 command=lambda:self.parent.showWindow(2), # Change le fenêtre pour les réglages
                                  text_color='gray14',
                                  hover_color = 'orange',
                                  fg_color='dark orange')

@@ -20,8 +20,7 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
         self.joueur = Joueur(self, self.obstacles)
         self.tir = Tir(self)
 
-        self.cibles_touche = 0
-        self.viles_touche = 0
+        self.log_index = 0
         self.score = 0 # Score du joueur
         self.temps = 121 # Temps pour que le joueur tire le plus de cibles possible
 
@@ -59,95 +58,113 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
         self.func_selector = ctk.CTkComboBox(master = self, 
                                              width = 200,
                                              height = 50,
-                                             corner_radius = 20,
+                                             corner_radius = 75,
+                                             font = ('Helvetica', 20),
                                              values=list(self.function_types.keys()), 
+                                             justify = 'left',
+                                             state = 'readonly',
                                              command=self.tir.plot_selected_function)
         self.entry_func = ctk.CTkEntry(master = self, 
                                        width = 200,
                                        height = 50,
-                                       corner_radius = 20,
+                                       corner_radius = 75,
+                                       font = ('Helvetica', 20),
                                        placeholder_text="Entrez une fonction")
         self.plot_button = ctk.CTkButton(master = self, 
-                                         width = 100, 
+                                         width = 200, 
                                          height = 50, 
                                          border_width = 0, 
-                                         corner_radius = 20, 
+                                         corner_radius = 75, 
                                          text="Tirer", 
+                                         font = ('Helvetica', 20),
                                          command=self.tir.plot_function, 
-                                         fg_color = 'blue')
+                                         text_color='gray14',
+                                         hover_color = 'red4',
+                                         fg_color = 'red3')
         self.reset_button = ctk.CTkButton(master = self, 
-                                          width = 100, 
+                                          width = 200, 
                                           height = 50, 
                                           border_width = 0, 
-                                          corner_radius = 20, 
+                                          corner_radius = 75, 
                                           text="Réinitialiser", 
+                                          font = ('Helvetica', 20),
                                           command=self.tir.reset_plot, 
-                                          fg_color = 'blue2')
+                                          text_color='gray14',
+                                          hover_color = 'red4',
+                                          fg_color = 'red3')
         self.main_menu = ctk.CTkButton(master = self, 
-                                          width = 100, 
+                                          width = 200, 
                                           height = 50, 
                                           border_width = 0, 
-                                          corner_radius = 20, 
+                                          corner_radius = 75, 
                                           text="Retour au menu", 
-                                          command=lambda:self.parent.changeWindow(0, 2), 
-                                          fg_color = 'blue2')
+                                          font = ('Helvetica', 20),
+                                          command=lambda:self.parent.changeWindow(0, 3), 
+                                          text_color='gray14',
+                                          hover_color = 'red4',
+                                          fg_color = 'red3')
         self.score_label = ctk.CTkLabel(master = self, 
-                                        width = 100, 
+                                        width = 200, 
                                         height = 50, 
-                                        corner_radius = 20, 
+                                        corner_radius = 75, 
                                         fg_color = '#363737',
                                         text_color = 'white',
+                                        font = ('Helvetica', 20),
                                         text=f"Score: {self.score}")
-        self.timer_label = ctk.CTkLabel( master = self, 
-                                        width = 100, 
+        self.user_label = ctk.CTkLabel(master = self, 
+                                        width = 200, 
                                         height = 50, 
-                                        corner_radius = 20, 
+                                        corner_radius = 75, 
+                                        fg_color = '#363737',
+                                        text_color = 'white',
+                                        font = ('Helvetica', 20),
+                                        text=f"Joueur: {self.score}")
+        self.timer_label = ctk.CTkLabel( master = self, 
+                                        width = 200, 
+                                        height = 50, 
+                                        corner_radius = 75, 
                                         text_color = 'white',
                                         fg_color = '#363737',
-
-                                        text=f"Temps restant: {self.temps}s")
+                                        font = ('Helvetica', 20),
+                                        text=f"Décompte: {self.temps}s")
         self.logs = ctk.CTkTextbox(master = self,
                                    fg_color = 'white',
-                                   font = ('Helvetica', 10),
-                                   state = 'disabled')
+                                   text_color = 'gray14',
+                                   font = ('Helvetica', 10))
         self.ax.set_xticks([])
         self.ax.set_yticks([])
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
 
     def layout_widgets(self):
-        self.func_selector.grid(row = 0, column = 0)
-        self.entry_func.grid(row = 1, column = 0)
-        self.plot_button.grid(row = 0, column = 1)
-        self.reset_button.grid(row = 1, column = 1) 
-        self.reset_button.grid(row = 0, column = 2)
+        self.func_selector.grid(row = 0, column = 2)
+        self.entry_func.grid(row = 0, column = 1)
+        self.plot_button.grid(row = 1, column = 1)
+        self.reset_button.grid(row = 1, column = 0)
         self.score_label.grid(row = 1, column = 2)
-        self.timer_label.grid(row = 0, column = 3)
-        self.main_menu.grid(row = 1, column = 3)
-        self.logs.grid(row = 0, column = 4, sticky = 'nswe')
+        self.timer_label.grid(row = 1, column = 3)
+        self.user_label.grid(row = 0, column = 3)
+        self.main_menu.grid(row = 0, column = 0)
+        self.logs.grid(row = 0, column = 4, rowspan = 2, sticky = 'nswe')
 
-    #def update_timer(self):
-        # Diminue la minuterie et met à jour l'affichage
-        #if self.temps > 0:
-            #self.temps -= 1
-            #self.timer_label.configure(text=f"Temps restant: {self.temps}s")
-            #self.after(1000, self.update_timer)  # Récursivite pour après 1 sec update le temps
-        #else:
-            #self.end_game()
+    def update_timer(self):
+        if self.temps > 0:
+            self.temps -= 1
+            self.timer_label.configure(text=f"Temps restant: {self.temps}s")
+            self.after(1000, self.update_timer)  # Récursivite pour après 1 sec update le temps
+        else:
+            self.end_game()
 
     def update_score(self, points):
-        # Met à jour le score et update affichage
-        if points == 0:
+        if points == 0 or points < 0:
             self.score == 0
-        elif points < 0:
-            self.score = 0
         else:
             self.score += points
             self.score_label.configure(text=f"Score: {self.score}")
 
     def end_game(self):
         self.timer_label.configure(text="Temps écoulé!")
-        self.master.ajouter_log(f"Partie termine avec {self.score} points")
-        # Ajouter une sauvgarde des log
+        self.plot_button.configure(state = 'disable')
+        self.logs.insert(f"Partie termine avec {self.score} points")
 
     def plot_obstacles_and_goal(self):  # Méthode pour tracer les obstacles et la cible
         for obstacle in self.joueur.obstacles:  # Itération sur les obstacles
@@ -166,8 +183,8 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
         self.ax.legend(prop = { "size": 15}, markerscale=0.6) # Affichage de la légende
 
-    def update_score_ville(self):
-        self.viles_touche +=1
+    #def update_score_ville(self):
+        #self.viles_touche +=1
 
-    def update_score_cible(self):
-        self.cibles_touche +=1
+    #def update_score_cible(self):
+        #self.cibles_touche +=1

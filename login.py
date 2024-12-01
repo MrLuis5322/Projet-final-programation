@@ -7,24 +7,38 @@ class Login(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        
-        self.rowconfigure(0, weight = 1, uniform = 'a') # Vertical 
-        self.columnconfigure((0, 1, 2, 3, 4, 5, 6), weight = 1, uniform = 'a') # Horizontal
+
+        self.rowconfigure((0, 1, 2, 3, 4), weight = 1, uniform = 'a') # Vertical 
+        self.columnconfigure((0, 1, 2, 3, 4), weight = 1, uniform = 'a') # Horizontal
+
+        self.configure(width = 800, 
+                       height = 800)
 
         self.DOSSIER_COMPTES = os.path.join(os.path.dirname(__file__), "accounts")  # Code pour accéder aux fichiers dans "accounts"  
-        pywinstyles.set_opacity(self, value = 0.5, color="#000001") # Permet de gérer l'opacité du widget
+        pywinstyles.set_opacity(self, value = 0.9, color="#000001") # Permet de gérer l'opacité du widget
         
         self.create_widgets()
         
 
     def create_widgets(self):
-        self.connectTab = ctk.CTkTabview(self.parent,
-                                         width = 1500,
-                                         height = 800)
+        self.tab = ctk.CTkTabview(master = self,
+                                  width = 800, 
+                                  height = 800,
+                                  segmented_button_fg_color = 'gold',
+                                  segmented_button_selected_color = 'gold3',
+                                  segmented_button_unselected_color = 'gold',
+                                  segmented_button_unselected_hover_color = 'gold3',
+                                  segmented_button_selected_hover_color = 'gold3')
+        
+        self.create = self.tab.add("Créer un compte")  # On ajoute un onglet de connexion et un onglet de céation de compte
+        self.connect = self.tab.add("Se connecter")
 
-        self.create = self.connectTab.add("Créer un compte")  # On ajoute un onglet de connexion et un onglet de céation de compte
-        self.connect = self.connectTab.add("Se connecter")
-
+        self.tab._segmented_button.configure(width = 100,
+                                         height = 50,
+                                         corner_radius = 75,
+                                         text_color = 'gray14',
+                                         font = ('Helvetica', 20))
+        
         self.label_nom_creation = ctk.CTkLabel(self.create, 
                                                text="Nom:")
         self.champ_nom_creation = ctk.CTkEntry(self.create, 
@@ -50,9 +64,9 @@ class Login(tk.Frame):
                                                      command=self.connect_account) 
 
     def layout_widgets(self):
-        self.connectTab.grid(row = 1, column = 1, rowspan = 8, columnspan = 8)
+        self.tab.grid(row = 0, column = 0, rowspan = 5, columnspan = 5)
 
-        self.bouton_creation_joueur.grid(row=3, column=4, columnspan = 2)
+        self.bouton_creation_joueur.grid(row=0, column=0)
         self.champ_password_creation.grid(row=3, column=0) 
         self.label_password_creation.grid(row=2, column=0)
         self.champ_nom_creation.grid(row=1, column=0)  

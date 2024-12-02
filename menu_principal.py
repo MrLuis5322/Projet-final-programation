@@ -28,7 +28,7 @@ class Main_menu(tk.Frame):
                                  corner_radius=50,
                                  text="Jouer", 
                                  font = ('Helvetica', 30),
-                                 command=lambda:self.parent.changeWindow(3, 0), # Change la fenêtre pour jouer
+                                 command=self.start_game, # Change la fenêtre pour jouer
                                  text_color='gray14',
                                  hover_color = 'orange',
                                  fg_color='dark orange')
@@ -81,6 +81,11 @@ class Main_menu(tk.Frame):
         self.btn_settings.grid(row = 7, column = 0)
         self.btn_tutorial.grid(row = 8, column = 0)
         self.btn_quit.grid(row = 9, column = 0)
+
+    def start_game(self):
+        self.parent.changeWindow(3, 0)
+        self.parent.windowList[3].temps = 121
+        self.parent.windowList[3].tir.reset_plot()
 
     def open_tutorial(self):
         webbrowser.open("https://www.youtube.com/watch?v=EHuQe7SKwkA")  # Remplace par l'URL de la vidéo tutoriel

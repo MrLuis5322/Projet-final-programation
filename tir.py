@@ -12,11 +12,10 @@ class Tir:
         self.obstacles = master.obstacles  # Initialiser les obstacles
 
     def plot_function(self): 
-        self.master.logs.configure(state = 'normal') 
         equation = self.master.entry_func.get()  # Récupère la fonction entrée par l'utilisateur
         
         if not equation:  # Vérifie si la fonction est vide
-            self.master.logs.insert('0.0', 'Veuillez entrer une fonction valide. ')  # Affiche un message d'erreur
+            self.master.write_log('Veuillez entrer une fonction valide. ')  # Affiche un message d'erreur
             return
         
         # Sécurité pour éviter les transaltion verticale (pour eviter une fonction qui ne partirait pas du joueur)
@@ -28,7 +27,7 @@ class Tir:
                 if i == '-' and equation[no+1] != 'x': nb_moins += 1
                 no += 1
             if nb_plus >= nb_x or nb_moins >= nb_x:
-                self.master.logs.insert('0.0', 'Veuillez entrer une fonction valide. ')
+                self.master.write_log('Veuillez entrer une fonction valide. ')
                 return
         
         # Position du joueur et de la cible
@@ -45,10 +44,10 @@ class Tir:
         try:
             y_fct = eval(equation, {"x": x_fct, "np": np})
         except Exception as e:
-            self.master.logs.insert('0.0', 'Veuillez entrer une fonction valide. ')
+            self.master.write_log('Veuillez entrer une fonction valide. ')
             return
         
-        self.master.logs.insert('0.0', f'La fonction {equation} fût tirée. ')
+        self.master.write_log(f'La fonction {equation} fût tirée. ')
         # Faire une translation horizontale et vertical de la fonction afin de la faire commencer (0,0) au joueur (x_joueur, y_joueur)
         x_fct = x_fct + x_joueur
         y_fct = y_fct + y_joueur
@@ -73,7 +72,7 @@ class Tir:
             for obstacle in self.obstacles:  # Itération sur les obstacles
                 x, y, r = obstacle  # Décomposition de l'obsatcles
                 if touche_au_cercle(x_fct[i], y_fct[i], x, y, r):
-                    print(f"Obstacle touché en : ({x_fct[i]:.2f}, {y_fct[i]:.2f})")
+                    self.master.write_log(f'Obstacle touché en : ({x_fct[i]:.2f}, {y_fct[i]:.2f})')
                     collision_x = x_fct[i]
                     collision_y = y_fct[i]
                     collision = True
@@ -84,7 +83,7 @@ class Tir:
 
             # Vérifier la collision avec la cible
             if touche_au_cercle(x_fct[i], y_fct[i], x_cible, y_cible, 5):
-                print(f"Cible touchée en : ({x_fct[i]:.2f}, {y_fct[i]:.2f})")
+                self.master.write_log(f'Cible touchée en : ({x_fct[i]:.2f}, {y_fct[i]:.2f})')
                 cible_touchee = True
                 collision = True
                 break
@@ -93,7 +92,8 @@ class Tir:
                 trajectoire_y.append(y_fct[i])
 
             if collision:
-                self.master.score =- 1
+                self.master.score -= 1
+                self.master.update_score(-1)
                 break  # Quitte la boucle
 
         # Trajectoire
@@ -101,7 +101,6 @@ class Tir:
         # Effet de collision
         if collision_x is not None and collision_y is not None:
             self.master.ax.plot(collision_x, collision_y, 'x', markersize=15)
-            self.master.logs.insert('0.0', 'Obstacle touché!. ')
 
         # Arranger le visuel
         self._finalize_plot()
@@ -109,10 +108,8 @@ class Tir:
         # Si la cible est touchée, ajoutez un délai, puis réinitialisez la scène
         if cible_touchee:
             self.master.after(800, self.reset_plot)  # Attente de 1 secondes avant réinitialisation
-            self.master.score =+ 1
-            self.master.logs.insert('0.0', 'Cible touchée!')#log
-
-        self.master.log.configure(state = 'disable')
+            self.master.update_score(1)
+            self.master.write_log(f'Cible touchée!')
 
     def reset_plot(self):
         self.master.ax.clear()
@@ -141,5 +138,5 @@ class Tir:
     def _finalize_plot(self):
         self.master.ax.set_xticks([])
         self.master.ax.set_yticks([])
-        self.master.ax.legend(loc="upper left", prop={"size": 15}, markerscale=0.6, bbox_to_anchor=(1, 1))
+        self.master.ax.legend(loc="upper left", prop={"size": 15*self.master.parent.windowList[2].lres}, markerscale=0.6*self.master.parent.windowList[2].lres, bbox_to_anchor=(1, 1))
         self.master.canvas.draw()

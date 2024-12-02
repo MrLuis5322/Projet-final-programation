@@ -20,7 +20,7 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
         self.joueur = Joueur(self, self.obstacles)
         self.tir = Tir(self)
 
-        self.log_index = 0
+        self.index = 0.0
         self.score = 0 # Score du joueur
         self.temps = 121 # Temps pour que le joueur tire le plus de cibles possible
 
@@ -32,8 +32,7 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
         self.columnconfigure(4, weight = 2, uniform = 'a')
 
         self.create_widgets()
-        
-        #self.update_timer()
+        self.update_timer()
 
     def create_figure(self):
         self.fig, self.ax = plt.subplots()  # Création de la figure et des axes pour le tracé
@@ -128,9 +127,10 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
                                         font = ('Helvetica', 20),
                                         text=f"Décompte: {self.temps}s")
         self.logs = ctk.CTkTextbox(master = self,
-                                   fg_color = 'white',
-                                   text_color = 'gray14',
-                                   font = ('Helvetica', 10))
+                                   fg_color = 'gray14',
+                                   text_color = 'white',
+                                   font = ('Helvetica', 15),
+                                   state = 'disable')
         self.ax.set_xticks([])
         self.ax.set_yticks([])
         self.plot_obstacles_and_goal() # Appel de la méthode pour tracer les obstacles et la cible
@@ -145,6 +145,10 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
         self.user_label.grid(row = 0, column = 3)
         self.main_menu.grid(row = 0, column = 0)
         self.logs.grid(row = 0, column = 4, rowspan = 2, sticky = 'nswe')
+        if self.parent.windowList[1].nom == "":
+            self.user_label.configure(text=f"Joueur: guest")
+        else:
+            self.user_label.configure(text=f"Joueur: {self.parent.windowList[1].nom}")
 
     def update_timer(self):
         if self.temps > 0:
@@ -173,18 +177,18 @@ class Game(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
             self.ax.add_patch(circle)  # Ajout du cercle au tracé
 
         # Tracé du joueur
-        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15, label='Joueur')
+        self.ax.plot(self.joueur.joueur_position[0], self.joueur.joueur_position[1], 'v', markersize=15*self.parent.windowList[2].pres, label='Joueur')
         # Tracé de la cible
-        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15, label='Cible')
+        self.ax.plot(self.joueur.cible_position[0], self.joueur.cible_position[1], 'o', markersize=15*self.parent.windowList[2].cres, label='Cible')
 
         # Définition des limites des axes
         self.ax.set_xlim(0, 360)  
         self.ax.set_ylim(0, 200)  
         self.ax.set_aspect('equal', 'box')  # Assurer un aspect égal pour le tracé
-        self.ax.legend(prop = { "size": 15}, markerscale=0.6) # Affichage de la légende
+        self.ax.legend(prop = { "size": 15*self.parent.windowList[2].lres}, markerscale=0.6*self.parent.windowList[2].lres) # Affichage de la légende
 
-    #def update_score_ville(self):
-        #self.viles_touche +=1
-
-    #def update_score_cible(self):
-        #self.cibles_touche +=1
+    def write_log(self, string):
+        self.logs.configure(state = 'normal') 
+        self.logs.insert(index = f'{self.index} linestart', text = f'{string}\n')
+        self.index += 1.0
+        self.logs.configure(state = 'disable')

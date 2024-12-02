@@ -10,7 +10,7 @@ class GraphWarGame(CTk):
     def __init__(self):
         super().__init__()
         self.title("Graphwar") # Nom de la fenêtre
-        self.windowList = [tk.Frame(self), tk.Frame(self), tk.Frame(self)] # On crée des placeholders pour pouvoir créer nos autres windows par la suite (pas optimal)
+        self.windowList = [tk.Frame(self), tk.Frame(self), tk.Frame(self), tk.Frame(self)] # On crée des placeholders pour pouvoir créer nos autres windows par la suite (pas optimal)
 
         self.rowconfigure(0, weight = 1, uniform = 'a') # Vertical
         self.columnconfigure(0, weight = 1, uniform = 'a') # Horizontal
@@ -21,6 +21,7 @@ class GraphWarGame(CTk):
         m = Main_menu(self)
         l = Login(self)
         s = Settings(self)
+        self.windowList = [m, l, s]
         g = Game(self)
         self.windowList = [m, l, s, g] # Liste avec tout les menus
         m.grid(row = 0, column = 0, sticky = 'nsew')
@@ -32,12 +33,19 @@ class GraphWarGame(CTk):
         self.windowList[sindex].layout_widgets()
     
     def showWindow(self, sindex):
-        self.windowList[sindex].layout_widgets
+        self.windowList[sindex].layout_widgets()
         self.windowList[sindex].grid(row = 0, column = 0)
 
     def quit_game(self): # Permet d'éviter le bug de ne pas pouvoir relancer 
         self.withdraw()
         self.quit()
+
+    def clean_filename(self, filename):
+    # Remplacer les caractères invalides dans le nom de fichier
+        caracteres_invalides = ['/', '\\', ':', '*', '?', '"', '<', '>', '|']
+        for char in caracteres_invalides:
+            filename = filename.replace(char, '_')
+        return f"{filename}.txt"
 
 if __name__ == "__main__":
     app = GraphWarGame()

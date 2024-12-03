@@ -26,11 +26,12 @@ class Menu(tk.Frame):
 
         # Calcul des positions Y des boutons
         positions_y = [
-            center_y - 2 * spacing,  # Bouton "Jouer"
-            center_y - spacing,      # Bouton "Se connecter"
-            center_y,                # Bouton "Tutoriel"
-            center_y + spacing,      # Bouton "Apprentissage"
-            center_y + 2 * spacing   # Bouton "Quitter"
+            center_y - 2.5 * spacing,  # Bouton "Jouer"
+            center_y - 1.5*spacing,      # Bouton "Niveaux"
+            center_y - 0.5*spacing,                #Bouton "Se conecter"
+            center_y + .5*spacing,                # Bouton "Tutoriel"
+            center_y + 1.5*spacing,      # Bouton "Apprentissage"
+            center_y + 2.5 * spacing   # Bouton "Quitter"
         ]
 
         # Bouton pour accéder à l'accueil (Jouer)
@@ -43,6 +44,16 @@ class Menu(tk.Frame):
                                  fg_color='blue')
         btn_play.place(x=center_x - btn_width // 2, y=positions_y[0])
 
+        #Bouton pour acceder a niveaux
+        btn_niveaux = ctk.CTkButton(self, 
+                                 width=btn_width,
+                                 height=btn_height,
+                                 corner_radius=20,
+                                 text="Niveaux", 
+                                 command=self.game.show_niveaux, 
+                                 fg_color='blue')
+        btn_niveaux.place(x=center_x - btn_width // 2, y=positions_y[1])
+
         # Bouton pour se connecter
         btn_login = ctk.CTkButton(self, 
                                   text="Se connecter", 
@@ -51,7 +62,7 @@ class Menu(tk.Frame):
                                   height=btn_height,
                                   corner_radius=20,
                                   fg_color='blue')
-        btn_login.place(x=center_x - btn_width // 2, y=positions_y[1])
+        btn_login.place(x=center_x - btn_width // 2, y=positions_y[2])
 
         # Bouton pour le tutoriel
         btn_tutorial = ctk.CTkButton(self, 
@@ -61,7 +72,7 @@ class Menu(tk.Frame):
                                      height=btn_height,
                                      corner_radius=20,
                                      fg_color='green')
-        btn_tutorial.place(x=center_x - btn_width // 2, y=positions_y[2])
+        btn_tutorial.place(x=center_x - btn_width // 2, y=positions_y[3])
 
         # Bouton pour l'apprentissage
         btn_learning = ctk.CTkButton(self, 
@@ -71,7 +82,7 @@ class Menu(tk.Frame):
                                      height=btn_height,
                                      corner_radius=20,
                                      fg_color='green')
-        btn_learning.place(x=center_x - btn_width // 2, y=positions_y[3])
+        btn_learning.place(x=center_x - btn_width // 2, y=positions_y[4])
 
         # Bouton pour quitter le jeu
         btn_quit = ctk.CTkButton(self, 
@@ -81,7 +92,7 @@ class Menu(tk.Frame):
                                  text="Quitter", 
                                  command=self.game.quit_game,
                                  fg_color='red')
-        btn_quit.place(x=center_x - btn_width // 2, y=positions_y[4])
+        btn_quit.place(x=center_x - btn_width // 2, y=positions_y[5])
 
     def update_background(self):
         """Mise à jour de l'image de fond pour qu'elle remplisse la fenêtre"""

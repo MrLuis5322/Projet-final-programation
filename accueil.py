@@ -145,7 +145,7 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.timer_label.configure(text="Temps écoulé!")
         self.master.ajouter_log(f"Partie terminée avec {self.score} points")
 
-    from matplotlib.transforms import Affine2D
+    
 
     def plot_obstacles_and_goal(self):  
         # Charger l'image pour l'arrière-plan

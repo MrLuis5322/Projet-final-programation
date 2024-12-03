@@ -9,6 +9,7 @@ from traitementCSV import Obstacles
 from matplotlib.patches import Circle
 import matplotlib.image as mpimg
 from matplotlib.lines import Line2D  # Import pour ajouter des objets de légende personnalisés
+from matplotlib.transforms import Affine2D #transformer image joueur
 
 
 
@@ -200,7 +201,7 @@ class Niveaux(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
 
         # Charger l'image de l'avion pour le joueur (avec fond transparent)
         joueur_image = mpimg.imread('PlayerPlane.png')  # Remplacez par le chemin de l'image de l'avion
-
+        joueur_image = np.rot90(joueur_image, k=2)
         # Tracer la position du joueur en utilisant l'image de l'avion
         self.ax.imshow(joueur_image, 
                         extent=[self.joueur.joueur_position[0] - 10, self.joueur.joueur_position[0] + 10, 

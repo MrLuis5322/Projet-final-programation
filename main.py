@@ -36,7 +36,7 @@ class GraphWarGame(CTk):
         self.show_menu()  # Afficher le menu principal
         self.creation_menu()
 
-
+#
     def show_menu(self):
         print("Retour au menu")  # Affichage dans le terminal pour déboguer
         self.clear_main_frame()  # Efface les widgets précédents

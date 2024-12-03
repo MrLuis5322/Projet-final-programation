@@ -18,10 +18,10 @@ class Joueur:  # Définition de la classe Joueur
                 self.cible_position = (350,125)
             elif niveau == 2:
                 self.joueur_position = (150,50)
-                self.cible_position = (300,150) 
+                self.cible_position = (300,110) 
             elif niveau == 3:
-                self.joueur_position = (50,50)
-                self.cible_position = (300,150) 
+                self.joueur_position = (35,100)
+                self.cible_position = (135,180) 
 
         else:
             print("Erreur!!!")        

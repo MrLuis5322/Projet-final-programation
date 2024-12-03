@@ -9,6 +9,8 @@ from traitementCSV import Obstacles
 from matplotlib.patches import Circle
 import matplotlib.image as mpimg
 from matplotlib.lines import Line2D
+from matplotlib.transforms import Affine2D #transformer image joueur
+
 
 
 class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkinter
@@ -143,11 +145,11 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
         self.timer_label.configure(text="Temps écoulé!")
         self.master.ajouter_log(f"Partie terminée avec {self.score} points")
 
-    def plot_obstacles_and_goal(self):  # Tracé des obstacles et de la cible
+    from matplotlib.transforms import Affine2D
+
+    def plot_obstacles_and_goal(self):  
         # Charger l'image pour l'arrière-plan
         background_image = mpimg.imread('landscapefromabove.jpg')  # Arrière-plan
-
-        # Afficher l'image en arrière-plan
         self.ax.imshow(background_image, extent=[0, 360, 0, 200], aspect='auto')
 
         # Tracer les obstacles
@@ -156,45 +158,56 @@ class Accueil(tk.Frame):  # Définition de la classe Accueil comme un frame tkin
             circle = Circle((x, y), r, color='red', alpha=0.5)
             self.ax.add_patch(circle)
 
-        # Charger l'image de l'avion pour le joueur (avec fond transparent)
-        joueur_image = mpimg.imread('PlayerPlane.png')  # Remplacez par le chemin de l'image de l'avion
+        # Charger l'image de l'avion pour le joueur
+        joueur_image = mpimg.imread('PlayerPlane.png')
 
-        # Tracer la position du joueur en utilisant l'image de l'avion
-        self.ax.imshow(joueur_image, 
-                    extent=[self.joueur.joueur_position[0] - 10, self.joueur.joueur_position[0] + 10, 
-                            self.joueur.joueur_position[1] - 10, self.joueur.joueur_position[1] + 10], 
-                    aspect='auto', alpha=1.0)  # Garder la transparence du fond
+        # Vérifier la position du joueur par rapport à la cible
+        joueur_x, joueur_y = self.joueur.joueur_position
+        cible_x, cible_y = self.joueur.cible_position
 
-        # Charger l'image de la cible
-        cible_image = mpimg.imread('EnemyPlane.png')  # Remplacez par le chemin de l'image de la cible
+        # Appliquer une rotation si nécessaire
+        if joueur_x < cible_x:  # Si le joueur est à gauche de la cible
+            rotation_transform = Affine2D().rotate_deg_around(joueur_x, joueur_y, 180) + self.ax.transData
+        else:  # Si le joueur est à droite de la cible, pas de rotation
+            rotation_transform = self.ax.transData
 
-        # Tracer la position de la cible en utilisant l'image
-        self.ax.imshow(cible_image, 
-                    extent=[self.joueur.cible_position[0] - 10, self.joueur.cible_position[0] + 10, 
-                            self.joueur.cible_position[1] - 10, self.joueur.cible_position[1] + 10], 
-                    aspect='auto')
+        # Tracer l'image de l'avion avec la rotation appliquée
+        self.ax.imshow(
+            joueur_image,
+            extent=[joueur_x - 10, joueur_x + 10, joueur_y - 10, joueur_y + 10],
+            aspect='auto',
+            transform=rotation_transform,
+            alpha=1.0,
+        )
+
+        # Charger et tracer l'image de la cible
+        cible_image = mpimg.imread('EnemyPlane.png')
+        self.ax.imshow(
+            cible_image,
+            extent=[cible_x - 10, cible_x + 10, cible_y - 10, cible_y + 10],
+            aspect='auto',
+        )
 
         # Configurer les limites et l'aspect des axes
         self.ax.set_xlim(0, 360)
         self.ax.set_ylim(0, 200)
         self.ax.set_aspect('equal', 'box')
 
-        # Légende avec les images : Ajouter des objets de légende personnalisés avec Line2D
-        joueur_couleur = '#808080'  # Gris
-        ennemi_couleur = '#6B8E23'  # Vert armée
+        # Ajouter une légende
+        joueur_couleur = '#808080'
+        ennemi_couleur = '#6B8E23'
         legend_elements = [
             Line2D([0], [0], marker='o', color='w', markerfacecolor=joueur_couleur, markersize=15, label='Joueur'),
             Line2D([0], [0], marker='o', color='w', markerfacecolor=ennemi_couleur, markersize=15, label='Ennemi')
         ]
         self.ax.legend(handles=legend_elements, loc='upper right', bbox_to_anchor=(1.1, 1), title='Légende')
 
-        # Ajouter des graduations manuelles sur l'axe x et y
-        self.ax.set_xticks(np.arange(0, 361, 50))  # Axes X de 0 à 360 avec des intervalles de 50
-        self.ax.set_yticks(np.arange(0, 201, 20))  # Axes Y de 0 à 200 avec des intervalles de 20
+        # Ajouter des graduations manuelles
+        self.ax.set_xticks(np.arange(0, 361, 50))
+        self.ax.set_yticks(np.arange(0, 201, 20))
+        self.ax.set_xticklabels([f'{x}°' for x in np.arange(0, 361, 50)])
+        self.ax.set_yticklabels([f'{y}m' for y in np.arange(0, 201, 20)])
 
-        # Ajouter des étiquettes personnalisées (facultatif)
-        self.ax.set_xticklabels([f'{x}°' for x in np.arange(0, 361, 50)])  # Exemple d'étiquettes pour l'axe x
-        self.ax.set_yticklabels([f'{y}m' for y in np.arange(0, 201, 20)])  # Exemple d'étiquettes pour l'axe y
 
 
 

@@ -19,7 +19,7 @@ class Tir:
             return
         
         # Sécurité pour éviter les transaltion verticale (pour eviter une fonction qui ne partirait pas du joueur)
-        nb_plus, nb_moins, nb_x, no = 0, 0, 0, 0 
+        """nb_plus, nb_moins, nb_x, no = 0, 0, 0, 0 
         if '+' or '-' in equation:
             for i in equation:
                 if i == '+' : nb_plus += 1
@@ -29,7 +29,7 @@ class Tir:
             if nb_plus >= nb_x or nb_moins >= nb_x:
                 print("La fonction ne peut pas être translatée verticalement.")
                 return
-        
+        """""
         # Position du joueur et de la cible
         joueur_pos = self.accueil.joueur.joueur_position 
         cible_pos = self.accueil.joueur.cible_position  
@@ -123,17 +123,16 @@ class Tir:
             return
 
     def reset_plot(self):
+        # Réinitialisation de l'affichage en fonction du type de jeu
         if self.accueil.type == "random":
             self.accueil.ax.clear()  # Effacer le graphique
-
-            # Redessiner les axes et autres configurations
-            self.accueil.ax.set_xlim(0, 360)  # Exemple de limite x
-            self.accueil.ax.set_ylim(0, 200)  # Exemple de limite y
+            self.accueil.ax.set_xlim(0, 360)  # Limite de l'axe x
+            self.accueil.ax.set_ylim(0, 200)  # Limite de l'axe y
 
             # Générer de nouveaux obstacles et mettre à jour les obstacles dans l'instance Tir
             self.accueil.obstacles = self.accueil.obstacles_instance.generer_obstacles()
             self.obstacles = self.accueil.obstacles
-            
+
             # Générer un nouveau joueur avec les nouveaux obstacles
             self.accueil.joueur = Joueur(self.accueil, self.accueil.obstacles, self.accueil.type, self.accueil.numero_Niveau)
             self.accueil.plot_obstacles_and_goal()
@@ -152,10 +151,8 @@ class Tir:
         elif self.accueil.type == "fixe":
             self.accueil.numero_Niveau += 1
             self.accueil.ax.clear()  # Effacer le graphique
-
-            # Redessiner les axes et autres configurations
-            self.accueil.ax.set_xlim(0, 360)  # Exemple de limite x
-            self.accueil.ax.set_ylim(0, 200)  # Exemple de limite y
+            self.accueil.ax.set_xlim(0, 360)  # Limite de l'axe x
+            self.accueil.ax.set_ylim(0, 200)  # Limite de l'axe y
 
             if self.accueil.numero_Niveau <= 3:
                 # Générer de nouveaux obstacles et mettre à jour les obstacles dans l'instance Tir
@@ -174,17 +171,17 @@ class Tir:
                 self.accueil.ax.clear()
 
                 # Ajouter un message de réussite avec fond vert
-                success_frame = tk.Frame(self.accueil.master, bg="green", width=1920, height=1080)  # Utiliser les dimensions de la fenêtre
-                success_frame.grid(row=0, column=0, sticky="nsew")  # Utiliser grid pour occuper toute la fenêtre
+                success_frame = tk.Frame(self.accueil.master, bg="green", width=1920, height=1080)
+                success_frame.grid(row=0, column=0, sticky="nsew")
 
                 success_message = "Félicitations! Vous avez terminé tous les niveaux!"
                 success_label = tk.Label(success_frame, text=success_message, font=("Arial", 16), fg="white", bg="green")
-                success_label.pack(expand=True)  # Centrer le texte dans le cadre
+                success_label.pack(expand=True)
 
                 # Attendre 3 secondes, puis retourner au menu principal
                 self.accueil.master.after(3100, success_frame.destroy)
-                #success_frame.destroy.after(2900)
-                self.accueil.master.after(3000, self.accueil.master.show_menu)  # 3000 ms = 3 secondes
+                self.accueil.master.after(3000, self.accueil.master.show_menu)
+
 
     
 
@@ -202,5 +199,7 @@ class Tir:
     def _finalize_plot(self):
         self.accueil.ax.set_xticks([])
         self.accueil.ax.set_yticks([])
-        self.accueil.ax.legend(loc="upper left", prop={"size": 15*self.accueil.res}, markerscale=0.6*self.accueil.res, bbox_to_anchor=(1, 1))
+        if any(artist.get_label() for artist in self.accueil.ax.get_legend_handles_labels()[0]):
+            self.accueil.ax.legend(loc="upper left", prop={"size": 15 * self.accueil.res}, markerscale=0.6 * self.accueil.res, bbox_to_anchor=(1, 1))
+
         self.accueil.canvas.draw()
